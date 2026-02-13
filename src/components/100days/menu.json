@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Day 1 - CSS Card",
+    "path": "/100days/day1",
+    "source": "https://100dayscss.com/days/1/",
+    "description": "An easy start into the challenge with a custom build number with gradient."
+  },
+  {
+    "name": "Day 2 - Menu Icon",
+    "path": "/100days/day2",
+    "source": "https://100dayscss.com/days/2/",
+    "description": "Used on almost every website by now, simple but impressively animated it becomes a real eye-catcher"
+  },
+  {
+    "name": "Day 3 - The Pyramide",
+    "path": "/100days/day3",
+    "source": "https://100dayscss.com/days/3/",
+    "description": "Not as challenging as the real pyramids in Egypt, but the shadow path is not easy."
+  }
+]

@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.dark {
+    color-scheme: dark;
+  }
+  
+  html {
+    height: 100%;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+  
+  body {
+    min-height: 100%;
+    @apply antialiased text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900;
+  }
+  
+  abbr[title] {
+    text-decoration: none;
+  }
