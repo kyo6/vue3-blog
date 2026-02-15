@@ -60,7 +60,6 @@ export default {
       menuList: [
         { name: '首页', pathname: '/' },
         { name: '基础组件', pathname: '/components' },
-
         { name: '项目模板', pathname: '/templates' },
         {
           name: 'UI组件库',

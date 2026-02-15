@@ -82,10 +82,10 @@
   content: '';
   position: absolute;
   width: 23px;
-  height: 97px;
+  height: 101px;
   background: #fff;
   left: 22px;
-  top: 33px;
+  top: 55px;
   transform: rotate(0deg);
   z-index: 1;
   border-top-left-radius: 11px;
