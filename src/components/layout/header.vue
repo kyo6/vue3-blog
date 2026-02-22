@@ -12,7 +12,11 @@
           <div class="relative hidden lg:flex items-center ml-auto">
             <nav class="text-sm leading-6 font-semibold text-slate-700 dark:text-slate-200">
               <ul class="flex space-x-8">
-                <li v-for="item in menuList" :key="item.pathname">
+                <li
+                  v-for="item in menuList"
+                  :key="item.pathname"
+                  :style="{ color: isCurrentPage(item.pathname) ? '#0d6eff' : '#222' }"
+                >
                   <a :href="item.pathname" class="hover:text-sky-500 dark:hover:text-sky-400">{{
                     item.name
                   }}</a>
@@ -58,14 +62,9 @@ export default {
       screenWidth: document.body.clientWidth,
       menuBreadOpen: false,
       menuList: [
-        { name: '首页', pathname: '/' },
-        { name: '基础组件', pathname: '/components' },
-        { name: '项目模板', pathname: '/templates' },
-        {
-          name: 'UI组件库',
-          pathname: 'http://p.huifutest.com/vueweb/',
-          isExternal: true
-        }
+        { name: 'Blog', pathname: '/' },
+        { name: 'ShowCase', pathname: '/show-case' },
+        { name: 'Templates', pathname: '/templates' }
       ]
     }
   },

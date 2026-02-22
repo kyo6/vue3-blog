@@ -1,12 +1,39 @@
 <template>
-  <div class="markdown-viewer" v-html="renderedHtml"></div>
+  <div class="markdown-viewer1" v-html="renderedHtml"></div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted, onUnmounted } from 'vue'
 import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
-import 'highlight.js/styles/github.css'
+import githubCssUrl from 'highlight.js/styles/github.css?url'
+import githubDarkCssUrl from 'highlight.js/styles/github-dark.css?url'
+
+let hljsStyleLink = null
+
+const updateHljsTheme = () => {
+  const isDark = document.documentElement.classList.contains('dark')
+  if (!hljsStyleLink) {
+    hljsStyleLink = document.createElement('link')
+    hljsStyleLink.rel = 'stylesheet'
+    document.head.appendChild(hljsStyleLink)
+  }
+  hljsStyleLink.href = isDark ? githubDarkCssUrl : githubCssUrl
+}
+
+let observer = null
+
+onMounted(() => {
+  updateHljsTheme()
+  observer = new MutationObserver(updateHljsTheme)
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+})
+
+onUnmounted(() => {
+  observer?.disconnect()
+  hljsStyleLink?.remove()
+  hljsStyleLink = null
+})
 
 const props = defineProps({
   markdown: {
