@@ -15,7 +15,7 @@
                 <li
                   v-for="item in menuList"
                   :key="item.pathname"
-                  :style="{ color: isCurrentPage(item.pathname) ? '#0d6eff' : '#222' }"
+                  :style="{ color: isCurrentPage(item.pathname) ? '#0d6eff' : 'inherit' }"
                 >
                   <a :href="item.pathname" class="hover:text-sky-500 dark:hover:text-sky-400">{{
                     item.name

@@ -142,7 +142,7 @@
             </div>
 
             <div class="prose prose-slate dark:prose-dark max-w-none prose-headings:scroll-mt-20">
-              <MarkdownViewer :markdown="mdContent" class="custom-markdown1" />
+              <MarkdownViewer :markdown="mdContent" />
             </div>
           </section>
         </div>
@@ -250,30 +250,5 @@ watchEffect(async () => {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-}
-
-/* Markdown Customization (Inherited from previous design but refined) */
-.custom-markdown :deep(.markdown-viewer) {
-  color: inherit !important;
-}
-
-.custom-markdown :deep(pre) {
-  @apply bg-slate-900 border border-slate-800 text-slate-300 shadow-lg rounded-xl p-5 my-6 overflow-x-auto text-sm;
-}
-
-.custom-markdown :deep(code) {
-  @apply font-mono text-sm bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-indigo-600 dark:text-indigo-400;
-}
-
-.custom-markdown :deep(pre code) {
-  @apply bg-transparent text-inherit p-0 border-none;
-}
-
-.custom-markdown :deep(a) {
-  @apply text-indigo-600 dark:text-indigo-400 hover:underline;
-}
-
-.custom-markdown :deep(blockquote) {
-  @apply border-l-4 border-indigo-500 pl-4 py-1 italic text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 rounded-r;
 }
 </style>
