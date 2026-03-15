@@ -1,7 +1,7 @@
 ---
 tag: ["文本效果","立体徽章效果"],
-date: "2025-02-12"
-detail:'该实现通过结构化拆解与CSS精密控制打造“100 DAYS CSS CHALLENGE”立体徽章效果'
+date: 2025-02-12
+detail: 该实现通过结构化拆解与CSS精密控制打造“100 DAYS CSS CHALLENGE”立体徽章效果
 ---
 
 这段代码展示了一个 "100 DAYS CSS CHALLENGE" 的静态展示页面，主要使用 CSS 实现视觉效果。
