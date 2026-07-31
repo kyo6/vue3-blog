@@ -75,7 +75,7 @@ onMounted(() => loadArticle(route.params.id))
   <div class="max-w-3xl mx-auto px-6 py-10">
     <!-- 返回按钮 -->
     <button
-      class="flex items-center gap-1 mb-8 text-sm text-violet-600 hover:text-violet-800 dark:text-violet-400 dark:hover:text-violet-200 transition-colors"
+      class="flex items-center gap-1 mb-8 text-sm text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
       @click="router.back()"
     >
       <svg
@@ -113,7 +113,7 @@ onMounted(() => loadArticle(route.params.id))
           <span
             v-for="tag in blogPost.tag"
             :key="tag"
-            class="px-2 py-0.5 text-xs font-semibold rounded bg-violet-100 text-violet-700 dark:bg-violet-900 dark:text-violet-300"
+            class="px-2 py-0.5 text-xs font-semibold rounded bg-gray-100 text-gray-700 dark:bg-gray-900 dark:text-gray-300"
           >
             {{ tag }}
           </span>

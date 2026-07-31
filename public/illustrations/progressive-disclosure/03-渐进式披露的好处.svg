@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" fill="none">
+  <defs>
+    <linearGradient id="bgGrad3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F5F3FF"/>
+      <stop offset="100%" stop-color="#FFF7ED"/>
+    </linearGradient>
+    <linearGradient id="pillarL" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+    <linearGradient id="pillarC" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#2563EB"/>
+    </linearGradient>
+    <linearGradient id="pillarR" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0D9488"/>
+      <stop offset="100%" stop-color="#0F766E"/>
+    </linearGradient>
+    <filter id="shadow3" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000000" flood-opacity="0.07"/>
+    </filter>
+  </defs>
+
+  <rect width="800" height="500" rx="20" fill="url(#bgGrad3)"/>
+
+  <text x="400" y="42" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="22" font-weight="700" fill="#374151">渐进式披露的三大可用性收益</text>
+
+  <!-- Three pillars -->
+  <!-- Pillar 1: Learnability -->
+  <g transform="translate(95, 75)">
+    <rect x="0" y="60" width="180" height="340" rx="14" fill="#FFFFFF" filter="url(#shadow3)" stroke="#DDD6FE" stroke-width="1"/>
+    <rect x="0" y="60" width="180" height="60" rx="14" fill="#F5F3FF"/>
+    <rect x="0" y="100" width="180" height="20" fill="#F5F3FF"/>
+    <!-- Icon circle -->
+    <circle cx="90" cy="95" r="32" fill="url(#pillarL)"/>
+    <text x="90" y="101" text-anchor="middle" font-family="sans-serif" font-size="22">🎓</text>
+    <text x="90" y="148" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="700" fill="#6D28D9">可学习性</text>
+
+    <!-- Description items -->
+    <g transform="translate(20,170)">
+      <circle cx="6" cy="6" r="4" fill="#8B5CF6" opacity="0.3"/>
+      <text x="18" y="10" font-family="PingFang SC, sans-serif" font-size="11" fill="#4B5563">新手用户快速上手</text>
+      <circle cx="6" cy="32" r="4" fill="#8B5CF6" opacity="0.3"/>
+      <text x="18" y="36" font-family="PingFang SC, sans-serif" font-size="11" fill="#4B5563">优先关注最有用的功能</text>
+      <circle cx="6" cy="58" r="4" fill="#8B5CF6" opacity="0.3"/>
+      <text x="18" y="62" font-family="PingFang SC, sans-serif" font-size="11" fill="#4B5563">隐藏令人困惑的高级设置</text>
+      <circle cx="6" cy="84" r="4" fill="#8B5CF6" opacity="0.3"/>
+      <text x="18" y="88" font-family="PingFang SC, sans-serif" font-size="11" fill="#4B5563">降低认知负荷</text>
+      <circle cx="6" cy="110" r="4" fill="#8B5CF6" opacity="0.3"/>
+      <text x="18" y="114" font-family="PingFang SC, sans-serif" font-size="11" fill="#4B5563">建立正确的心理模型</text>
+    </g>
+  </g>
+
+  <!-- Pillar 2: Efficiency -->
+  <g transform="translate(310, 75)">
+    <rect x="0" y="60" width="180" height="340" rx="14" fill="#FFFFFF" filter="url(#shadow3)" stroke="#BFDBFE" stroke-width="1"/>
+    <rect x="0" y="60" width="180" height="60" rx="14" fill="#EFF6FF"/>
+    <rect x="0" y="100" width="180" height="20" fill="#EFF6FF"/>
+    <circle cx="90" cy="95" r="32" fill="url(#pillarC)"/>
+    <text x="90" y="101" text-anchor="middle" font-family="sans-serif" font-size="22">⚡</text>
+    <text x="90" y="148" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="700" fill="#2563EB">使用效率</text>
+
+    <g transform="translate(20,170)">
+      <circle cx="6" cy="6" r="4" fill="#3B82F6" opacity="0.3"/>
+      <text x="18" y="10" font-family="PingFang SC, sans-serif" font-size="11" fill="#4B5563">减少初始显示的选项数量</text>
+      <circle cx="6" cy="32" r="4" fill="#3B82F6" opacity="0.3"/>
+      <text x="18" y="36" font-family="PingFang SC, sans-serif" font-size="11" fill="#4B5563">高级用户快速定位</text>
+      <circle cx="6" cy="58" r="4" fill="#3B82F6" opacity="0.3"/>
+      <text x="18" y="62" font-family="PingFang SC, sans-serif" font-size="11" fill="#4B5563">避免浏览不常用功能</text>
+      <circle cx="6" cy="84" r="4" fill="#3B82F6" opacity="0.3"/>
+      <text x="18" y="88" font-family="PingFang SC, sans-serif" font-size="11" fill="#4B5563">信息架构清晰</text>
+      <circle cx="6" cy="110" r="4" fill="#3B82F6" opacity="0.3"/>
+      <text x="18" y="114" font-family="PingFang SC, sans-serif" font-size="11" fill="#4B5563">任务流更顺畅</text>
+    </g>
+  </g>
+
+  <!-- Pillar 3: Error Rate -->
+  <g transform="translate(525, 75)">
+    <rect x="0" y="60" width="180" height="340" rx="14" fill="#FFFFFF" filter="url(#shadow3)" stroke="#99F6E4" stroke-width="1"/>
+    <rect x="0" y="60" width="180" height="60" rx="14" fill="#F0FDFA"/>
+    <rect x="0" y="100" width="180" height="20" fill="#F0FDFA"/>
+    <circle cx="90" cy="95" r="32" fill="url(#pillarR)"/>
+    <text x="90" y="101" text-anchor="middle" font-family="sans-serif" font-size="22">🛡</text>
+    <text x="90" y="148" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="700" fill="#0F766E">错误率</text>
+
+    <g transform="translate(20,170)">
+      <circle cx="6" cy="6" r="4" fill="#0D9488" opacity="0.3"/>
+      <text x="18" y="10" font-family="PingFang SC, sans-serif" font-size="11" fill="#4B5563">新手避免误操作</text>
+      <circle cx="6" cy="32" r="4" fill="#0D9488" opacity="0.3"/>
+      <text x="18" y="36" font-family="PingFang SC, sans-serif" font-size="11" fill="#4B5563">减少选择过多导致的错误</text>
+      <circle cx="6" cy="58" r="4" fill="#0D9488" opacity="0.3"/>
+      <text x="18" y="62" font-family="PingFang SC, sans-serif" font-size="11" fill="#4B5563">引导正确的操作路径</text>
+      <circle cx="6" cy="84" r="4" fill="#0D9488" opacity="0.3"/>
+      <text x="18" y="88" font-family="PingFang SC, sans-serif" font-size="11" fill="#4B5563">防止信息过载</text>
+      <circle cx="6" cy="110" r="4" fill="#0D9488" opacity="0.3"/>
+      <text x="18" y="114" font-family="PingFang SC, sans-serif" font-size="11" fill="#4B5563">降低探索成本</text>
+    </g>
+  </g>
+
+  <!-- Bottom summary -->
+  <rect x="200" y="445" width="400" height="36" rx="18" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+  <text x="400" y="468" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="600" fill="#6D28D9">研究证实：渐进式披露同时改善学习性、效率和错误率</text>
+</svg>

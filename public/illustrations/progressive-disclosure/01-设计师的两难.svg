@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F5F3FF"/>
+      <stop offset="100%" stop-color="#F0F9FF"/>
+    </linearGradient>
+    <linearGradient id="violetGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+    <linearGradient id="amberGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#EA580C"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#7C3AED" flood-opacity="0.12"/>
+    </filter>
+    <filter id="shadowR" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#EA580C" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" rx="20" fill="url(#bgGrad)"/>
+
+  <!-- Title -->
+  <text x="400" y="52" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="22" font-weight="700" fill="#374151">功能丰富 VS 简单易用：设计师的两难</text>
+
+  <!-- Left side: Many features (complexity) -->
+  <rect x="60" y="100" width="280" height="310" rx="16" fill="#FFFFFF" filter="url(#shadowR)" stroke="#FED7AA" stroke-width="1.5"/>
+  <text x="200" y="138" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="15" font-weight="700" fill="#EA580C">功能丰富</text>
+  <line x1="120" y1="152" x2="280" y2="152" stroke="#FED7AA" stroke-width="1"/>
+
+  <!-- Feature items -->
+  <rect x="90" y="170" width="220" height="28" rx="6" fill="#FFF7ED"/>
+  <text x="100" y="189" font-family="PingFang SC, sans-serif" font-size="12" fill="#9A3412">⚙ 行号显示</text>
+  <rect x="90" y="206" width="220" height="28" rx="6" fill="#FFF7ED"/>
+  <text x="100" y="225" font-family="PingFang SC, sans-serif" font-size="12" fill="#9A3412">⚙ 高级排版</text>
+  <rect x="90" y="242" width="220" height="28" rx="6" fill="#FFF7ED"/>
+  <text x="100" y="261" font-family="PingFang SC, sans-serif" font-size="12" fill="#9A3412">⚙ 宏录制</text>
+  <rect x="90" y="278" width="220" height="28" rx="6" fill="#FFF7ED"/>
+  <text x="100" y="297" font-family="PingFang SC, sans-serif" font-size="12" fill="#9A3412">⚙ 版本对比</text>
+  <rect x="90" y="314" width="220" height="28" rx="6" fill="#FFF7ED"/>
+  <text x="100" y="333" font-family="PingFang SC, sans-serif" font-size="12" fill="#9A3412">⚙ 自定义样式</text>
+  <rect x="90" y="350" width="220" height="28" rx="6" fill="#FFF7ED"/>
+  <text x="100" y="369" font-family="PingFang SC, sans-serif" font-size="12" fill="#9A3412">⚙ 插件扩展</text>
+
+  <text x="200" y="395" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" fill="#9CA3AF">"我需要所有功能！"</text>
+
+  <!-- Center bridge -->
+  <rect x="320" y="230" width="160" height="70" rx="35" fill="url(#violetGrad)" filter="url(#shadow)"/>
+  <text x="400" y="262" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF">渐进式披露</text>
+  <text x="400" y="284" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" fill="#DDD6FE">Progressive Disclosure</text>
+
+  <!-- Connecting arrows -->
+  <path d="M340 190 L340 230" stroke="#9CA3AF" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <path d="M460 190 L460 230" stroke="#9CA3AF" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <path d="M340 300 L340 340" stroke="#9CA3AF" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <path d="M460 300 L460 340" stroke="#9CA3AF" stroke-width="1.5" stroke-dasharray="4 3"/>
+
+  <!-- Right side: Simple (only a few options) -->
+  <rect x="480" y="100" width="260" height="310" rx="16" fill="#FFFFFF" filter="url(#shadow)" stroke="#C4B5FD" stroke-width="1.5"/>
+  <text x="610" y="138" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="15" font-weight="700" fill="#7C3AED">简单易用</text>
+  <line x1="540" y1="152" x2="680" y2="152" stroke="#C4B5FD" stroke-width="1"/>
+
+  <!-- Few core items with "More..." -->
+  <rect x="510" y="175" width="200" height="36" rx="8" fill="#F5F3FF" stroke="#C4B5FD" stroke-width="1"/>
+  <text x="610" y="198" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="13" fill="#6D28D9">📄 打印份数</text>
+  <rect x="510" y="220" width="200" height="36" rx="8" fill="#F5F3FF" stroke="#C4B5FD" stroke-width="1"/>
+  <text x="610" y="243" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="13" fill="#6D28D9">🖨 选择打印机</text>
+
+  <!-- Advanced button -->
+  <rect x="510" y="270" width="200" height="36" rx="8" fill="#EDE9FE" stroke="#A78BFA" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="610" y="293" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="13" font-weight="600" fill="#7C3AED">高级选项 →</text>
+
+  <text x="610" y="320" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" fill="#9CA3AF">按需展开更多功能</text>
+
+  <!-- Sub-graphic below: print dialog metaphor -->
+  <g transform="translate(530,340)">
+    <rect x="0" y="0" width="140" height="50" rx="8" fill="#F8F7FF" stroke="#DDD6FE" stroke-width="1"/>
+    <text x="70" y="22" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="10" fill="#8B5CF6">缩放 · 双面 · 排序</text>
+    <text x="70" y="40" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="9" fill="#C4B5FD">仅在需要时披露</text>
+  </g>
+
+  <!-- Bottom note -->
+  <text x="400" y="475" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="12" fill="#9CA3AF">大多数用户在初始显示时就得到了他们需要的东西</text>
+</svg>

@@ -88,3 +88,91 @@ const renderedHtml = computed(() => {
   }
 })
 </script>
+
+<style>
+.dark\:prose-dark:is(.dark *) {
+  .markdown-viewer {
+    color: inherit;
+    :not(pre) code {
+      background: #0f172a;
+    }
+
+    li::before {
+      background-color: #c9d1d9;
+    }
+
+    strong {
+      color: inherit;
+    }
+  }
+}
+.markdown-viewer {
+  color: #1a1a1a;
+  /* 标题层级强化 */
+  h1 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    line-height: 1.2;
+    margin-bottom: 0.5em;
+    color: #000;
+    letter-spacing: -0.02em;
+  }
+
+  .meta {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 3em;
+  }
+
+  h2 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin-top: 2.5em;
+    margin-bottom: 1em;
+    color: #000;
+    /* 极简分割线，替代沉重的 border */
+    position: relative;
+  }
+
+  h2::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 2px;
+    background-color: #ddd;
+    margin-top: 12px;
+  }
+
+  p {
+    margin-bottom: 2em;
+    line-height: 1.8em;
+    font-size: 1.1rem;
+  }
+
+  li::before {
+    width: 0.3em;
+    height: 0.3em;
+    left: 16px;
+    background-color: #0f172abd;
+  }
+
+  *:not(pre) code {
+    color: #0119a8;
+    background: #f0f4f8;
+    border-radius: 2px;
+    padding: 2px 5px;
+  }
+
+  *:not(pre) code {
+    &::before {
+      content: '';
+    }
+    &::after {
+      content: '';
+    }
+  }
+}
+</style>

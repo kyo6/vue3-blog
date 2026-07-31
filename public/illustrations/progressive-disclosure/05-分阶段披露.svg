@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" fill="none">
+  <defs>
+    <linearGradient id="bgGrad5" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F5F3FF"/>
+      <stop offset="100%" stop-color="#ECFDF5"/>
+    </linearGradient>
+    <filter id="shadow5" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#000000" flood-opacity="0.07"/>
+    </filter>
+  </defs>
+
+  <rect width="800" height="500" rx="20" fill="url(#bgGrad5)"/>
+
+  <text x="400" y="38" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="22" font-weight="700" fill="#374151">分阶段披露 VS 渐进式披露</text>
+
+  <!-- Left: Progressive Disclosure -->
+  <g transform="translate(30, 60)">
+    <rect x="0" y="0" width="355" height="410" rx="16" fill="#FFFFFF" filter="url(#shadow5)" stroke="#C4B5FD" stroke-width="1.5"/>
+    <rect x="0" y="0" width="355" height="48" rx="16" fill="#7C3AED"/>
+    <rect x="0" y="24" width="355" height="24" fill="#7C3AED"/>
+    <text x="177" y="30" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF">渐进式披露</text>
+
+    <!-- Hierarchical tree -->
+    <g transform="translate(177, 120)">
+      <!-- Root node -->
+      <rect x="-80" y="0" width="160" height="42" rx="10" fill="#7C3AED" filter="url(#shadow5)"/>
+      <text x="0" y="26" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF">初始显示</text>
+      <text x="0" y="37" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="8" fill="#DDD6FE">核心功能</text>
+
+      <!-- Lines to children -->
+      <line x1="0" y1="42" x2="-90" y2="75" stroke="#C4B5FD" stroke-width="1.5"/>
+      <line x1="0" y1="42" x2="90" y2="75" stroke="#C4B5FD" stroke-width="1.5"/>
+
+      <!-- Child 1 -->
+      <rect x="-135" y="75" width="90" height="36" rx="8" fill="#A78BFA" filter="url(#shadow5)"/>
+      <text x="-90" y="97" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="10" font-weight="600" fill="#FFFFFF">次级显示A</text>
+
+      <!-- Child 2 -->
+      <rect x="45" y="75" width="90" height="36" rx="8" fill="#A78BFA" filter="url(#shadow5)"/>
+      <text x="90" y="97" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="10" font-weight="600" fill="#FFFFFF">次级显示B</text>
+
+      <!-- Return arrows -->
+      <path d="M-90 75 L-90 65 L0 50 L0 42" stroke="#DDD6FE" stroke-width="1" stroke-dasharray="3 2" fill="none"/>
+      <path d="M90 75 L90 65 L0 50 L0 42" stroke="#DDD6FE" stroke-width="1" stroke-dasharray="3 2" fill="none"/>
+
+      <!-- Labels -->
+      <text x="-90" y="140" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="9" fill="#9CA3AF">专业功能</text>
+      <text x="90" y="140" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="9" fill="#9CA3AF">专业功能</text>
+    </g>
+
+    <!-- Characteristics -->
+    <g transform="translate(20, 300)">
+      <text x="0" y="0" font-family="PingFang SC, sans-serif" font-size="11" font-weight="600" fill="#7C3AED">特征：</text>
+      <rect x="0" y="12" width="315" height="20" rx="4" fill="#F5F3FF"/>
+      <text x="8" y="27" font-family="PingFang SC, sans-serif" font-size="9" fill="#6D28D9">● 大多数用户不会进入次级显示</text>
+      <rect x="0" y="36" width="315" height="20" rx="4" fill="#F5F3FF"/>
+      <text x="8" y="51" font-family="PingFang SC, sans-serif" font-size="9" fill="#6D28D9">● 分层导航：初始 → 次级 → 返回</text>
+      <rect x="0" y="60" width="315" height="20" rx="4" fill="#F5F3FF"/>
+      <text x="8" y="75" font-family="PingFang SC, sans-serif" font-size="9" fill="#6D28D9">● 优势：可学习性，新手友好</text>
+      <rect x="0" y="84" width="315" height="20" rx="4" fill="#F5F3FF"/>
+      <text x="8" y="99" font-family="PingFang SC, sans-serif" font-size="9" fill="#6D28D9">● 示例：打印对话框</text>
+    </g>
+  </g>
+
+  <!-- Center divider -->
+  <line x1="400" y1="75" x2="400" y2="460" stroke="#E5E7EB" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <rect x="380" y="245" width="40" height="24" rx="12" fill="#9CA3AF"/>
+  <text x="400" y="261" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF">VS</text>
+
+  <!-- Right: Staged Disclosure -->
+  <g transform="translate(415, 60)">
+    <rect x="0" y="0" width="355" height="410" rx="16" fill="#FFFFFF" filter="url(#shadow5)" stroke="#99F6E4" stroke-width="1.5"/>
+    <rect x="0" y="0" width="355" height="48" rx="16" fill="#0D9488"/>
+    <rect x="0" y="24" width="355" height="24" fill="#0D9488"/>
+    <text x="177" y="30" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF">分阶段披露</text>
+
+    <!-- Linear step flow -->
+    <g transform="translate(20, 80)">
+      <!-- Step 1 -->
+      <rect x="0" y="0" width="120" height="44" rx="10" fill="#0D9488" filter="url(#shadow5)"/>
+      <text x="60" y="19" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF">步骤 1</text>
+      <text x="60" y="34" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="8" fill="#99F6E4">选择日期</text>
+
+      <!-- Arrow -->
+      <path d="M125 22 L145 22" stroke="#5EEAD4" stroke-width="2"/>
+      <polygon points="142,17 150,22 142,27" fill="#5EEAD4"/>
+
+      <!-- Step 2 -->
+      <rect x="150" y="0" width="120" height="44" rx="10" fill="#14B8A6" filter="url(#shadow5)"/>
+      <text x="210" y="19" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF">步骤 2</text>
+      <text x="210" y="34" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="8" fill="#CCFBF1">选择房型</text>
+
+      <!-- Arrow down -->
+      <path d="M195 44 L195 64" stroke="#5EEAD4" stroke-width="2"/>
+      <polygon points="190,61 195,69 200,61" fill="#5EEAD4"/>
+
+      <!-- Step 3 -->
+      <rect x="45" y="68" width="120" height="44" rx="10" fill="#2DD4BF" filter="url(#shadow5)"/>
+      <text x="105" y="87" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF">步骤 3</text>
+      <text x="105" y="102" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="8" fill="#CCFBF1">填写信息</text>
+
+      <!-- Arrow -->
+      <path d="M170 90 L195 90" stroke="#5EEAD4" stroke-width="2"/>
+      <polygon points="192,85 200,90 192,95" fill="#5EEAD4"/>
+
+      <!-- Step 4 -->
+      <rect x="200" y="68" width="120" height="44" rx="10" fill="#5EEAD4" filter="url(#shadow5)"/>
+      <text x="260" y="87" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" font-weight="700" fill="#0F766E">步骤 4</text>
+      <text x="260" y="102" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="8" fill="#0F766E">确认支付</text>
+    </g>
+
+    <!-- Hotel example -->
+    <g transform="translate(20, 230)">
+      <rect x="0" y="0" width="315" height="38" rx="6" fill="#F0FDFA" stroke="#99F6E4" stroke-width="1"/>
+      <text x="157" y="16" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="10" font-weight="600" fill="#0F766E">酒店预订案例</text>
+      <text x="157" y="30" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="8" fill="#0F766E">探索房间 → 选择 → 填写信息 → 支付</text>
+    </g>
+
+    <!-- Bad design warning -->
+    <g transform="translate(20, 278)">
+      <rect x="0" y="0" width="315" height="36" rx="6" fill="#FFF7ED" stroke="#FED7AA" stroke-width="1"/>
+      <text x="157" y="15" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="9" fill="#EA580C">⚠ 反面案例：所有步骤挤在一个屏幕</text>
+      <text x="157" y="29" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="8" fill="#9A3412">用户被迫同时处理不相关的信息</text>
+    </g>
+
+    <!-- Characteristics -->
+    <g transform="translate(20, 326)">
+      <text x="0" y="0" font-family="PingFang SC, sans-serif" font-size="11" font-weight="600" fill="#0D9488">特征：</text>
+      <rect x="0" y="12" width="315" height="20" rx="4" fill="#F0FDFA"/>
+      <text x="8" y="27" font-family="PingFang SC, sans-serif" font-size="9" fill="#0F766E">● 用户必须走完所有步骤</text>
+      <rect x="0" y="36" width="315" height="20" rx="4" fill="#F0FDFA"/>
+      <text x="8" y="51" font-family="PingFang SC, sans-serif" font-size="9" fill="#0F766E">● 线性导航：步骤 1 → 2 → 3 → 完成</text>
+      <rect x="0" y="60" width="315" height="20" rx="4" fill="#F0FDFA"/>
+      <text x="8" y="75" font-family="PingFang SC, sans-serif" font-size="9" fill="#0F766E">● 优势：简单明确，每步目的清晰</text>
+    </g>
+  </g>
+
+  <!-- Bottom separator -->
+  <line x1="30" y1="475" x2="770" y2="475" stroke="#E5E7EB" stroke-width="0.5"/>
+</svg>

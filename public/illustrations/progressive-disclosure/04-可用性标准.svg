@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" fill="none">
+  <defs>
+    <linearGradient id="bgGrad4" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F0FDFA"/>
+      <stop offset="100%" stop-color="#F5F3FF"/>
+    </linearGradient>
+    <linearGradient id="level1" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#7C3AED"/>
+      <stop offset="100%" stop-color="#8B5CF6"/>
+    </linearGradient>
+    <linearGradient id="level2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#6366F1"/>
+      <stop offset="100%" stop-color="#818CF8"/>
+    </linearGradient>
+    <linearGradient id="level3" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#A78BFA"/>
+      <stop offset="100%" stop-color="#C4B5FD"/>
+    </linearGradient>
+    <filter id="shadow4" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#7C3AED" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <rect width="800" height="500" rx="20" fill="url(#bgGrad4)"/>
+
+  <text x="400" y="38" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="22" font-weight="700" fill="#374151">渐进式披露的可用性设计标准</text>
+
+  <!-- Left: Layered disclosure pyramid -->
+  <g transform="translate(60, 65)">
+    <text x="100" y="20" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="700" fill="#7C3AED">标准一：特性层级分配</text>
+
+    <!-- Level 1 - Primary -->
+    <rect x="0" y="50" width="200" height="65" rx="12" fill="url(#level1)" filter="url(#shadow4)"/>
+    <text x="100" y="78" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF">初级：核心功能</text>
+    <text x="100" y="100" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="10" fill="#DDD6FE">用户频繁需要的所有内容</text>
+
+    <!-- Arrow -->
+    <path d="M100 115 L100 138" stroke="#C4B5FD" stroke-width="2"/>
+    <polygon points="94,135 100,145 106,135" fill="#C4B5FD"/>
+
+    <!-- Level 2 - Secondary -->
+    <rect x="30" y="145" width="140" height="55" rx="10" fill="url(#level2)" filter="url(#shadow4)"/>
+    <text x="100" y="168" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="700" fill="#FFFFFF">次级：专业功能</text>
+    <text x="100" y="188" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="9" fill="#C7D2FE">罕见情况下才需要的功能</text>
+
+    <!-- Arrow -->
+    <path d="M100 200 L100 220" stroke="#C4B5FD" stroke-width="2"/>
+    <polygon points="94,217 100,227 106,217" fill="#C4B5FD"/>
+
+    <!-- Level 3 - Tertiary (discouraged) -->
+    <rect x="55" y="227" width="90" height="45" rx="8" fill="url(#level3)" stroke-dasharray="4 3" filter="url(#shadow4)"/>
+    <text x="100" y="247" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF">第三级？</text>
+    <text x="100" y="262" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="8" fill="#DDD6FE">⬆ 尽量避免</text>
+
+    <!-- Warning text -->
+    <text x="100" y="300" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="9" fill="#F97316">⚠ 超过2级，用户容易迷失方向</text>
+  </g>
+
+  <!-- Right: Navigation between levels -->
+  <g transform="translate(370, 65)">
+    <text x="180" y="20" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="13" font-weight="700" fill="#0D9488">标准二：层级间导航</text>
+
+    <!-- Primary screen -->
+    <rect x="0" y="50" width="360" height="100" rx="12" fill="#FFFFFF" stroke="#7C3AED" stroke-width="2" filter="url(#shadow4)"/>
+    <text x="20" y="74" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="12" font-weight="700" fill="#7C3AED">📋 主界面</text>
+    <!-- Some UI elements -->
+    <rect x="20" y="86" width="140" height="28" rx="6" fill="#F5F3FF" stroke="#DDD6FE" stroke-width="1"/>
+    <text x="90" y="105" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="10" fill="#6D28D9">核心设置选项</text>
+
+    <!-- Advanced button -->
+    <rect x="220" y="86" width="120" height="28" rx="6" fill="#EDE9FE" stroke="#A78BFA" stroke-width="1.5" stroke-dasharray="4 2"/>
+    <text x="280" y="105" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="10" font-weight="600" fill="#7C3AED">⚙ 高级设置 →</text>
+
+    <!-- Arrow connecting -->
+    <path d="M280 145 L280 170" stroke="#A78BFA" stroke-width="2"/>
+    <polygon points="274,167 280,175 286,167" fill="#A78BFA"/>
+
+    <!-- Secondary screen -->
+    <rect x="40" y="175" width="320" height="100" rx="12" fill="#FFFFFF" stroke="#0D9488" stroke-width="1.5" filter="url(#shadow4)"/>
+    <text x="60" y="199" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="12" font-weight="700" fill="#0D9488">🔧 高级设置</text>
+
+    <rect x="60" y="212" width="120" height="24" rx="4" fill="#F0FDFA"/>
+    <text x="120" y="229" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="9" fill="#0F766E">缩放比例</text>
+    <rect x="190" y="212" width="120" height="24" rx="4" fill="#F0FDFA"/>
+    <text x="250" y="229" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="9" fill="#0F766E">页面顺序</text>
+
+    <!-- Back button -->
+    <rect x="60" y="242" width="60" height="22" rx="4" fill="#F0FDFA" stroke="#5EEAD4" stroke-width="1"/>
+    <text x="90" y="257" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="8" fill="#0F766E">← 返回</text>
+
+    <!-- Navigation tips -->
+    <g transform="translate(0, 300)">
+      <text x="180" y="15" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="10" fill="#6B7280">导航设计要点：</text>
+      <rect x="40" y="25" width="280" height="24" rx="4" fill="#F3F4F6"/>
+      <text x="50" y="42" font-family="PingFang SC, sans-serif" font-size="9" fill="#4B5563">✓ 按钮可见、标签清晰，具有强烈的信息气味</text>
+      <rect x="40" y="54" width="280" height="24" rx="4" fill="#F3F4F6"/>
+      <text x="50" y="71" font-family="PingFang SC, sans-serif" font-size="9" fill="#4B5563">✓ 进入次级显示的机制要简单直接</text>
+      <rect x="40" y="83" width="280" height="24" rx="4" fill="#F3F4F6"/>
+      <text x="50" y="100" font-family="PingFang SC, sans-serif" font-size="9" fill="#4B5563">✓ 让用户能轻松返回初始显示</text>
+    </g>
+  </g>
+
+  <!-- Bottom -->
+  <text x="400" y="482" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" fill="#9CA3AF">两条标准缺一不可：分配得当 + 导航顺畅</text>
+</svg>

@@ -43,6 +43,26 @@
   },
   {
     "id": 5,
+    "title": "Monorepo 组件库架构的改造",
+    "date": "",
+    "tag": [],
+    "summary": "Monorepo 组件库架构的改造",
+    "filename": "Monorepo 组件库架构的改造.md"
+  },
+  {
+    "id": 6,
+    "title": "SVG 坐标系统",
+    "date": "2026-07-31",
+    "tag": [
+      "SVG",
+      "坐标系统",
+      "前端绘图"
+    ],
+    "summary": "SVG 之所以能精准绘图，靠的是一套清晰的坐标系统。本文系统梳理坐标系的基本概念、视口（viewport）与视图框（viewBox）的区别与用法，以及坐标变换（transform）的核心机制，帮你彻底搞懂 SVG 的\"画图逻辑\"。",
+    "filename": "SVG 坐标系统.md"
+  },
+  {
+    "id": 7,
     "title": "Tailwind Docs Layout",
     "date": "2025-02-18",
     "tag": [
@@ -53,7 +73,7 @@
     "filename": "Tailwind Docs Layout.md"
   },
   {
-    "id": 6,
+    "id": 8,
     "title": "Top 10 OpenClaw Use Cases in 2026 What People Actually Do With It",
     "date": "2026-01-01",
     "tag": [
@@ -63,7 +83,7 @@
     "filename": "Top 10 OpenClaw Use Cases in 2026 What People Actually Do With It.md"
   },
   {
-    "id": 7,
+    "id": 9,
     "title": "What Is OpenClaw, Formerly Moltbot Everything You Need To Know",
     "date": "2026-02-03",
     "tag": [
@@ -73,7 +93,7 @@
     "filename": "What Is OpenClaw, Formerly Moltbot Everything You Need To Know.md"
   },
   {
-    "id": 8,
+    "id": 10,
     "title": "What is OpenClaw The Viral AI Agent Explained (February 2026)",
     "date": "",
     "tag": [],
@@ -81,7 +101,15 @@
     "filename": "What is OpenClaw The Viral AI Agent Explained (February 2026).md"
   },
   {
-    "id": 9,
+    "id": 11,
+    "title": "代码抽象-变与不变",
+    "date": "",
+    "tag": [],
+    "summary": "程序员身上有一种很常见的错觉。他以为代码难，是因为不够多。他以为变，是因为不熟。但真正难的东西，从来不是代码本身，而是分辨哪些代码值得写。",
+    "filename": "代码抽象-变与不变.md"
+  },
+  {
+    "id": 12,
     "title": "关于网页上英文字体的基础知识和选择",
     "date": "2025-02-12",
     "tag": [
@@ -91,7 +119,7 @@
     "filename": "关于网页上英文字体的基础知识和选择.md"
   },
   {
-    "id": 10,
+    "id": 13,
     "title": "在古诗中感受春天",
     "date": "2026-03-22",
     "tag": [
@@ -101,7 +129,31 @@
     "filename": "在古诗中感受春天.md"
   },
   {
-    "id": 11,
+    "id": 14,
+    "title": "如何利用这个简单的框架来应对不可能完成的截止日期 --- How to Push Back on Impossible Deadlines Using This Simple Framework",
+    "date": "",
+    "tag": [],
+    "summary": "Opinions expressed by Entrepreneur contributors are their own.",
+    "filename": "如何利用这个简单的框架来应对不可能完成的截止日期 --- How to Push Back on Impossible Deadlines Using This Simple Framework.md"
+  },
+  {
+    "id": 15,
+    "title": "如何搭建整体框架 - TDesign",
+    "date": "",
+    "tag": [],
+    "summary": "1.  [什么是中后台系统](https://tdesign.tencent.com/design/offices#%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%AD%E5%90%8E%E5%8F%B0%E7%B3%B…",
+    "filename": "如何搭建整体框架 - TDesign.md"
+  },
+  {
+    "id": 16,
+    "title": "如何编写需求文档",
+    "date": "",
+    "tag": [],
+    "summary": "需求说明软件必须做什么才能够满足客户的需求，具体来说，包括：",
+    "filename": "如何编写需求文档.md"
+  },
+  {
+    "id": 17,
     "title": "常用的英语句子",
     "date": "2022-01-17",
     "tag": [
@@ -111,7 +163,34 @@
     "filename": "常用的英语句子.md"
   },
   {
-    "id": 12,
+    "id": 18,
+    "title": "新东方美文背诵30篇 (Born to win)",
+    "date": "",
+    "tag": [],
+    "summary": "# 新东方英语背诵美文30篇",
+    "filename": "新东方美文背诵30篇 (Born to win).md"
+  },
+  {
+    "id": 19,
+    "title": "看电影  浪浪山小妖怪到底是喜剧还是悲剧",
+    "date": "",
+    "tag": [],
+    "summary": "小小关去外婆家以后，独留我一人留在上海继续上班，我也因此获得了最大限度的时间自由，也终于得空，可以把前段时间上映的还没有看的电影来看一下。",
+    "filename": "看电影  浪浪山小妖怪到底是喜剧还是悲剧.md"
+  },
+  {
+    "id": 20,
+    "title": "设计译文｜渐进式披露",
+    "date": "2026-07-31",
+    "tag": [
+      "设计译文",
+      "交互设计"
+    ],
+    "summary": "渐进式披露是交互设计中的经典策略——初始只展示核心选项，按需揭示专业功能。本文系统梳理其原理、好处、可用性标准，以及与\"分阶段披露\"的差异，帮助你在功能丰富与界面简洁之间找到平衡。",
+    "filename": "设计译文｜渐进式披露.md"
+  },
+  {
+    "id": 21,
     "title": "项目分析",
     "date": "2026-03-15",
     "tag": [
