@@ -29,3 +29,5 @@ coverage
 .specstory/
 .cursorindexingignore
 .workbuddy/*
+.cursor/*
+.pnpm-store/*

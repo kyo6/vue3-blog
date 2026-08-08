@@ -22,6 +22,7 @@
     "@tailwindcss/typography": "^0.5.19",
     "highlight.js": "^11.11.1",
     "markdown-it": "^14.1.1",
+    "markdown-it-anchor": "^9.2.1",
     "mini-svg-data-uri": "^1.4.4",
     "pinia": "^2.1.7",
     "vue": "^3.4.29",
@@ -76,5 +77,6 @@
     "vue3 enterprise starter",
     "vue 3 enterprise starter"
   ],
-  "author": "richardevcom <hello@richardev.com> (https://github.com/richardevcom/)"
+  "author": "richardevcom <hello@richardev.com> (https://github.com/richardevcom/)",
+  "packageManager": "pnpm@11.17.0+sha512.cca3cea332ad254bb84145f966d19f4879615210346fc92c79a047f23a0d7b3cca3c3792f0076ba1f1831d277efbcf0a9119b31a9a60eca7fb3d6231f331ef72"
 }

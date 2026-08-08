@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 260" width="200" height="260">
+  <defs>
+    <!-- 霓虹外发光 -->
+    <filter id="neon-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- 统一描边样式 -->
+  <g fill="none" stroke="#D4FF3F" stroke-linecap="round" stroke-linejoin="round" filter="url(#neon-glow)">
+
+    <!-- ===== 思想云（thought bubble） ===== -->
+    <path d="
+      M 76 42
+      C 68 40 66 32 70 26
+      C 72 18 82 16 88 20
+      C 92 12 104 12 110 20
+      C 118 16 128 18 130 28
+      C 138 32 136 42 128 46
+      C 128 54 118 58 110 54
+      C 104 60 92 60 86 54
+      C 78 56 72 50 76 42
+      Z
+    " stroke-width="2"/>
+
+    <!-- 云到头部的小气泡 -->
+    <circle cx="100" cy="68" r="3.2" stroke-width="1.6"/>
+    <circle cx="100" cy="78" r="2.2" stroke-width="1.4"/>
+    <circle cx="100" cy="86" r="1.4" stroke-width="1.2"/>
+
+    <!-- ===== 灯泡 ===== -->
+    <!-- 玻璃泡 -->
+    <path d="M 95 28 C 95 20 99 16 104 16 C 109 16 113 20 113 28 C 113 33 111 36 109 39 L 99 39 C 97 36 95 33 95 28 Z" stroke-width="1.8"/>
+    <!-- 灯口 -->
+    <rect x="99" y="39" width="10" height="3" rx="1.5" stroke-width="1.5"/>
+    <rect x="100" y="42" width="8" height="2.5" rx="1" stroke-width="1.4"/>
+    <!-- 灯丝 -->
+    <path d="M 101 35 L 104 27 L 107 35" stroke-width="1.4"/>
+    <!-- 光芒 -->
+    <line x1="104" y1="10" x2="104" y2="5" stroke-width="1.4"/>
+    <line x1="90" y1="14" x2="86" y2="10" stroke-width="1.4"/>
+    <line x1="118" y1="14" x2="122" y2="10" stroke-width="1.4"/>
+    <line x1="84" y1="28" x2="79" y2="28" stroke-width="1.4"/>
+    <line x1="124" y1="28" x2="129" y2="28" stroke-width="1.4"/>
+
+    <!-- ===== 人物 ===== -->
+    <!-- 脸部轮廓 -->
+    <path d="M 84 116 C 82 104 88 94 100 94 C 112 94 118 104 116 116 C 114 126 108 132 100 132 C 92 132 86 126 84 116 Z" stroke-width="2"/>
+
+    <!-- 头发 -->
+    <path d="M 84 102 C 84 92 92 86 102 86 C 112 86 118 94 118 102" stroke-width="2"/>
+    <path d="M 86 94 L 82 88" stroke-width="1.8"/>
+    <path d="M 94 88 L 92 82" stroke-width="1.8"/>
+    <path d="M 104 86 L 106 80" stroke-width="1.8"/>
+    <path d="M 114 90 L 120 86" stroke-width="1.8"/>
+
+    <!-- 耳朵 -->
+    <path d="M 84 114 C 80 112 80 120 86 120" stroke-width="1.6"/>
+
+    <!-- 眼睛 -->
+    <circle cx="110" cy="110" r="2.2" fill="#D4FF3F" stroke="none"/>
+
+    <!-- 眉毛 -->
+    <path d="M 108 104 Q 112 102 116 105" stroke-width="1.4"/>
+
+    <!-- 鼻子 -->
+    <path d="M 114 116 Q 118 118 114 120" stroke-width="1.4"/>
+
+    <!-- 微笑 -->
+    <path d="M 108 124 Q 112 126 116 123" stroke-width="1.4"/>
+
+    <!-- 颈部 -->
+    <path d="M 100 132 L 100 140" stroke-width="2"/>
+
+    <!-- 肩膀/躯干 -->
+    <path d="M 72 188 C 74 162 86 150 100 150 C 114 150 126 162 128 188" stroke-width="2"/>
+
+    <!-- 左臂（自然下垂） -->
+    <path d="M 76 162 C 72 174 70 186 70 198" stroke-width="2"/>
+
+    <!-- 右臂（弯曲托下巴） -->
+    <path d="M 124 160 C 132 168 136 180 130 190" stroke-width="2"/>
+    <path d="M 130 190 C 124 196 116 190 114 184" stroke-width="2"/>
+    <path d="M 114 184 C 112 178 116 172 120 170" stroke-width="2"/>
+
+    <!-- 手（托下巴） -->
+    <path d="M 118 172 C 122 168 128 172 126 178 C 124 182 118 182 116 178" stroke-width="1.8"/>
+    <path d="M 120 174 L 122 168" stroke-width="1.6"/>
+    <path d="M 123 175 L 126 170" stroke-width="1.6"/>
+    <path d="M 125 177 L 129 174" stroke-width="1.6"/>
+
+  </g>
+</svg>
