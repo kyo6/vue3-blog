@@ -40,7 +40,7 @@ const router = createRouter({
         ...templateChildren,
         {
           path: '',
-          redirect: `/templates/${firstTemplatePath}`
+          redirect: { name: `templates-${firstTemplatePath}` }
         }
       ]
     }

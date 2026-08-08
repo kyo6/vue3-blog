@@ -3,8 +3,9 @@
 </template>
 
 <script setup>
-import { computed, onMounted, onUnmounted } from 'vue'
+import { computed, watch, onMounted, onUnmounted } from 'vue'
 import MarkdownIt from 'markdown-it'
+import anchor from 'markdown-it-anchor'
 import hljs from 'highlight.js'
 import githubCssUrl from 'highlight.js/styles/github.css?url'
 import githubDarkCssUrl from 'highlight.js/styles/github-dark.css?url'
@@ -42,6 +43,8 @@ const props = defineProps({
   }
 })
 
+const emit = defineEmits(['headings'])
+
 // HTML 转义函数
 const escapeHtml = (str) => {
   return str
@@ -73,20 +76,56 @@ const md = new MarkdownIt({
   }
 })
 
-const renderedHtml = computed(() => {
+md.use(anchor, {
+  level: [2, 3, 4],
+  permalink: false
+})
+
+// 在 anchor 插件之后收集标题，供大纲使用
+md.core.ruler.after('anchor', 'collect_headings', (state) => {
+  const headings = []
+  const tokens = state.tokens
+  for (let i = 0; i < tokens.length; i++) {
+    const token = tokens[i]
+    if (token.type === 'heading_open' && ['h2', 'h3', 'h4'].includes(token.tag)) {
+      const id = token.attrGet('id')
+      const inline = tokens[i + 1]
+      if (id && inline?.type === 'inline') {
+        headings.push({
+          level: parseInt(token.tag[1]),
+          text: inline.content,
+          id
+        })
+      }
+    }
+  }
+  state.env.headings = headings
+})
+
+const renderResult = computed(() => {
   try {
     if (!props.markdown) {
-      console.warn('No markdown content provided')
-      return '<p>No content</p>'
+      return { html: '<p>No content</p>', headings: [] }
     }
-    const result = md.render(props.markdown)
-    console.log('Markdown rendered successfully, output length:', result.length)
-    return result
+    const env = {}
+    const html = md.render(props.markdown, env)
+    return { html, headings: env.headings || [] }
   } catch (error) {
     console.error('Error rendering markdown:', error)
-    return '<p style="color: red;">Error rendering markdown: ' + error.message + '</p>'
+    return {
+      html: '<p style="color: red;">Error rendering markdown: ' + error.message + '</p>',
+      headings: []
+    }
   }
 })
+
+const renderedHtml = computed(() => renderResult.value.html)
+
+watch(
+  () => renderResult.value.headings,
+  (headings) => emit('headings', headings),
+  { immediate: true }
+)
 </script>
 
 <style>
