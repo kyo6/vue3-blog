@@ -1,10 +1,23 @@
 <script setup>
-import { RouterView } from 'vue-router'
+import { RouterView, useRoute } from 'vue-router'
+import { computed, onMounted, watch } from 'vue'
 import FrameHeader from '@/components/layout/header.vue'
 import { useThemeStore } from '@/stores/theme'
-import { onMounted } from 'vue'
 
 const themeStore = useThemeStore()
+const route = useRoute()
+
+const isWorksRoute = computed(
+  () => route.path === '/works' || route.path.startsWith('/works/')
+)
+
+watch(
+  isWorksRoute,
+  (active) => {
+    document.documentElement.classList.toggle('works-route', active)
+  },
+  { immediate: true }
+)
 
 onMounted(() => {
   themeStore.initFromStorage()
@@ -13,6 +26,13 @@ onMounted(() => {
 </script>
 
 <template>
-  <FrameHeader />
+  <FrameHeader :works-theme="isWorksRoute" />
   <RouterView />
 </template>
+
+<style>
+html.works-route,
+html.works-route body {
+  background-color: #14181f;
+}
+</style>

@@ -1,9 +1,18 @@
 <script setup>
-import { ref } from 'vue'
+import { computed } from 'vue'
 import content from '@/config/content.json'
 
-// Mock 数据
-const blogPosts = ref(content)
+/** 按日期降序；无日期排最后（与 genDocContent 一致） */
+function sortByDateDesc(posts) {
+  return [...posts].sort((a, b) => {
+    if (!a.date && !b.date) return a.title.localeCompare(b.title, 'zh-CN')
+    if (!a.date) return 1
+    if (!b.date) return -1
+    return b.date.localeCompare(a.date)
+  })
+}
+
+const blogPosts = computed(() => sortByDateDesc(content))
 </script>
 
 <template>
@@ -14,7 +23,7 @@ const blogPosts = ref(content)
       class="container max-w-4xl px-10 py-6 mx-auto rounded-lg shadow-sm dark:bg-slate-900"
     >
       <div class="flex items-center justify-between">
-        <span class="text-sm dark:text-gray-500">{{ post.date }}</span>
+        <span class="text-sm dark:text-gray-500">{{ post.date || '未标注日期' }}</span>
       </div>
       <div class="mt-3">
         <router-link

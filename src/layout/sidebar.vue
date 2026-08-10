@@ -20,7 +20,7 @@
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h10" />
         </svg>
       </button>
-      <span class="text-sm font-semibold text-slate-900 dark:text-white">DG Components</span>
+      <span class="text-sm font-semibold text-slate-900 dark:text-white">Docs</span>
     </header>
 
     <!-- Centered container -->
@@ -33,13 +33,13 @@
             <!-- Brand -->
             <div class="py-5 pr-4">
               <router-link
-                to="/"
+                to="/docs"
                 class="flex items-center gap-2 text-slate-900 dark:text-white font-semibold text-sm"
               >
                 <svg class="w-5 h-5 text-sky-500" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10 2a8 8 0 100 16A8 8 0 0010 2z" />
                 </svg>
-                DG Components
+                Docs
               </router-link>
             </div>
             <nav-menu :menu="menu" :is-active="isActive" />
@@ -57,14 +57,14 @@
         >
           <div class="sticky top-0 z-10 bg-white dark:bg-slate-900 px-6 py-4 border-b border-slate-200 dark:border-slate-700">
             <router-link
-              to="/"
+              to="/docs"
               class="flex items-center gap-2 text-slate-900 dark:text-white font-semibold text-sm"
               @click="sidebarOpen = false"
             >
               <svg class="w-5 h-5 text-sky-500" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10 2a8 8 0 100 16A8 8 0 0010 2z" />
               </svg>
-              DG Components
+              Docs
             </router-link>
           </div>
           <nav-menu :menu="menu" :is-active="isActive" @navigate="sidebarOpen = false" />
@@ -81,7 +81,7 @@
 </template>
 
 <script setup>
-import { ref, defineComponent, h, resolveComponent } from 'vue'
+import { ref, defineComponent, h } from 'vue'
 import { useRoute, RouterLink } from 'vue-router'
 import menu from '@/config/menu.json'
 

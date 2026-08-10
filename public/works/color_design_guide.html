@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="canvas:aspect-ratio" content="16:9">
+  <title>配色总是脏？因为你不懂这5个色彩判断标准</title>
+  <style>
+    /* ============================================
+       Design Tokens (seed-level)
+       ============================================ */
+    :root {
+      --seed-bg: #F5F0E8;
+      --seed-fg: #2A2520;
+      --seed-primary: #C4664A;
+      --seed-accent: #7B8F7E;
+      --seed-surface: #EDE8DF;
+      --seed-surface-alt: #E3DDD3;
+      --seed-radius: 12px;
+
+      --bg: var(--seed-bg);
+      --fg: var(--seed-fg);
+      --fg-secondary: #6B6560;
+      --fg-muted: #9B9590;
+      --primary: var(--seed-primary);
+      --primary-soft: #C4664A18;
+      --accent: var(--seed-accent);
+      --surface: var(--seed-surface);
+      --surface-alt: var(--seed-surface-alt);
+      --border: #D5CFC5;
+      --radius: var(--seed-radius);
+      --radius-lg: 20px;
+      --radius-sm: 8px;
+
+      /* Extended tokens */
+      --white: #FFFFFF;
+      --on-color: #FFFFFF;
+      --success-bg: #7B8F7E25;
+      --success-fg: #5A7060;
+      --danger-bg: #C4664A20;
+      --aesop-warm-white: #FCF8F0;
+      --aesop-warm-border: #E8E0D4;
+      --aesop-pure-border: #E0E0E0;
+      --aesop-dark: #231E19;
+      --aesop-text-secondary: #6B5E52;
+      --aesop-label-pure: #333333;
+      --proportion-good-main: #C4664A;
+      --proportion-good-sub: #7B8F7E;
+      --proportion-good-accent: #D4A574;
+      --proportion-bad-main: #6A8E7F;
+      --proportion-bad-sub: #C47A5A;
+      --proportion-bad-accent: #8B7FB5;
+      --hero-glow-primary: #C4664A12;
+      --hero-glow-primary-mid: #C4664A08;
+      --hero-glow-accent: #7B8F7E0A;
+      --shadow-tip: rgba(42, 37, 32, 0.06);
+      --shadow-toggle: rgba(0, 0, 0, 0.15);
+      --shadow-thumb: rgba(0, 0, 0, 0.2);
+    }
+
+    /* ============================================
+       Reset & Base
+       ============================================ */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "PingFang SC", "Noto Sans CJK SC", "Microsoft YaHei", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.65;
+      letter-spacing: -0.01em;
+      overflow-x: hidden;
+    }
+
+    /* ============================================
+       Typography
+       ============================================ */
+    .display {
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 600;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+
+    .body-lg {
+      font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+      font-weight: 400;
+      line-height: 1.7;
+      letter-spacing: -0.005em;
+    }
+
+    .body-sm {
+      font-size: 0.9rem;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    .label {
+      font-family: "SF Mono", "Fira Code", "Cascadia Code", "Menlo", monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .mono {
+      font-family: "SF Mono", "Fira Code", "Cascadia Code", "Menlo", monospace;
+    }
+
+    /* ============================================
+       Layout
+       ============================================ */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 clamp(1.5rem, 4vw, 3rem);
+    }
+
+    section {
+      padding: clamp(4rem, 8vw, 7rem) 0;
+    }
+
+    /* ============================================
+       Scroll Progress Bar
+       ============================================ */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: var(--primary);
+      z-index: 1000;
+      transition: width 0.1s linear;
+    }
+
+    /* ============================================
+       Hero Section
+       ============================================ */
+    .hero {
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      right: -10%;
+      width: 55%;
+      height: 120%;
+      background: radial-gradient(ellipse at center,
+        var(--hero-glow-primary) 0%,
+        var(--hero-glow-primary-mid) 40%,
+        transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -10%;
+      left: -5%;
+      width: 40%;
+      height: 80%;
+      background: radial-gradient(ellipse at center,
+        var(--hero-glow-accent) 0%,
+        transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--primary);
+    }
+
+    .hero h1 {
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--primary);
+      position: relative;
+    }
+
+    .hero h1 em::after {
+      content: '';
+      position: absolute;
+      bottom: 0.05em;
+      left: 0;
+      right: 0;
+      height: 0.08em;
+      background: var(--primary);
+      opacity: 0.3;
+      border-radius: 2px;
+    }
+
+    .hero-subtitle {
+      color: var(--fg-secondary);
+      max-width: 560px;
+    }
+
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--fg-muted);
+      animation: float 2.5s ease-in-out infinite;
+    }
+
+    .hero-scroll-hint .arrow {
+      width: 1px;
+      height: 28px;
+      background: linear-gradient(to bottom, var(--fg-muted), transparent);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ============================================
+       Intro Section
+       ============================================ */
+    .intro {
+      border-top: 1px solid var(--border);
+    }
+
+    .intro-text {
+      max-width: 680px;
+      color: var(--fg-secondary);
+    }
+
+    .intro-text p + p {
+      margin-top: 1.2em;
+    }
+
+    .intro-text strong {
+      color: var(--fg);
+      font-weight: 600;
+    }
+
+    /* ============================================
+       Criteria Sections
+       ============================================ */
+    .criteria {
+      border-top: 1px solid var(--border);
+    }
+
+    .criteria-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .criteria-number {
+      font-family: "SF Mono", "Fira Code", monospace;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--primary);
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+    }
+
+    .criteria-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 4vw, 4rem);
+      align-items: start;
+    }
+
+    .criteria-text p {
+      color: var(--fg-secondary);
+      margin-top: 1rem;
+    }
+
+    .criteria-text p:first-of-type {
+      color: var(--fg);
+    }
+
+    .criteria-demo {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: clamp(1.5rem, 3vw, 2rem);
+      position: relative;
+    }
+
+    .demo-label {
+      color: var(--fg-muted);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .demo-label .tag {
+      background: var(--primary);
+      color: var(--on-color);
+      padding: 0.2em 0.6em;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* --- Demo 1: Color Harmony Strips --- */
+    .harmony-strips {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .harmony-strip {
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      cursor: default;
+      transition: transform 0.2s ease;
+    }
+
+    .harmony-strip:hover {
+      transform: translateY(-2px);
+    }
+
+    .harmony-strip .swatch {
+      height: 60px;
+    }
+
+    .harmony-strip .strip-label {
+      font-size: 0.7rem;
+      text-align: center;
+      padding: 0.4rem;
+      background: var(--white);
+      color: var(--fg-secondary);
+    }
+
+    .harmony-strip.chaotic .strip-label {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* --- Demo 2: Value Contrast --- */
+    .value-demo {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .value-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      user-select: none;
+      font-size: 0.85rem;
+      color: var(--fg-secondary);
+    }
+
+    .value-toggle .toggle-track {
+      width: 36px;
+      height: 20px;
+      background: var(--border);
+      border-radius: 10px;
+      position: relative;
+      transition: background 0.2s ease;
+    }
+
+    .value-toggle .toggle-track::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 16px;
+      height: 16px;
+      background: var(--white);
+      border-radius: 50%;
+      transition: transform 0.2s ease;
+      box-shadow: 0 1px 3px var(--shadow-toggle);
+    }
+
+    .value-toggle.active .toggle-track {
+      background: var(--primary);
+    }
+
+    .value-toggle.active .toggle-track::after {
+      transform: translateX(16px);
+    }
+
+    .value-card {
+      border-radius: var(--radius);
+      padding: 1.2rem;
+      transition: filter 0.4s ease;
+    }
+
+    .value-card.grayscale {
+      filter: grayscale(1);
+    }
+
+    .value-card h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .value-card p {
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+
+    .value-card .tag-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 0.8rem;
+    }
+
+    .value-card .tag-pill {
+      padding: 0.2em 0.6em;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 500;
+    }
+
+    /* --- Demo 3: Saturation Slider --- */
+    .saturation-demo {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .sat-preview {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .sat-chip {
+      height: 56px;
+      border-radius: var(--radius-sm);
+      transition: background-color 0.15s ease;
+    }
+
+    .sat-slider-wrap {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .sat-slider-wrap label {
+      font-size: 0.8rem;
+      color: var(--fg-muted);
+      white-space: nowrap;
+    }
+
+    .sat-slider-wrap input[type="range"] {
+      flex: 1;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      outline: none;
+    }
+
+    .sat-slider-wrap input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      background: var(--primary);
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 1px 4px var(--shadow-thumb);
+    }
+
+    .sat-value {
+      font-family: "SF Mono", monospace;
+      font-size: 0.8rem;
+      color: var(--fg-secondary);
+      min-width: 3ch;
+      text-align: right;
+    }
+
+    /* --- Demo 4: Color Count --- */
+    .color-count-demo {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .color-dots {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .color-dot {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      cursor: default;
+      position: relative;
+    }
+
+    .color-dot:hover {
+      transform: scale(1.1);
+    }
+
+    .color-dot.excess {
+      opacity: 0.4;
+    }
+
+    .color-dot.excess::after {
+      content: '×';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--on-color);
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .count-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+    }
+
+    .count-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 24px;
+      height: 24px;
+      padding: 0 0.4em;
+      border-radius: 12px;
+      font-family: "SF Mono", monospace;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .count-badge.ok {
+      background: var(--success-bg);
+      color: var(--success-fg);
+    }
+
+    .count-badge.bad {
+      background: var(--danger-bg);
+      color: var(--primary);
+    }
+
+    /* --- Demo 5: Proportion Bars --- */
+    .proportion-demo {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .proportion-bar {
+      display: flex;
+      height: 48px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+
+    .proportion-bar > div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .proportion-bar.good .p-main { background: var(--proportion-good-main); color: var(--on-color); width: 60%; }
+    .proportion-bar.good .p-sub { background: var(--proportion-good-sub); color: var(--on-color); width: 30%; }
+    .proportion-bar.good .p-accent { background: var(--proportion-good-accent); color: var(--on-color); width: 10%; }
+
+    .proportion-bar.bad .p-main { background: var(--proportion-bad-main); width: 33%; color: var(--on-color); }
+    .proportion-bar.bad .p-sub { background: var(--proportion-bad-sub); width: 34%; color: var(--on-color); }
+    .proportion-bar.bad .p-accent { background: var(--proportion-bad-accent); width: 33%; color: var(--on-color); }
+
+    .proportion-legend {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.8rem;
+      color: var(--fg-secondary);
+    }
+
+    .proportion-legend span {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .proportion-legend .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .proportion-label {
+      font-size: 0.8rem;
+      color: var(--fg-muted);
+      margin-top: -0.3rem;
+    }
+
+    .proportion-label.good-label { color: var(--success-fg); }
+    .proportion-label.bad-label { color: var(--primary); }
+
+    /* ============================================
+       Method Callout
+       ============================================ */
+    .method-callout {
+      margin-top: 1.5rem;
+      padding: 1rem 1.2rem;
+      background: var(--primary-soft);
+      border-left: 3px solid var(--primary);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 0.9rem;
+      color: var(--fg);
+    }
+
+    .method-callout .method-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--primary);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+
+    /* ============================================
+       Aesop Section
+       ============================================ */
+    .aesop {
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .aesop-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: center;
+    }
+
+    .aesop-text h2 {
+      margin-bottom: 1.2rem;
+    }
+
+    .aesop-text p {
+      color: var(--fg-secondary);
+    }
+
+    .aesop-text p + p {
+      margin-top: 1em;
+    }
+
+    .aesop-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .aesop-card {
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .aesop-card.pure {
+      background: var(--white);
+      border: 1px solid var(--border);
+    }
+
+    .aesop-card.muted {
+      background: var(--aesop-warm-white);
+      border: 1px solid var(--aesop-warm-border);
+    }
+
+    .aesop-card .color-sample {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      margin: 0 auto 0.8rem;
+    }
+
+    .aesop-card.pure .color-sample {
+      background: var(--white);
+      border: 2px solid var(--aesop-pure-border);
+    }
+
+    .aesop-card.muted .color-sample {
+      background: var(--aesop-warm-white);
+      border: 2px solid var(--aesop-warm-border);
+    }
+
+    .aesop-card .card-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .aesop-card .card-hex {
+      font-family: "SF Mono", monospace;
+      font-size: 0.8rem;
+      color: var(--fg-muted);
+      margin-top: 0.3rem;
+    }
+
+    .aesop-card.pure .card-label { color: var(--aesop-label-pure); }
+    .aesop-card.muted .card-label { color: var(--aesop-dark); }
+
+    /* ============================================
+       Tips Section
+       ============================================ */
+    .tips {
+      border-top: 1px solid var(--border);
+    }
+
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .tip-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .tip-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px var(--shadow-tip);
+    }
+
+    .tip-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: var(--primary);
+      color: var(--on-color);
+      border-radius: 50%;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+
+    .tip-card h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.01em;
+    }
+
+    .tip-card p {
+      font-size: 0.85rem;
+      color: var(--fg-secondary);
+      line-height: 1.55;
+    }
+
+    /* ============================================
+       Palettes Section
+       ============================================ */
+    .palettes {
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .palettes-grid {
+      display: grid;
+      gap: 1.2rem;
+      margin-top: 2.5rem;
+    }
+
+    .palette-card {
+      background: var(--bg);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 1.5rem;
+      align-items: center;
+      transition: transform 0.2s ease;
+    }
+
+    .palette-card:hover {
+      transform: translateY(-1px);
+    }
+
+    .palette-swatches {
+      display: flex;
+      gap: 6px;
+    }
+
+    .palette-swatch {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: transform 0.15s ease;
+      position: relative;
+    }
+
+    .palette-swatch:hover {
+      transform: scale(1.08);
+    }
+
+    .palette-swatch .swatch-hex {
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: "SF Mono", monospace;
+      font-size: 0.6rem;
+      color: var(--fg-muted);
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+
+    .palette-swatch:hover .swatch-hex {
+      opacity: 1;
+    }
+
+    .palette-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .palette-name {
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .palette-desc {
+      font-size: 0.8rem;
+      color: var(--fg-muted);
+    }
+
+    .palette-copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: var(--fg-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    .palette-copy-btn:hover {
+      background: var(--fg);
+      color: var(--bg);
+      border-color: var(--fg);
+    }
+
+    .palette-copy-btn.copied {
+      background: var(--accent);
+      color: var(--on-color);
+      border-color: var(--accent);
+    }
+
+    /* ============================================
+       Footer
+       ============================================ */
+    .footer {
+      padding: 3rem 0;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer p {
+      font-size: 0.85rem;
+      color: var(--fg-muted);
+    }
+
+    .footer .highlight {
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    /* ============================================
+       Scroll Reveal
+       ============================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ============================================
+       Toast Notification
+       ============================================ */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--fg);
+      color: var(--bg);
+      padding: 0.7rem 1.4rem;
+      border-radius: 24px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      z-index: 2000;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ============================================
+       Responsive
+       ============================================ */
+    @media (max-width: 768px) {
+      .criteria-layout,
+      .aesop-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .aesop-compare {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .harmony-strips {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .palette-card {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .palette-copy-btn {
+        justify-self: start;
+      }
+
+      .tips-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .aesop-compare {
+        grid-template-columns: 1fr;
+      }
+
+      .sat-preview {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Scroll Progress -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">已复制到剪贴板</div>
+
+  <!-- ========== HERO ========== -->
+  <main data-component="page-root">
+  <section class="hero" data-component="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-eyebrow label">色彩判断标准</div>
+        <h1 class="display">配色总是脏？<br>因为你不懂<br>这<em>5</em>个色彩判断标准</h1>
+        <p class="body-lg hero-subtitle">干净的配色不是「感觉好看就行」，而是一个需要判断的设计决策。掌握这5个标准，让你的配色告别「脏」。</p>
+      </div>
+    </div>
+    <div class="hero-scroll-hint">
+      <span class="body-sm">向下滚动</span>
+      <div class="arrow"></div>
+    </div>
+  </section>
+
+  <!-- ========== INTRO ========== -->
+  <section class="intro" data-component="intro">
+    <div class="container">
+      <div class="intro-text body-lg reveal">
+        <p>如果你搜「配色脏怎么改」，大概率遇到过这种反馈：设计交出去，对方说<strong>「配色有点脏」「不够干净」</strong>。但你认真选了颜色，每一步都花了心思。</p>
+        <p>问题不是你不会配色，是没有人告诉过你：<strong>干净的配色是一个需要判断的设计决策</strong>，不是「感觉好看就行」。以下是5个可以立即使用的判断标准。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CRITERION 1: 色相统一 ========== -->
+  <section class="criteria" id="c1" data-component="criterion-hue">
+    <div class="container">
+      <div class="criteria-header reveal">
+        <span class="criteria-number label">01</span>
+        <h2 class="section-title">色相必须统一</h2>
+      </div>
+      <div class="criteria-layout">
+        <div class="criteria-text reveal">
+          <p class="body-lg">干净的配色，色相必须在一个系统里。主色、辅色、点缀色，应该在色环上有明确的关系——要么同色系，要么邻近色，要么有逻辑的对比色。</p>
+          <p>很多设计被说「脏」，其实是红、绿、蓝、紫全往上堆，色相关系混乱。色相统一不是选一个颜色，是选一个系统。</p>
+          <div class="method-callout">
+            <div class="method-label label">判断方法</div>
+            把设计缩小到缩略图大小，如果看不出主色调是什么，就是色相不统一。
+          </div>
+        </div>
+        <div class="criteria-demo reveal">
+          <div class="demo-label">
+            <span class="label">色相关系对比</span>
+          </div>
+          <div class="harmony-strips">
+            <div class="harmony-strip">
+              <div class="swatch" style="background:#C4664A"></div>
+              <div class="swatch" style="background:#D4836A"></div>
+              <div class="swatch" style="background:#E8B8A0"></div>
+              <div class="strip-label">同色系</div>
+            </div>
+            <div class="harmony-strip">
+              <div class="swatch" style="background:#7B8F7E"></div>
+              <div class="swatch" style="background:#A8B89A"></div>
+              <div class="swatch" style="background:#D4C8A0"></div>
+              <div class="strip-label">邻近色</div>
+            </div>
+            <div class="harmony-strip">
+              <div class="swatch" style="background:#C4664A"></div>
+              <div class="swatch" style="background:#F5F0E8"></div>
+              <div class="swatch" style="background:#7B8F7E"></div>
+              <div class="strip-label">对比色</div>
+            </div>
+            <div class="harmony-strip chaotic">
+              <div class="swatch" style="background:#E74C3C"></div>
+              <div class="swatch" style="background:#2ECC71"></div>
+              <div class="swatch" style="background:#3498DB"></div>
+              <div class="strip-label">混乱 ✕</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CRITERION 2: 明度对比 ========== -->
+  <section class="criteria" id="c2" data-component="criterion-value">
+    <div class="container">
+      <div class="criteria-header reveal">
+        <span class="criteria-number label">02</span>
+        <h2 class="section-title">明度对比必须清晰</h2>
+      </div>
+      <div class="criteria-layout">
+        <div class="criteria-text reveal">
+          <p class="body-lg">干净的配色，必须有明确的明暗层次。标题和背景的明度差、主色和辅色的明度差——这些对比越清晰，画面越干净。</p>
+          <p>很多设计看起来「脏」，其实是所有颜色明度都差不多，糊成一片。</p>
+          <div class="method-callout">
+            <div class="method-label label">判断方法</div>
+            把设计转成黑白模式，如果看不出层次关系，就是明度对比不够。
+          </div>
+        </div>
+        <div class="criteria-demo reveal">
+          <div class="demo-label">
+            <span class="label">灰度测试</span>
+            <div class="value-toggle" id="valueToggle" onclick="toggleGrayscale()">
+              <span class="toggle-track"></span>
+              <span class="toggle-text">转黑白</span>
+            </div>
+          </div>
+          <div class="value-card" id="valueCard" style="background: #FCF8F0; color: #231E19;">
+            <h4>清晰的明度层次</h4>
+            <p style="color: #6B5E52;">辅助文字使用较浅的暖灰色</p>
+            <div class="tag-row">
+              <span class="tag-pill" style="background: #C4664A; color: #fff;">强调标签</span>
+              <span class="tag-pill" style="background: #7B8F7E; color: #fff;">辅助标签</span>
+              <span class="tag-pill" style="background: #D4A574; color: #fff;">点缀标签</span>
+            </div>
+          </div>
+          <p class="body-sm" style="color: var(--fg-muted); margin-top: 0.8rem; text-align: center;">
+            点击「转黑白」验证明度对比是否仍然清晰
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CRITERION 3: 饱和度克制 ========== -->
+  <section class="criteria" id="c3" data-component="criterion-saturation">
+    <div class="container">
+      <div class="criteria-header reveal">
+        <span class="criteria-number label">03</span>
+        <h2 class="section-title">饱和度必须克制</h2>
+      </div>
+      <div class="criteria-layout">
+        <div class="criteria-text reveal">
+          <p class="body-lg">干净的配色，饱和度必须克制。大面积使用高饱和色，会让画面刺眼、廉价、不高级。</p>
+          <p>问自己「这个设计里，有没有哪个颜色在抢眼？」如果有，就是饱和度失控。试试拖动下方的滑块，感受饱和度对画面质感的影响。</p>
+          <div class="method-callout">
+            <div class="method-label label">判断方法</div>
+            问自己「这个设计里，有没有哪个颜色在抢眼？」如果有，就是饱和度失控。
+          </div>
+        </div>
+        <div class="criteria-demo reveal">
+          <div class="demo-label">
+            <span class="label">饱和度调节</span>
+          </div>
+          <div class="saturation-demo">
+            <div class="sat-preview">
+              <div class="sat-chip" id="satChip1"></div>
+              <div class="sat-chip" id="satChip2"></div>
+              <div class="sat-chip" id="satChip3"></div>
+            </div>
+            <div class="sat-slider-wrap">
+              <label>饱和度</label>
+              <input type="range" id="satSlider" min="5" max="100" value="35" oninput="updateSaturation(this.value)">
+              <span class="sat-value" id="satValue">35%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CRITERION 4: 色彩数量 ========== -->
+  <section class="criteria" id="c4" data-component="criterion-count">
+    <div class="container">
+      <div class="criteria-header reveal">
+        <span class="criteria-number label">04</span>
+        <h2 class="section-title">色彩数量必须控制</h2>
+      </div>
+      <div class="criteria-layout">
+        <div class="criteria-text reveal">
+          <p class="body-lg">干净的配色，色彩数量必须控制。一般建议不超过3-4种主要颜色。颜色太多，每种都在争注意力，画面就乱了。</p>
+          <p>数一数设计里有多少种明显的颜色，如果超过4种，就需要精简。下方左侧是克制的4色方案，右侧是超过限制的混乱方案。</p>
+          <div class="method-callout">
+            <div class="method-label label">判断方法</div>
+            数一数设计里有多少种明显的颜色，如果超过4种，就需要精简。
+          </div>
+        </div>
+        <div class="criteria-demo reveal">
+          <div class="demo-label">
+            <span class="label">色彩数量对比</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div>
+              <div class="color-dots" style="justify-content: center;">
+                <div class="color-dot" style="background: #C4664A;"></div>
+                <div class="color-dot" style="background: #7B8F7E;"></div>
+                <div class="color-dot" style="background: #D4A574;"></div>
+                <div class="color-dot" style="background: #2A2520;"></div>
+              </div>
+              <div class="count-indicator" style="justify-content: center; margin-top: 0.8rem;">
+                <span class="count-badge ok">4</span>
+                <span style="color: #5A7060; font-size: 0.8rem;">干净</span>
+              </div>
+            </div>
+            <div>
+              <div class="color-dots" style="justify-content: center;">
+                <div class="color-dot" style="background: #E74C3C;"></div>
+                <div class="color-dot" style="background: #2ECC71;"></div>
+                <div class="color-dot" style="background: #3498DB;"></div>
+                <div class="color-dot" style="background: #9B59B6;"></div>
+                <div class="color-dot excess" style="background: #F39C12;"></div>
+                <div class="color-dot excess" style="background: #1ABC9C;"></div>
+                <div class="color-dot excess" style="background: #E91E63;"></div>
+              </div>
+              <div class="count-indicator" style="justify-content: center; margin-top: 0.8rem;">
+                <span class="count-badge bad">7</span>
+                <span style="color: var(--primary); font-size: 0.8rem;">混乱</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CRITERION 5: 色彩节奏 ========== -->
+  <section class="criteria" id="c5" data-component="criterion-rhythm">
+    <div class="container">
+      <div class="criteria-header reveal">
+        <span class="criteria-number label">05</span>
+        <h2 class="section-title">色彩节奏必须有规律</h2>
+      </div>
+      <div class="criteria-layout">
+        <div class="criteria-text reveal">
+          <p class="body-lg">干净的配色，必须有节奏感。主色占大面积、辅色占中面积、点缀色占小面积，这个比例关系要稳定。</p>
+          <p>问自己「这个设计里，哪个颜色是主角？」如果答不出来，就是色彩节奏有问题。经典的 60-30-10 法则是最可靠的起点。</p>
+          <div class="method-callout">
+            <div class="method-label label">判断方法</div>
+            问自己「这个设计里，哪个颜色是主角？」如果答不出来，就是色彩节奏有问题。
+          </div>
+        </div>
+        <div class="criteria-demo reveal">
+          <div class="demo-label">
+            <span class="label">比例对比</span>
+          </div>
+          <div class="proportion-demo">
+            <div>
+              <div class="proportion-bar good">
+                <div class="p-main">60%</div>
+                <div class="p-sub">30%</div>
+                <div class="p-accent">10%</div>
+              </div>
+              <p class="proportion-label good-label" style="margin-top: 0.4rem;">60 / 30 / 10 — 节奏清晰</p>
+            </div>
+            <div>
+              <div class="proportion-bar bad">
+                <div class="p-main">33%</div>
+                <div class="p-sub">34%</div>
+                <div class="p-accent">33%</div>
+              </div>
+              <p class="proportion-label bad-label" style="margin-top: 0.4rem;">33 / 34 / 33 — 没有主角</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== AESOP SECTION ========== -->
+  <section class="aesop" data-component="aesop-example">
+    <div class="container">
+      <div class="aesop-layout">
+        <div class="aesop-text reveal">
+          <span class="label" style="color: var(--primary); display: block; margin-bottom: 1rem;">Aesop 的白不是白</span>
+          <h2 class="section-title">你和大厂配色的差距<br>不是色环理论，<br>而是你一直在用「纯色」</h2>
+          <p class="body-lg" style="margin-top: 1.2rem;">Aesop 的白不是纯白 <span class="mono" style="color: var(--fg-muted);">#FFFFFF</span>，而是温暖的 <span class="mono" style="color: var(--fg-muted);">#FCF8F0</span>。黑不是纯黑 <span class="mono" style="color: var(--fg-muted);">#000000</span>，而是深沉的 <span class="mono" style="color: var(--fg-muted);">#231E19</span>。</p>
+          <p style="margin-top: 1em;">灭掉纯色，给颜色加入一点点温度，整个画面就会从「廉价」变成「高级」。这是最简单、也最有效的配色升级方法。</p>
+        </div>
+        <div class="aesop-compare reveal">
+          <div style="text-align: center;">
+            <div class="aesop-card pure">
+              <div class="color-sample"></div>
+              <div class="card-label">纯色白</div>
+              <div class="card-hex">#FFFFFF</div>
+            </div>
+            <p class="body-sm" style="color: var(--fg-muted); margin-top: 0.5rem;">冷、刺眼、廉价</p>
+          </div>
+          <div style="text-align: center;">
+            <div class="aesop-card muted">
+              <div class="color-sample"></div>
+              <div class="card-label">Aesop 白</div>
+              <div class="card-hex">#FCF8F0</div>
+            </div>
+            <p class="body-sm" style="color: var(--fg-muted); margin-top: 0.5rem;">温暖、高级、克制</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TIPS SECTION ========== -->
+  <section class="tips" data-component="core-tips">
+    <div class="container">
+      <div class="reveal">
+        <span class="label" style="color: var(--primary); display: block; margin-bottom: 0.8rem;">核心要点</span>
+        <h2 class="section-title">8 个立即上手的配色法则</h2>
+      </div>
+      <div class="tips-grid">
+        <div class="tip-card reveal">
+          <div class="tip-number">1</div>
+          <h4>灭掉纯色</h4>
+          <p>白不用 #FFFFFF，用 #FCF8F0；黑不用 #000000，用 #231E19。给颜色加一点温度。</p>
+        </div>
+        <div class="tip-card reveal">
+          <div class="tip-number">2</div>
+          <h4>3 色铁律</h4>
+          <p>主色 60%、辅色 30%、点缀色 10%。这个比例关系是干净配色的底层逻辑。</p>
+        </div>
+        <div class="tip-card reveal">
+          <div class="tip-number">3</div>
+          <h4>偷大牌</h4>
+          <p>去优秀品牌的官网吸管取色，站在巨人的肩膀上。Aesop、Muji、Apple 都是好老师。</p>
+        </div>
+        <div class="tip-card reveal">
+          <div class="tip-number">4</div>
+          <h4>阴影不用黑</h4>
+          <p>阴影不要用纯黑色，改用主色的 HSL 降明度版本，让阴影融入画面。</p>
+        </div>
+        <div class="tip-card reveal">
+          <div class="tip-number">5</div>
+          <h4>统一饱和度</h4>
+          <p>给所有颜色盖一层 8% 灰色蒙版，抹平饱和度差异，让画面色调统一。</p>
+        </div>
+        <div class="tip-card reveal">
+          <div class="tip-number">6</div>
+          <h4>互补色用狠的</h4>
+          <p>米白 + 爱马仕橙，极端对比才出效果。犹犹豫豫的互补色最显脏。</p>
+        </div>
+        <div class="tip-card reveal">
+          <div class="tip-number">7</div>
+          <h4>渐变只用邻近色</h4>
+          <p>色环上小于 60° 的颜色做渐变才优雅。跨度过大的渐变容易显脏。</p>
+        </div>
+        <div class="tip-card reveal">
+          <div class="tip-number">8</div>
+          <h4>建个人色彩库</h4>
+          <p>每个项目存档好配色，建立自己的色彩资产。下次设计直接从库里选。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PALETTES SECTION ========== -->
+  <section class="palettes" data-component="palette-showcase">
+    <div class="container">
+      <div class="reveal">
+        <span class="label" style="color: var(--primary); display: block; margin-bottom: 0.8rem;">可直接抄的配色</span>
+        <h2 class="section-title">5 套高级配色方案</h2>
+        <p class="body-lg" style="color: var(--fg-secondary); margin-top: 0.8rem;">每套方案都经过精心调配，点击色值可复制，点击「复制整组」可一次复制所有色值。</p>
+      </div>
+      <div class="palettes-grid">
+
+        <!-- Palette 1: 轻奢调 -->
+        <div class="palette-card reveal" data-colors="#F5EDE3, #8B7355, #C8A96E">
+          <div class="palette-swatches">
+            <div class="palette-swatch" style="background: #F5EDE3;" onclick="copyText('#F5EDE3')"><span class="swatch-hex">#F5EDE3</span></div>
+            <div class="palette-swatch" style="background: #8B7355;" onclick="copyText('#8B7355')"><span class="swatch-hex">#8B7355</span></div>
+            <div class="palette-swatch" style="background: #C8A96E;" onclick="copyText('#C8A96E')"><span class="swatch-hex">#C8A96E</span></div>
+          </div>
+          <div class="palette-info">
+            <span class="palette-name">轻奢调</span>
+            <span class="palette-desc">温暖、优雅、适合高端品牌与生活方式类设计</span>
+          </div>
+          <button class="palette-copy-btn" onclick="copyPalette(this, '#F5EDE3, #8B7355, #C8A96E')">复制整组</button>
+        </div>
+
+        <!-- Palette 2: 科技调 -->
+        <div class="palette-card reveal" data-colors="#0D0D0D, #E8E8E8, #00D4AA">
+          <div class="palette-swatches">
+            <div class="palette-swatch" style="background: #0D0D0D;" onclick="copyText('#0D0D0D')"><span class="swatch-hex">#0D0D0D</span></div>
+            <div class="palette-swatch" style="background: #E8E8E8;" onclick="copyText('#E8E8E8')"><span class="swatch-hex">#E8E8E8</span></div>
+            <div class="palette-swatch" style="background: #00D4AA;" onclick="copyText('#00D4AA')"><span class="swatch-hex">#00D4AA</span></div>
+          </div>
+          <div class="palette-info">
+            <span class="palette-name">科技调</span>
+            <span class="palette-desc">冷静、精确、适合 SaaS 产品与技术类界面</span>
+          </div>
+          <button class="palette-copy-btn" onclick="copyPalette(this, '#0D0D0D, #E8E8E8, #00D4AA')">复制整组</button>
+        </div>
+
+        <!-- Palette 3: 先锋调 -->
+        <div class="palette-card reveal" data-colors="#FCF8F0, #E8621A, #231E19">
+          <div class="palette-swatches">
+            <div class="palette-swatch" style="background: #FCF8F0; border: 1px solid #E8E0D4;" onclick="copyText('#FCF8F0')"><span class="swatch-hex">#FCF8F0</span></div>
+            <div class="palette-swatch" style="background: #E8621A;" onclick="copyText('#E8621A')"><span class="swatch-hex">#E8621A</span></div>
+            <div class="palette-swatch" style="background: #231E19;" onclick="copyText('#231E19')"><span class="swatch-hex">#231E19</span></div>
+          </div>
+          <div class="palette-info">
+            <span class="palette-name">先锋调</span>
+            <span class="palette-desc">大胆、有力、适合创意品牌与时尚类设计</span>
+          </div>
+          <button class="palette-copy-btn" onclick="copyPalette(this, '#FCF8F0, #E8621A, #231E19')">复制整组</button>
+        </div>
+
+        <!-- Palette 4: 森系调 -->
+        <div class="palette-card reveal" data-colors="#F7F3ED, #3E5F4E, #D4A574">
+          <div class="palette-swatches">
+            <div class="palette-swatch" style="background: #F7F3ED;" onclick="copyText('#F7F3ED')"><span class="swatch-hex">#F7F3ED</span></div>
+            <div class="palette-swatch" style="background: #3E5F4E;" onclick="copyText('#3E5F4E')"><span class="swatch-hex">#3E5F4E</span></div>
+            <div class="palette-swatch" style="background: #D4A574;" onclick="copyText('#D4A574')"><span class="swatch-hex">#D4A574</span></div>
+          </div>
+          <div class="palette-info">
+            <span class="palette-name">森系调</span>
+            <span class="palette-desc">自然、宁静、适合环保品牌与健康类设计</span>
+          </div>
+          <button class="palette-copy-btn" onclick="copyPalette(this, '#F7F3ED, #3E5F4E, #D4A574')">复制整组</button>
+        </div>
+
+        <!-- Palette 5: Y2K调 -->
+        <div class="palette-card reveal" data-colors="#1A1A2E, #E94560, #FFD700">
+          <div class="palette-swatches">
+            <div class="palette-swatch" style="background: #1A1A2E;" onclick="copyText('#1A1A2E')"><span class="swatch-hex">#1A1A2E</span></div>
+            <div class="palette-swatch" style="background: #E94560;" onclick="copyText('#E94560')"><span class="swatch-hex">#E94560</span></div>
+            <div class="palette-swatch" style="background: #FFD700;" onclick="copyText('#FFD700')"><span class="swatch-hex">#FFD700</span></div>
+          </div>
+          <div class="palette-info">
+            <span class="palette-name">Y2K 调</span>
+            <span class="palette-desc">复古、活力、适合潮流品牌与年轻化设计</span>
+          </div>
+          <button class="palette-copy-btn" onclick="copyPalette(this, '#1A1A2E, #E94560, #FFD700')">复制整组</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer" data-component="footer">
+    <div class="container">
+      <p>记住：干净的配色不是感觉出来的，是<span class="highlight">检查</span>出来的。</p>
+    </div>
+  </footer>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script>
+    /* --- Scroll Progress --- */
+    window.addEventListener('scroll', () => {
+      const scrollTop = document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = (scrollTop / scrollHeight) * 100;
+      document.getElementById('scrollProgress').style.width = progress + '%';
+    });
+
+    /* --- Scroll Reveal --- */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    /* --- Demo 2: Grayscale Toggle --- */
+    function toggleGrayscale() {
+      const toggle = document.getElementById('valueToggle');
+      const card = document.getElementById('valueCard');
+      toggle.classList.toggle('active');
+      card.classList.toggle('grayscale');
+    }
+
+    /* --- Demo 3: Saturation Slider --- */
+    function updateSaturation(value) {
+      document.getElementById('satValue').textContent = value + '%';
+      document.getElementById('satChip1').style.backgroundColor = `hsl(16, ${value}%, 53%)`;
+      document.getElementById('satChip2').style.backgroundColor = `hsl(140, ${value}%, 52%)`;
+      document.getElementById('satChip3').style.backgroundColor = `hsl(35, ${value}%, 64%)`;
+    }
+    // Initialize saturation demo
+    updateSaturation(35);
+
+    /* --- Toast Notification --- */
+    let toastTimeout;
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message || '已复制到剪贴板';
+      toast.classList.add('show');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2000);
+    }
+
+    /* --- Copy Functions --- */
+    function copyText(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('已复制 ' + text);
+      }).catch(() => {
+        showToast('复制失败，请手动复制');
+      });
+    }
+
+    function copyPalette(btn, colors) {
+      navigator.clipboard.writeText(colors).then(() => {
+        btn.textContent = '已复制';
+        btn.classList.add('copied');
+        showToast('已复制配色方案');
+        setTimeout(() => {
+          btn.textContent = '复制整组';
+          btn.classList.remove('copied');
+        }, 2000);
+      }).catch(() => {
+        showToast('复制失败，请手动复制');
+      });
+    }
+  </script>
+
+</body>
+</html>

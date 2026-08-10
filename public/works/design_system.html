@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Design System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#1c1c1c', // Darkened slightly for higher contrast text/icons
+                        },
+                        semantic: {
+                            success: '#57c785', // Softer, more pastel green from the chart/tags
+                            warning: '#f6d55c', // Softer yellow/gold
+                            error: '#f8a8b1',   // Pinkish-red from the expense chart
+                            info: '#4ba3e3',    // Light blue from the earning chart
+                        },
+                        text: {
+                            primary: '#1c1c1c',
+                            secondary: '#6b7280', // Lighter gray for secondary text
+                            tertiary: '#9ca3af',
+                            quaternary: '#d1d5db',
+                        },
+                        surface: {
+                            layout: '#f3f4f6', // Slightly darker body bg to make white cards pop more
+                            container: '#ffffff',
+                            secondary: '#f9fafb', // Very subtle off-white for sidebar
+                            border: '#e5e7eb',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Geist', 'Inter', '-apple-system', 'sans-serif'],
+                        mono: ['Geist Mono', 'Fira Code', 'monospace'],
+                    },
+                    spacing: {
+                        'xxs': '4px',
+                        'xs': '8px',
+                        'sm': '12px',
+                        'base': '16px',
+                        'md': '20px',
+                        'lg': '24px',
+                        'xl': '32px',
+                    },
+                    borderRadius: {
+                        'xs': '4px',
+                        'sm': '6px',
+                        'base': '8px',
+                        'lg': '12px',
+                    },
+                    boxShadow: {
+                        'level1': '0 8px 16px -4px rgba(0, 0, 0, 0.2)',
+                        'level2': '0 20px 20px -8px rgba(0, 0, 0, 0.24)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8;
+            color: #080808;
+        }
+
+        .gradient-ai {
+            background: linear-gradient(135deg, #4ba3e3 0%, #a77bf3 100%); /* Adjusted to blue->purple */
+        }
+        
+        .gradient-subtle-ai {
+            background: linear-gradient(90deg, rgba(167, 123, 243, 0.08) 0%, rgba(75, 163, 227, 0.08) 100%);
+        }
+
+        /* Semantic Tag Backgrounds (15% opacity for better visibility of pastel colors) */
+        .bg-success-subtle { background-color: rgba(87, 199, 133, 0.15); }
+        .bg-warning-subtle { background-color: rgba(246, 213, 92, 0.2); }
+        .bg-error-subtle { background-color: rgba(248, 168, 177, 0.15); }
+        .bg-info-subtle { background-color: rgba(75, 163, 227, 0.15); }
+
+        /* Custom Scrollbar for the sidebar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #cbd5e1;
+        }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden antialiased text-text-primary bg-surface-layout selection:bg-primary selection:text-white">
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-64 bg-surface-container border-r border-surface-border flex-shrink-0 flex flex-col hidden md:flex h-full">
+        <div class="p-base border-b border-surface-border">
+            <h1 class="text-xl font-bold tracking-tight">Design System</h1>
+            <p class="text-xs text-text-secondary mt-1">v1.0.0 Alpha</p>
+        </div>
+        <nav class="flex-1 overflow-y-auto p-xs space-y-1">
+            <a href="#vibe" class="block px-sm py-2 rounded-base text-sm font-medium text-text-secondary hover:bg-surface-layout hover:text-text-primary transition-colors duration-200">1. Overall Vibe</a>
+            <a href="#colors" class="block px-sm py-2 rounded-base text-sm font-medium text-text-secondary hover:bg-surface-layout hover:text-text-primary transition-colors duration-200">2. Color Palette</a>
+            <a href="#typography" class="block px-sm py-2 rounded-base text-sm font-medium text-text-secondary hover:bg-surface-layout hover:text-text-primary transition-colors duration-200">3. Typography</a>
+            <a href="#spacing" class="block px-sm py-2 rounded-base text-sm font-medium text-text-secondary hover:bg-surface-layout hover:text-text-primary transition-colors duration-200">4. Spacing</a>
+            <a href="#components" class="block px-sm py-2 rounded-base text-sm font-medium text-text-secondary hover:bg-surface-layout hover:text-text-primary transition-colors duration-200">5. Components</a>
+            <a href="#elevation" class="block px-sm py-2 rounded-base text-sm font-medium text-text-secondary hover:bg-surface-layout hover:text-text-primary transition-colors duration-200">6. Elevation</a>
+            <a href="#guidelines" class="block px-sm py-2 rounded-base text-sm font-medium text-text-secondary hover:bg-surface-layout hover:text-text-primary transition-colors duration-200">7. Guidelines</a>
+        </nav>
+        <div class="p-base border-t border-surface-border">
+            <button class="w-full gradient-ai text-white rounded-base py-2 text-sm font-medium shadow-sm hover:opacity-90 transition-opacity duration-200 flex items-center justify-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-9 5 18 3-9h5"/></svg>
+                Export Tokens
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 overflow-y-auto scroll-smooth">
+        <div class="max-w-5xl mx-auto p-lg md:p-xl space-y-xl">
+            
+            <section id="vibe" class="scroll-mt-lg">
+                <h2 class="text-3xl font-bold mb-xs">Dashboard Design System</h2>
+                <p class="text-text-secondary text-base mb-lg max-w-3xl leading-relaxed">
+                    Interactive documentation for our design language. Based on the 9-element framework, focusing on clean data visualization, neutral scales, and AI-driven accents.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-base">
+                    <div class="bg-surface-container p-md rounded-lg border border-surface-border">
+                        <div class="w-8 h-8 rounded-full bg-surface-layout flex items-center justify-center mb-sm">✨</div>
+                        <h3 class="font-semibold mb-xs">Tech-Forward</h3>
+                        <p class="text-sm text-text-secondary leading-relaxed">Emphasizes efficiency and modern SaaS aesthetics with subtle AI gradients.</p>
+                    </div>
+                    <div class="bg-surface-container p-md rounded-lg border border-surface-border">
+                        <div class="w-8 h-8 rounded-full bg-surface-layout flex items-center justify-center mb-sm">⚖️</div>
+                        <h3 class="font-semibold mb-xs">Professional</h3>
+                        <p class="text-sm text-text-secondary leading-relaxed">High contrast typography and strict neutral palettes reduce cognitive load.</p>
+                    </div>
+                    <div class="bg-surface-container p-md rounded-lg border border-surface-border">
+                        <div class="w-8 h-8 rounded-full bg-surface-layout flex items-center justify-center mb-sm">🍃</div>
+                        <h3 class="font-semibold mb-xs">Lightweight</h3>
+                        <p class="text-sm text-text-secondary leading-relaxed">Ample whitespace and flat surfaces (Level 0) create a breathable interface.</p>
+                    </div>
+                </div>
+            </section>
+
+            <hr class="border-surface-border">
+
+            <section id="colors" class="scroll-mt-lg">
+                <h2 class="text-2xl font-bold mb-md">Color Palette</h2>
+                
+                <div class="space-y-lg">
+                    <!-- Brand & Neutrals -->
+                    <div>
+                        <h3 class="text-sm font-medium text-text-secondary mb-sm uppercase tracking-wider">Brand & Neutrals</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-base">
+                            <div class="space-y-xs">
+                                <div class="h-20 rounded-base bg-primary shadow-sm border border-black/10"></div>
+                                <div>
+                                    <p class="font-medium text-sm">Primary (Text/Icons)</p>
+                                    <p class="text-xs text-text-tertiary">#1c1c1c</p>
+                                </div>
+                            </div>
+                            <div class="space-y-xs">
+                                <div class="h-20 rounded-base bg-text-secondary shadow-sm"></div>
+                                <div>
+                                    <p class="font-medium text-sm">Text Secondary</p>
+                                    <p class="text-xs text-text-tertiary">#6b7280</p>
+                                </div>
+                            </div>
+                            <div class="space-y-xs">
+                                <div class="h-20 rounded-base bg-surface-container shadow-sm border border-surface-border"></div>
+                                <div>
+                                    <p class="font-medium text-sm">Surface Container</p>
+                                    <p class="text-xs text-text-tertiary">#ffffff</p>
+                                </div>
+                            </div>
+                             <div class="space-y-xs">
+                                <div class="h-20 rounded-base bg-surface-layout shadow-sm border border-surface-border"></div>
+                                <div>
+                                    <p class="font-medium text-sm">Surface Layout</p>
+                                    <p class="text-xs text-text-tertiary">#f3f4f6</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Semantic Colors -->
+                    <div>
+                        <h3 class="text-sm font-medium text-text-secondary mb-sm uppercase tracking-wider">Semantic States</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-base">
+                            <div class="space-y-xs">
+                                <div class="h-16 rounded-base bg-semantic-success shadow-sm"></div>
+                                <div>
+                                    <p class="font-medium text-sm">Success (Pastel)</p>
+                                    <p class="text-xs text-text-tertiary">#57c785</p>
+                                </div>
+                            </div>
+                            <div class="space-y-xs">
+                                <div class="h-16 rounded-base bg-semantic-warning shadow-sm"></div>
+                                <div>
+                                    <p class="font-medium text-sm">Warning (Pastel)</p>
+                                    <p class="text-xs text-text-tertiary">#f6d55c</p>
+                                </div>
+                            </div>
+                            <div class="space-y-xs">
+                                <div class="h-16 rounded-base bg-semantic-error shadow-sm"></div>
+                                <div>
+                                    <p class="font-medium text-sm">Error (Pinkish)</p>
+                                    <p class="text-xs text-text-tertiary">#f8a8b1</p>
+                                </div>
+                            </div>
+                            <div class="space-y-xs">
+                                <div class="h-16 rounded-base bg-semantic-info shadow-sm"></div>
+                                <div>
+                                    <p class="font-medium text-sm">Info / Brand Blue</p>
+                                    <p class="text-xs text-text-tertiary">#4ba3e3</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gradients -->
+                    <div>
+                         <h3 class="text-sm font-medium text-text-secondary mb-sm uppercase tracking-wider">Gradients & Accents</h3>
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-base">
+                             <div class="bg-surface-container border border-surface-border p-md rounded-lg flex items-center gap-md">
+                                 <div class="w-16 h-16 rounded-full gradient-ai shrink-0 shadow-sm"></div>
+                                 <div>
+                                     <p class="font-medium">AI Action Gradient</p>
+                                     <p class="text-xs text-text-secondary mt-1 font-mono bg-surface-layout p-1 rounded inline-block">linear-gradient(135deg, #4ba3e3, #a77bf3)</p>
+                                 </div>
+                             </div>
+                             <div class="bg-surface-container border border-surface-border p-md rounded-lg flex items-center gap-md">
+                                <div class="w-16 h-16 rounded-base gradient-subtle-ai shrink-0 border border-primary/5"></div>
+                                <div>
+                                    <p class="font-medium">Subtle AI Surface</p>
+                                    <p class="text-xs text-text-secondary mt-1 font-mono bg-surface-layout p-1 rounded inline-block">Alpha 8% Overlay</p>
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <hr class="border-surface-border">
+
+            <section id="typography" class="scroll-mt-lg">
+                <h2 class="text-2xl font-bold mb-md">Typography</h2>
+                <div class="bg-surface-container border border-surface-border rounded-lg overflow-hidden">
+                    <div class="p-md border-b border-surface-border bg-surface-secondary">
+                        <p class="font-mono text-sm text-text-secondary">Font Family: Geist, Inter, system-ui, sans-serif</p>
+                    </div>
+                    <div class="divide-y divide-surface-border">
+                        <div class="p-md flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div class="flex-1 truncate">
+                                <h1 class="text-[38px] font-bold leading-[1.2]">Page Heading 1</h1>
+                            </div>
+                            <div class="text-right shrink-0">
+                                <p class="text-sm font-medium">38px / Bold (700)</p>
+                                <p class="text-xs text-text-tertiary">color: text-primary</p>
+                            </div>
+                        </div>
+                        <div class="p-md flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div class="flex-1 truncate">
+                                <h2 class="text-[30px] font-semibold leading-[1.2]">Card Value H2</h2>
+                            </div>
+                            <div class="text-right shrink-0">
+                                <p class="text-sm font-medium">30px / SemiBold (600)</p>
+                            </div>
+                        </div>
+                        <div class="p-md flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div class="flex-1 truncate">
+                                <h3 class="text-[24px] font-semibold leading-[1.2]">Module Title H3</h3>
+                            </div>
+                            <div class="text-right shrink-0">
+                                <p class="text-sm font-medium">24px / SemiBold (600)</p>
+                            </div>
+                        </div>
+                        <div class="p-md flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div class="flex-1">
+                                <p class="text-[14px] font-normal leading-[1.57]">Body text. Used for main content, descriptions, and standard UI elements. It provides good readability with a 1.57 line height.</p>
+                            </div>
+                            <div class="text-right shrink-0">
+                                <p class="text-sm font-medium">14px / Regular (400)</p>
+                                <p class="text-xs text-text-tertiary">line-height: 1.57</p>
+                            </div>
+                        </div>
+                        <div class="p-md flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div class="flex-1">
+                                <p class="text-[12px] font-normal text-text-secondary leading-[1.66]">Caption text. Used for metadata, timestamps, and subtle hints.</p>
+                            </div>
+                            <div class="text-right shrink-0">
+                                <p class="text-sm font-medium">12px / Regular (400)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <hr class="border-surface-border">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-xl">
+                <section id="spacing" class="scroll-mt-lg">
+                    <h2 class="text-2xl font-bold mb-md">Spacing System</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-md">
+                            <div class="w-16 text-right text-xs font-mono text-text-secondary shrink-0">XS (8px)</div>
+                            <div class="h-4 bg-primary/20 w-2 rounded-sm shrink-0"></div>
+                            <div class="text-sm text-text-secondary text-sm">Icon & text gap</div>
+                        </div>
+                        <div class="flex items-center gap-md">
+                            <div class="w-16 text-right text-xs font-mono text-text-secondary shrink-0">SM (12px)</div>
+                            <div class="h-4 bg-primary/30 w-3 rounded-sm shrink-0"></div>
+                            <div class="text-sm text-text-secondary">Small element padding</div>
+                        </div>
+                        <div class="flex items-center gap-md">
+                            <div class="w-16 text-right text-xs font-mono text-text-secondary shrink-0">Base (16px)</div>
+                            <div class="h-4 bg-primary/40 w-4 rounded-sm shrink-0"></div>
+                            <div class="text-sm text-text-secondary">Standard item gap</div>
+                        </div>
+                        <div class="flex items-center gap-md">
+                            <div class="w-16 text-right text-xs font-mono text-text-secondary shrink-0">MD (20px)</div>
+                            <div class="h-4 bg-primary/50 w-5 rounded-sm shrink-0"></div>
+                            <div class="text-sm text-text-secondary">Card internal padding</div>
+                        </div>
+                         <div class="flex items-center gap-md">
+                            <div class="w-16 text-right text-xs font-mono text-text-secondary shrink-0">LG (24px)</div>
+                            <div class="h-4 bg-primary/60 w-6 rounded-sm shrink-0"></div>
+                            <div class="text-sm text-text-secondary">Module spacing</div>
+                        </div>
+                        <div class="flex items-center gap-md">
+                            <div class="w-16 text-right text-xs font-mono text-text-secondary shrink-0">XL (32px)</div>
+                            <div class="h-4 bg-primary/70 w-8 rounded-sm shrink-0"></div>
+                            <div class="text-sm text-text-secondary">Major section breaks</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="components" class="scroll-mt-lg">
+                    <h2 class="text-2xl font-bold mb-md">UI Elements</h2>
+                    
+                    <div class="space-y-lg">
+                        <!-- Buttons -->
+                        <div>
+                            <h3 class="text-sm font-medium text-text-secondary mb-sm">Buttons (h: 36px, rounded: 8px)</h3>
+                            <div class="flex flex-wrap gap-sm items-center">
+                                <button class="h-[36px] px-base bg-primary text-white rounded-base text-sm font-medium hover:opacity-90 transition-opacity">Primary Button</button>
+                                <button class="h-[36px] px-base gradient-ai text-white rounded-base text-sm font-medium hover:opacity-90 transition-opacity shadow-sm flex items-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                                    AI Copilot
+                                </button>
+                                <button class="h-[36px] px-base bg-surface-container border border-surface-border text-text-primary rounded-base text-sm font-medium hover:bg-surface-layout transition-colors">Default Outline</button>
+                                <button class="h-[36px] px-base bg-primary/5 text-primary rounded-base text-sm font-medium hover:bg-primary/10 transition-colors cursor-not-allowed opacity-50">Disabled</button>
+                            </div>
+                        </div>
+
+                        <!-- Tabs -->
+                        <div>
+                            <h3 class="text-sm font-medium text-text-secondary mb-sm">Tabs (h: 36px, active background)</h3>
+                            <div class="inline-flex p-1 bg-surface-layout rounded-base">
+                                <button class="h-[32px] px-sm md:px-base bg-surface-container text-text-primary text-sm font-medium rounded-sm shadow-sm transition-all">Overview</button>
+                                <button class="h-[32px] px-sm md:px-base text-text-secondary hover:text-text-primary text-sm font-medium rounded-sm transition-all">My Tasks</button>
+                                <button class="h-[32px] px-sm md:px-base text-text-secondary hover:text-text-primary text-sm font-medium rounded-sm transition-all hidden sm:block">My Calendar</button>
+                            </div>
+                        </div>
+
+                        <!-- Menu/Sidebar Items -->
+                        <div>
+                            <h3 class="text-sm font-medium text-text-secondary mb-sm">Menu Items (Sidebar style)</h3>
+                            <div class="w-full max-w-[240px] bg-surface-container border border-surface-border p-xs rounded-base flex flex-col gap-1">
+                                <a href="#" class="flex items-center gap-3 px-sm py-2 bg-primary/5 text-primary rounded-sm transition-colors group">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+                                    <span class="text-sm font-medium">Dashboard</span>
+                                </a>
+                                <a href="#" class="flex items-center gap-3 px-sm py-2 text-text-secondary hover:bg-surface-layout hover:text-text-primary rounded-sm transition-colors group">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-text-tertiary group-hover:text-text-secondary"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                    <span class="text-sm font-medium">Contacts</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Statistics Card -->
+                        <div>
+                            <h3 class="text-sm font-medium text-text-secondary mb-sm">Statistic Card</h3>
+                            <div class="w-full max-w-[280px] bg-surface-container border border-surface-border p-md rounded-lg shadow-sm hover:-translate-y-0.5 transition-transform duration-200">
+                                <h4 class="text-sm text-text-secondary mb-xs">Task Due today</h4>
+                                <div class="flex items-baseline gap-2 mb-sm">
+                                    <span class="text-3xl font-bold text-text-primary">07</span>
+                                </div>
+                                <span class="inline-flex items-center h-[24px] px-xs rounded-xs bg-success-subtle text-semantic-success text-xs font-medium w-fit">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-semantic-success mr-1.5"></span> 3 task completed
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Status Tags (Pills) -->
+                        <div>
+                            <h3 class="text-sm font-medium text-text-secondary mb-sm">Status Tags (h: 24px, rounded: 4px)</h3>
+                            <div class="flex flex-wrap gap-sm">
+                                <span class="inline-flex items-center h-[24px] px-xs rounded-xs bg-success-subtle text-semantic-success text-xs font-medium">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-semantic-success mr-1.5"></span> 3 Tasks Completed
+                                </span>
+                                <span class="inline-flex items-center h-[24px] px-xs rounded-xs bg-warning-subtle text-semantic-warning text-xs font-medium">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-semantic-warning mr-1.5"></span> Nearing Deadline
+                                </span>
+                                <span class="inline-flex items-center h-[24px] px-xs rounded-xs bg-info-subtle text-semantic-info text-xs font-medium">
+                                    Product Design
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <hr class="border-surface-border">
+
+            <section id="elevation" class="scroll-mt-lg">
+                <h2 class="text-2xl font-bold mb-md">Elevation & Cards</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+                    <!-- Level 0 -->
+                    <div class="bg-surface-container rounded-base border border-surface-border p-md">
+                        <div class="mb-sm flex items-center justify-between">
+                            <h3 class="font-semibold">Level 0: Flat Card</h3>
+                        </div>
+                        <p class="text-sm text-text-secondary mb-md">Standard data card. Uses <code class="bg-surface-layout px-1 rounded text-xs">border-surface-border</code> with no shadow.</p>
+                        <div class="h-20 bg-surface-layout rounded-sm border border-dashed border-surface-border flex items-center justify-center text-text-tertiary text-xs">Content Area</div>
+                    </div>
+
+                    <!-- Level 1 -->
+                    <div class="bg-surface-container rounded-lg border border-surface-border p-md shadow-level1 relative z-10 transform hover:-translate-y-1 transition-transform duration-200">
+                        <div class="mb-sm">
+                            <h3 class="font-semibold">Level 1: Float</h3>
+                        </div>
+                        <p class="text-sm text-text-secondary mb-md">Used for Dropdowns, Tooltips, and slightly elevated interactive elements.</p>
+                        <button class="w-full h-8 border border-surface-border rounded-sm text-sm hover:bg-surface-layout transition-colors">Action</button>
+                    </div>
+
+                    <!-- Level 2 -->
+                    <div class="bg-surface-container rounded-lg border border-surface-border p-md shadow-level2 relative z-20">
+                        <div class="mb-sm">
+                            <h3 class="font-semibold">Level 2: Modal</h3>
+                        </div>
+                        <p class="text-sm text-text-secondary mb-md">Highest elevation. Completely detaches from the background. Used for dialogs.</p>
+                        <div class="flex justify-end gap-2 mt-4">
+                            <button class="px-3 py-1.5 text-sm text-text-secondary hover:bg-surface-layout rounded-sm">Cancel</button>
+                            <button class="px-3 py-1.5 text-sm bg-primary text-white rounded-sm">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="guidelines" class="scroll-mt-lg pb-xl">
+                 <h2 class="text-2xl font-bold mb-md">AI Integration Example</h2>
+                 
+                 <!-- Complex Component Example built from tokens -->
+                 <div class="gradient-subtle-ai border border-primary/10 rounded-lg p-lg relative overflow-hidden">
+                     <!-- Decorative background element -->
+                     <div class="absolute -right-20 -top-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
+                     
+                     <div class="relative z-10">
+                        <div class="flex items-center gap-xs mb-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                            <h3 class="font-semibold text-primary">Priority Suggestion by AI</h3>
+                        </div>
+                        <p class="text-sm text-text-primary leading-relaxed max-w-2xl">
+                            <span class="font-semibold bg-surface-container px-1 py-0.5 rounded border border-surface-border">2 Creative</span> deliverables due, 
+                            <span class="font-semibold bg-surface-container px-1 py-0.5 rounded border border-surface-border">1 invoice</span> needs categorization, and 
+                            <span class="font-semibold bg-surface-container px-1 py-0.5 rounded border border-surface-border">4 client</span> meetings scheduled.
+                        </p>
+                        
+                        <div class="mt-md flex gap-sm">
+                            <button class="h-[32px] px-sm bg-primary text-white text-xs font-medium rounded-base shadow-sm hover:opacity-90 transition-opacity">Auto-Schedule</button>
+                            <button class="h-[32px] px-sm bg-surface-container border border-surface-border text-xs font-medium rounded-base hover:bg-surface-layout transition-colors">Dismiss</button>
+                        </div>
+                     </div>
+                 </div>
+            </section>
+        </div>
+    </main>
+</body>
+</html>

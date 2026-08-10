@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Interactive Bookshelf</title>
+    <!-- 引入 Three.js 和 OrbitControls -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <!-- 引入 GSAP 动画库用于复杂的序列动画 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #f5f5f7; /* 匹配参考图的亮色背景 */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #333;
+        }
+        canvas {
+            display: block;
+        }
+        #ui-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* 让点击穿透到 Canvas */
+            display: flex;
+            justify-content: space-between;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+        .header-text {
+            font-size: 12px;
+            letter-spacing: 2px;
+            font-weight: 500;
+            color: #888;
+        }
+        /* 控制面板样式 */
+        #controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 15px 25px;
+            border-radius: 30px;
+            pointer-events: auto; /* 允许点击 */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: opacity 0.3s ease;
+        }
+        .control-group {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        input[type="range"] {
+            margin-left: 10px;
+            width: 120px;
+            accent-color: #333;
+        }
+        #instructions {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            text-align: right;
+            font-size: 12px;
+            color: #888;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="ui-layer">
+        <div class="header-text">( LIBRARY )</div>
+        <div class="header-text">( PREVIEW )</div>
+        <div class="header-text">( SETTINGS )</div>
+    </div>
+
+    <div id="controls">
+        <div class="control-group">
+            <label for="spacingSlider">Spacing:</label>
+            <input type="range" id="spacingSlider" min="3" max="15" step="0.5" value="6.5">
+            <span id="spacingValue" style="margin-left: 10px; width: 20px;">6.5</span>
+        </div>
+    </div>
+
+    <div id="instructions">
+        Scroll to navigate<br>
+        Click to open/close<br>
+        Drag to rotate view
+    </div>
+
+    <script>
+        // 初始化 Three.js 场景
+        const scene = new THREE.Scene();
+        // 添加雾效以融合背景，使远处物体渐隐
+        scene.fog = new THREE.FogExp2(0xf5f5f7, 0.015);
+
+        // 创建相机
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        // 初始相机位置，调整为更好的全局视角
+        camera.position.set(0, 4, 35);
+
+        // 创建渲染器，启用抗锯齿和透明背景
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // 提高清晰度
+        renderer.shadowMap.enabled = true; // 启用阴影映射
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap; // 使用柔和阴影
+        document.body.appendChild(renderer.domElement);
+
+        // 添加轨道控制器，允许用户旋转和倾斜视角
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true; // 启用阻尼效果，使操作更平滑
+        controls.dampingFactor = 0.05; // 阻尼系数
+        controls.maxPolarAngle = Math.PI / 2 + 0.1; // 限制最大仰角，防止翻转到地下
+        controls.enablePan = false; // 禁用平移
+        controls.enableZoom = false; // 禁用鼠标滚轮缩放视角，避免与列表滑动冲突
+
+        // --- 灯光设置 ---
+        // 环境光，提供整体明亮感，无阴影
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+        scene.add(ambientLight);
+
+        // 主平行光，产生柔和阴影，模拟太阳光
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
+        dirLight.position.set(15, 25, 10);
+        dirLight.castShadow = true; // 启用投射阴影
+        // 优化阴影贴图设置以获得更好的质量
+        dirLight.shadow.mapSize.width = 2048;
+        dirLight.shadow.mapSize.height = 2048;
+        dirLight.shadow.camera.left = -30;
+        dirLight.shadow.camera.right = 30;
+        dirLight.shadow.camera.top = 30;
+        dirLight.shadow.camera.bottom = -30;
+        dirLight.shadow.bias = -0.001; // 调整阴影偏移，减少伪影
+        scene.add(dirLight);
+
+        // 补光，模拟地面反射光，提亮暗部
+        const hemiLight = new THREE.HemisphereLight(0xffffff, 0xf5f5f7, 0.4);
+        scene.add(hemiLight);
+
+        // --- 应用状态和参数 ---
+        const appState = {
+            mode: 'INTRO', // 应用模式: INTRO(开场), IDLE(空闲), ANIMATING(动画中), OPENED(已打开)
+            scrollOffset: 0, // 当前滚动偏移量
+            targetScrollOffset: 0, // 目标滚动偏移量，用于平滑滚动
+            activeBook: null, // 当前选中的书籍
+            materials: [] // 用于存储所有材质以便统一修改透明度
+        };
+
+        const bookParams = {
+            width: 3.5, // 书籍宽度
+            height: 5, // 书籍高度
+            depth: 0.6, // 书籍厚度
+            coverThick: 0.06, // 封面厚度
+            spacing: 6.5, // 书籍间距
+            // 倾斜对角线方向向量 (调整为类似参考图的完美排布)
+            direction: new THREE.Vector3(-1.2, -0.5, 0.8).normalize()
+        };
+
+        // --- 书籍数据和纹理生成 ---
+        // 书籍数据列表 (完全匹配参考图)
+        const bookDataList = [
+            { title: "Steal Like\nan Artist", author: "AUSTIN KLEON", color: "#222222", textColor: "#FFFFFF" },
+            { title: "Show\nYour Work!", author: "AUSTIN KLEON", color: "#F4D03F", textColor: "#000000" },
+            { title: "Keep\nGoing", author: "AUSTIN KLEON", color: "#3498DB", textColor: "#FFFFFF" },
+            { title: "The\nAgricultural", author: "VERONICA DENNIS", color: "#E74C3C", textColor: "#FFFFFF" },
+            { title: "The Design\nof Everyday\nThings", author: "DON NORMAN", color: "#F7DC6F", textColor: "#000000" }
+        ];
+        const books = []; // 存储生成的书籍对象
+
+        // 生成高分辨率的封面贴图
+        function createCoverTexture(data) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 1024;
+            canvas.height = 1460; // 根据宽高比计算
+            const ctx = canvas.getContext('2d');
+
+            // 绘制背景色
+            ctx.fillStyle = data.color;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // 绘制标题文本
+            ctx.fillStyle = data.textColor;
+            ctx.font = 'bold 120px "Times New Roman", serif';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'top';
+            
+            const lines = data.title.split('\n');
+            let y = 200;
+            lines.forEach(line => {
+                ctx.fillText(line, 120, y);
+                y += 140;
+            });
+
+            // 绘制作者文本
+            ctx.font = '40px -apple-system, sans-serif';
+            ctx.letterSpacing = '5px';
+            ctx.fillText(data.author, 120, canvas.height - 250);
+            
+            // 绘制底部小装饰线
+            ctx.fillRect(120, canvas.height - 180, 150, 10);
+
+            const texture = new THREE.CanvasTexture(canvas);
+            texture.anisotropy = renderer.capabilities.getMaxAnisotropy(); // 启用各向异性过滤，提高倾斜视角下的清晰度
+            return texture;
+        }
+
+        // 生成高分辨率的内页文字贴图 (左页/右页)
+        function createPageTexture(isLeft) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 1024;
+            canvas.height = 1460;
+            const ctx = canvas.getContext('2d');
+
+            // 绘制纸张底色 (米黄色)
+            ctx.fillStyle = '#fdfbf7';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#333333';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'top';
+
+            const mX = 140; // 增加左右边距，防止重叠
+            const mY = 160; // 增加上下边距
+            const maxW = canvas.width - mX * 2;
+
+            if (isLeft) {
+                // 左页设计：引用语 (附着在封面内侧)
+                ctx.font = 'bold 22px sans-serif';
+                ctx.letterSpacing = '4px';
+                ctx.fillText('A NOTE TO THE READER', mX, mY);
+                
+                ctx.fillRect(mX, mY + 60, 100, 2); // 装饰短线
+
+                ctx.font = 'italic 48px "Times New Roman", serif';
+                const quote = "“A book begins long before its first sentence and continues long after its final page.”";
+                wrapText(ctx, quote, mX, mY + 160, maxW, 65);
+
+                ctx.font = '28px "Times New Roman", serif';
+                const p1 = "This volume is an invitation to pause, notice, and return to the ideas that shape our everyday choices. Read it slowly; the smallest details often carry the greatest weight.";
+                wrapText(ctx, p1, mX, mY + 480, maxW, 46);
+
+                ctx.font = 'bold 22px sans-serif';
+                ctx.letterSpacing = '2px';
+                ctx.fillText('ERIC JORGENSON', mX, canvas.height - mY - 60);
+                
+                // 页码
+                ctx.font = '20px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('00', canvas.width/2, canvas.height - mY + 60);
+
+            } else {
+                // 右页设计：章节起始 (附着在封底内侧)
+                ctx.font = 'bold 22px sans-serif';
+                ctx.letterSpacing = '4px';
+                ctx.fillText('CHAPTER ONE', mX, mY);
+                
+                ctx.font = '65px "Times New Roman", serif';
+                ctx.fillText('The Almanack of Naval', mX, mY + 80);
+                
+                // 移除导致排版错乱的首字母下沉，使用统一对齐的段落
+                ctx.font = '28px "Times New Roman", serif';
+                const p1 = "Every meaningful change begins quietly. It starts with a question, a small observation, or the decision to look at an ordinary thing with greater care.";
+                wrapText(ctx, p1, mX, mY + 280, maxW, 46);
+
+                const p2 = "Progress is rarely a single dramatic moment. More often, it is the result of patient attention repeated over time, until a new way of seeing becomes a new way of living.";
+                wrapText(ctx, p2, mX, mY + 460, maxW, 46);
+                
+                // 页码
+                ctx.font = '20px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('01', canvas.width/2, canvas.height - mY + 60);
+            }
+
+            const texture = new THREE.CanvasTexture(canvas);
+            texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+            return texture;
+        }
+
+        // 辅助函数：Canvas 文字自动换行
+        function wrapText(context, text, x, y, maxWidth, lineHeight) {
+            const words = text.split(' ');
+            let line = '';
+            for(let n = 0; n < words.length; n++) {
+                const testLine = line + words[n] + ' ';
+                const metrics = context.measureText(testLine);
+                const testWidth = metrics.width;
+                if (testWidth > maxWidth && n > 0) {
+                    context.fillText(line, x, y);
+                    line = words[n] + ' ';
+                    y += lineHeight;
+                } else {
+                    line = testLine;
+                }
+            }
+            context.fillText(line, x, y);
+            return y + lineHeight;
+        }
+
+        // --- 书籍模型创建 ---
+        // 创建带有开合骨骼系统的书籍模型 (重构：以书脊为中心，修复内外页反转)
+        function createBook(data, index) {
+            const { width, height, depth, coverThick } = bookParams;
+            
+            // 材质生成
+            const coverTex = createCoverTexture(data);
+            const pageLeftTex = createPageTexture(true);
+            const pageRightTex = createPageTexture(false);
+            
+            // 移除 transparent 以修复透明度导致的深度排序错乱（封面被文字遮盖的问题）
+            const matParams = { roughness: 0.8, metalness: 0.1 };
+            const coverMat = new THREE.MeshStandardMaterial({ ...matParams, map: coverTex });
+            const plainCoverMat = new THREE.MeshStandardMaterial({ ...matParams, color: data.color });
+            const pageMatRight = new THREE.MeshStandardMaterial({ ...matParams, map: pageRightTex });
+            const pageMatLeft = new THREE.MeshStandardMaterial({ ...matParams, map: pageLeftTex });
+            const pageEdgeMat = new THREE.MeshStandardMaterial({ ...matParams, color: 0xeae6df, roughness: 1.0 });
+
+            appState.materials.push(coverMat, plainCoverMat, pageMatRight, pageMatLeft, pageEdgeMat);
+
+            // --- 结构层级 ---
+            // Root 作为整体容器，其局部坐标原点设定在【书脊中心】
+            const root = new THREE.Group();
+            
+            // 1. 书脊
+            const spineGeom = new THREE.BoxGeometry(coverThick, height, depth);
+            // Three.js 面顺序: +x, -x, +y, -y, +z, -z
+            const spineMats = [plainCoverMat, coverMat, plainCoverMat, plainCoverMat, plainCoverMat, plainCoverMat];
+            const spine = new THREE.Mesh(spineGeom, spineMats);
+            spine.castShadow = true;
+            root.add(spine);
+
+            // 2. 前半部(前封面+左页) 的旋转枢纽，位于书脊的前边缘 (+z方向)
+            const frontHinge = new THREE.Group();
+            frontHinge.position.set(coverThick / 2, 0, depth / 2 - coverThick / 2);
+            root.add(frontHinge);
+
+            // 前封面
+            const frontCoverGeom = new THREE.BoxGeometry(width, height, coverThick);
+            // 封面贴图在 +z (外侧)
+            const fCoverMats = [plainCoverMat, plainCoverMat, plainCoverMat, plainCoverMat, coverMat, plainCoverMat];
+            const frontCover = new THREE.Mesh(frontCoverGeom, fCoverMats);
+            frontCover.position.set(width / 2, 0, 0); 
+            frontCover.castShadow = true;
+            frontHinge.add(frontCover);
+
+            // 左内页块 (附着在前封面上)
+            // 减小厚度并增加间距，避免与封面重叠产生 Z-fighting
+            const pageThick = depth / 2 - coverThick - 0.01;
+            const pageBlockGeom = new THREE.BoxGeometry(width - 0.1, height - 0.3, pageThick);
+            // 左页文字在 -z (内侧)
+            const lPageMats = [pageEdgeMat, plainCoverMat, pageEdgeMat, pageEdgeMat, plainCoverMat, pageMatLeft];
+            const leftPages = new THREE.Mesh(pageBlockGeom, lPageMats);
+            leftPages.position.set(width / 2, 0, - (coverThick / 2 + 0.005 + pageThick / 2)); 
+            leftPages.castShadow = true;
+            frontHinge.add(leftPages);
+
+            // 3. 后半部(后封面+右页) 的旋转枢纽，位于书脊的后边缘 (-z方向)
+            const backHinge = new THREE.Group();
+            backHinge.position.set(coverThick / 2, 0, -depth / 2 + coverThick / 2);
+            root.add(backHinge);
+
+            // 后封面
+            const backCoverGeom = new THREE.BoxGeometry(width, height, coverThick);
+            // 封底贴图在 -z (外侧)
+            const bCoverMats = [plainCoverMat, plainCoverMat, plainCoverMat, plainCoverMat, plainCoverMat, coverMat];
+            const backCover = new THREE.Mesh(backCoverGeom, bCoverMats);
+            backCover.position.set(width / 2, 0, 0);
+            backCover.castShadow = true;
+            backHinge.add(backCover);
+
+            // 右内页块 (附着在后封面上)
+            // 右页文字在 +z (内侧)
+            const rPageMats = [pageEdgeMat, plainCoverMat, pageEdgeMat, pageEdgeMat, pageMatRight, plainCoverMat];
+            const rightPages = new THREE.Mesh(pageBlockGeom, rPageMats);
+            rightPages.position.set(width / 2, 0, (coverThick / 2 + 0.005 + pageThick / 2));
+            rightPages.castShadow = true;
+            backHinge.add(rightPages);
+
+            // 绑定数据供交互使用
+            root.userData = {
+                index: index,
+                frontHinge: frontHinge,
+                backHinge: backHinge,
+                hitMeshes: [frontCover, backCover, spine]
+            };
+
+            scene.add(root);
+            return root;
+        }
+
+        // 初始化书籍列表
+        function initBooks() {
+            // 根据数据列表生成多本书 (使用重复数据加长列表以演示滚动)
+            const totalToGenerate = 15; 
+            for (let i = 0; i < totalToGenerate; i++) {
+                const data = bookDataList[i % bookDataList.length];
+                const book = createBook(data, i);
+                
+                // 初始时放置在视野下方隐藏，准备开场动画
+                book.position.set(0, -30, 0); 
+                books.push(book);
+            }
+
+            // 启动开场动画
+            playIntroAnimation();
+        }
+
+        // 计算书籍在对角线上的目标位置和旋转
+        function calcBookTransform(virtualIndex) {
+            const { spacing, direction } = bookParams;
+            const centerIndex = books.length / 2;
+            
+            // 使得索引在 0 到 length 之间平滑循环
+            const total = books.length;
+            const wrappedIndex = ((virtualIndex % total) + total) % total;
+            const offsetDist = (wrappedIndex - centerIndex) * spacing;
+
+            const pos = new THREE.Vector3().copy(direction).multiplyScalar(offsetDist);
+            
+            // 调整整体偏移，使得画面居中且视觉舒适
+            pos.x += 10;
+            pos.y += 5;
+            pos.z -= 10;
+
+            // 固定的斜放角度 (模拟参考图的放置方式)
+            const rot = new THREE.Euler(0, -Math.PI / 8, -Math.PI / 16);
+
+            return { pos, rot };
+        }
+
+        // --- 动画函数 ---
+        // 播放开场动画：书籍依次飞入
+        function playIntroAnimation() {
+            appState.mode = 'ANIMATING';
+            
+            books.forEach((book, i) => {
+                const target = calcBookTransform(i);
+                
+                // 初始旋转设置得略微夸张，动画恢复正常
+                book.rotation.set(0, 0, -Math.PI/4);
+                
+                // 使用 GSAP 进行平滑动画
+                gsap.to(book.position, {
+                    x: target.pos.x,
+                    y: target.pos.y,
+                    z: target.pos.z,
+                    duration: 1.5,
+                    ease: "power3.out",
+                    delay: i * 0.1 // 依次出现
+                });
+
+                gsap.to(book.rotation, {
+                    x: target.rot.x,
+                    y: target.rot.y,
+                    z: target.rot.z,
+                    duration: 1.5,
+                    ease: "power3.out",
+                    delay: i * 0.1,
+                    onComplete: () => {
+                        // 最后一本书动画完成后，切换为空闲模式
+                        if (i === books.length - 1) {
+                            appState.mode = 'IDLE'; // 动画结束，允许交互
+                        }
+                    }
+                });
+            });
+        }
+
+        // 翻开选中的书籍 (优化视角和动画顺序)
+        function openBook(book) {
+            appState.mode = 'ANIMATING';
+            appState.activeBook = book;
+            
+            document.getElementById('controls').style.opacity = '0';
+            document.getElementById('controls').style.pointerEvents = 'none';
+            controls.enabled = false;
+
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    appState.mode = 'OPENED';
+                }
+            });
+
+            // --- 步骤 1: 其他书籍彻底滑出屏幕底端 ---
+            books.forEach(b => {
+                if (b !== book) {
+                    tl.to(b.position, { 
+                        y: -50, 
+                        duration: 0.8, 
+                        ease: "power3.in" 
+                    }, 0);
+                }
+            });
+
+            // --- 步骤 2: 选中书籍缓慢移动到屏幕中央 ---
+            const targetPos = new THREE.Vector3(0, 0.5, 18);
+            const { frontHinge, backHinge } = book.userData;
+            
+            // 提早一点开始移动
+            const startTime = 0.3; 
+
+            // 使用 power3.inOut 增加滑行的高级感，略微增加时长
+            tl.to(book.position, {
+                x: targetPos.x,
+                y: targetPos.y,
+                z: targetPos.z,
+                duration: 1.6,
+                ease: "power3.inOut"
+            }, startTime);
+
+            tl.to(book.rotation, {
+                x: 0, 
+                y: 0, 
+                z: 0,
+                duration: 1.6,
+                ease: "power3.inOut"
+            }, startTime);
+
+            tl.to(book.scale, {
+                x: 1.8,
+                y: 1.8,
+                z: 1.8,
+                duration: 1.6,
+                ease: "power3.inOut"
+            }, startTime);
+
+            // --- 步骤 3: 移动快结束时，提前开始翻开 (产生重叠和顺滑感) ---
+            // 移动动画总长 1.6s，我们在 1.0s 时就开始翻开，产生 0.6s 的动画交叠
+            const hingeStartTime = startTime + 1.0;
+
+            tl.to(frontHinge.rotation, {
+                y: -Math.PI * 0.95, 
+                duration: 1.6,
+                ease: "power3.inOut"
+            }, hingeStartTime);
+
+            tl.to(backHinge.rotation, {
+                y: Math.PI * 0.05, 
+                duration: 1.6,
+                ease: "power3.inOut"
+            }, hingeStartTime);
+        }
+
+        // 合上书籍并恢复列表
+        function closeBook() {
+            if (!appState.activeBook) return;
+            appState.mode = 'ANIMATING';
+            const book = appState.activeBook;
+
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    document.getElementById('controls').style.opacity = '1';
+                    document.getElementById('controls').style.pointerEvents = 'auto';
+                    controls.enabled = true;
+                    appState.activeBook = null;
+                    appState.mode = 'IDLE';
+                }
+            });
+
+            // 1. 先合上封面 (使用相同的顺滑缓动)
+            const { frontHinge, backHinge } = book.userData;
+            tl.to([frontHinge.rotation, backHinge.rotation], {
+                y: 0,
+                duration: 1.4,
+                ease: "power3.inOut"
+            }, 0);
+
+            // 2. 还没完全合上时，就开始向回飞 (动画交叠)
+            const moveBackStartTime = 0.8; 
+            const origTransform = calcBookTransform(book.userData.index + appState.scrollOffset);
+
+            tl.to(book.position, {
+                x: origTransform.pos.x,
+                y: origTransform.pos.y,
+                z: origTransform.pos.z,
+                duration: 1.5,
+                ease: "power3.inOut"
+            }, moveBackStartTime);
+
+            tl.to(book.rotation, {
+                x: origTransform.rot.x,
+                y: origTransform.rot.y,
+                z: origTransform.rot.z,
+                duration: 1.5,
+                ease: "power3.inOut"
+            }, moveBackStartTime);
+
+            tl.to(book.scale, {
+                x: 1, y: 1, z: 1,
+                duration: 1.5,
+                ease: "power3.inOut"
+            }, moveBackStartTime);
+
+            // 3. 其他书籍跟随升起就位
+            const othersStartTime = moveBackStartTime + 0.5;
+            books.forEach(b => {
+                if (b !== book) {
+                    const target = calcBookTransform(b.userData.index + appState.scrollOffset);
+                    tl.to(b.position, {
+                        y: target.pos.y,
+                        duration: 1.2,
+                        ease: "power3.out"
+                    }, othersStartTime);
+                }
+            });
+        }
+
+
+        
+        // --- 事件监听 ---
+        // 鼠标滚轮滑动列表
+        window.addEventListener('wheel', (event) => {
+            if (appState.mode !== 'IDLE') return; // 只有在空闲状态允许滚动
+            
+            // 根据滚轮方向调整目标偏移
+            const delta = Math.sign(event.deltaY) * 0.15;
+            appState.targetScrollOffset += delta;
+        }, { passive: true });
+
+        // 鼠标点击检测
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+
+        window.addEventListener('click', (event) => {
+            if (appState.mode === 'ANIMATING') return;
+
+            // 如果当前是打开状态，任意点击则关闭
+            if (appState.mode === 'OPENED') {
+                closeBook();
+                return;
+            }
+
+            // 在空闲状态检测点击
+            if (appState.mode === 'IDLE') {
+                // 将鼠标点击位置转换为归一化设备坐标 (-1 到 +1)
+                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+                // 通过摄像机和鼠标位置更新射线
+                raycaster.setFromCamera(mouse, camera);
+
+                // 收集所有用于射线检测的网格 (封面和书脊)
+                let hitTargets = [];
+                books.forEach(b => {
+                    hitTargets.push(...b.userData.hitMeshes);
+                });
+
+                // 计算物体和射线的焦点
+                const intersects = raycaster.intersectObjects(hitTargets);
+
+                if (intersects.length > 0) {
+                    // 向上回溯找到 Root Group (书籍对象)
+                    let object = intersects[0].object;
+                    let rootGroup = object.parent;
+                    while (rootGroup && !rootGroup.userData.hasOwnProperty('index')) {
+                        rootGroup = rootGroup.parent;
+                    }
+
+                    if (rootGroup) {
+                        openBook(rootGroup); // 打开点击的书籍
+                    }
+                }
+            }
+        });
+
+        // 间距滑块控制
+        const spacingSlider = document.getElementById('spacingSlider');
+        const spacingValue = document.getElementById('spacingValue');
+
+        spacingSlider.addEventListener('input', (event) => {
+            const val = parseFloat(event.target.value);
+            bookParams.spacing = val;
+            spacingValue.textContent = val.toFixed(1);
+            // 实时更新位置将在 render 循环的 IDLE 模式中自动应用
+        });
+
+        // 窗口尺寸自适应
+        window.addEventListener('resize', () => {
+            // 更新相机的宽高比和投影矩阵
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            // 更新渲染器的大小
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // 初始化应用
+        initBooks();
+
+        // 渲染循环
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // 仅在空闲状态下处理平滑滚动
+            if (appState.mode === 'IDLE') {
+                // 平滑插值 scrollOffset，实现惯性滚动效果
+                appState.scrollOffset += (appState.targetScrollOffset - appState.scrollOffset) * 0.1;
+
+                // 实时更新所有书籍的目标位置以实现滚动和间距调整响应
+                books.forEach(book => {
+                    const virtualIndex = book.userData.index + appState.scrollOffset;
+                    const target = calcBookTransform(virtualIndex);
+                    
+                    // 使用 lerp 平滑移动到目标位置
+                    book.position.lerp(target.pos, 0.1);
+                    // 保持设定的倾斜旋转
+                    book.rotation.set(target.rot.x, target.rot.y, target.rot.z);
+                });
+            }
+
+            // 更新轨道控制器
+            controls.update();
+            // 渲染场景
+            renderer.render(scene, camera);
+        }
+
+        // 启动渲染循环
+        window.onload = animate;
+
+    </script>
+</body>
+</html>

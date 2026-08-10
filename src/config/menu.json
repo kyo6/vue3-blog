@@ -1,29 +1,30 @@
-
+{
+  "Overview": [
     {
-      "Overview": [
-        {
-          "href": "templates/installation",
-          "title": "dg-components介绍"
-        }
-      ],
-      "Layout": [
-        {
-            "href": "templates/form",
-            "title": "FormLayout 表单布局"
-        }       
-      ],
-      "Components": [
-        {
-            "href": "templates/icons",
-            "title": "字体图标"
-        }
-      ],
-      "Slides": [
-        {
-            "href": "templates/slides-api-management-intro",
-            "title": "API管理模块"
-        }
-      ]
+      "href": "docs/installation",
+      "title": "dg-components介绍"
     }
-   
-  
+  ],
+  "Layout": [
+    {
+      "href": "docs/form",
+      "title": "FormLayout 表单布局"
+    }
+  ],
+  "Components": [
+    {
+      "href": "docs/icons",
+      "title": "字体图标"
+    }
+  ],
+  "Examples": [
+    {
+      "href": "docs/css-card",
+      "title": "CSS Card"
+    },
+    {
+      "href": "docs/tailwind-plugins",
+      "title": "Tailwind Plugins"
+    }
+  ]
+}
