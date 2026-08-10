@@ -8,6 +8,12 @@ const vueModules = import.meta.glob('./components/*.vue')
 
 const item = computed(() => works.find((w) => w.id === route.params.id))
 
+const resolvedSrc = computed(() => {
+  const src = item.value?.src
+  if (!src || /^https?:\/\//.test(src)) return src
+  return `${import.meta.env.BASE_URL}${src.replace(/^\//, '')}`
+})
+
 const VueWork = computed(() => {
   if (!item.value || item.value.type !== 'vue') return null
   const path = `./components/${item.value.component}.vue`
@@ -42,7 +48,7 @@ const VueWork = computed(() => {
 
     <!-- iframe 全屏嵌入 HTML -->
     <div v-if="item.type === 'iframe'" class="works-iframe-wrap">
-      <iframe :src="item.src" :title="item.title" class="works-iframe" />
+      <iframe :src="resolvedSrc" :title="item.title" class="works-iframe" />
     </div>
 
     <!-- Vue 作品组件 -->
@@ -54,7 +60,7 @@ const VueWork = computed(() => {
     <div v-else-if="item.type === 'link'" class="max-w-xl mx-auto px-6 py-20 text-center">
       <p class="text-slate-600 dark:text-slate-300 mb-6">{{ item.summary }}</p>
       <a
-        :href="item.src"
+        :href="resolvedSrc"
         target="_blank"
         rel="noopener noreferrer"
         class="inline-flex items-center gap-1 text-sky-500 hover:underline"
