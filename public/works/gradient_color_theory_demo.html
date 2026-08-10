@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>渐变色彩理论 — 从脏灰到清爽</title>
+<style>
+  :root {
+    /* Seed tokens for Nudge controls */
+    --seed-bg: #0e0e12;
+    --seed-fg: #e8e8ed;
+    --seed-primary: #6c6cff;
+    --seed-surface: #1a1a22;
+    --seed-radius: 16px;
+
+    /* Demo core colors */
+    --klein-blue: #002FA7;
+    --lemon-yellow: #FFF44F;
+    --cyan-mid: #00b4d8;
+    --green-mid: #7efcb1;
+
+    /* Derived from seeds */
+    --bg: var(--seed-bg);
+    --text: var(--seed-fg);
+    --accent: var(--seed-primary);
+    --surface: var(--seed-surface);
+    --radius: var(--seed-radius);
+    --surface-2: #24242f;
+    --text-dim: #8e8e9a;
+    --border-subtle: rgba(255,255,255,.06);
+    --border-light: rgba(255,255,255,.1);
+    --border-wheel: rgba(255,255,255,.2);
+    --tag-bad-bg: rgba(255,80,80,.15);
+    --tag-bad-text: #ff6b6b;
+    --tag-good-bg: rgba(80,220,120,.15);
+    --tag-good-text: #50dc78;
+    --label-bad-bg: rgba(255,80,80,.25);
+    --label-bad-text: #ff9999;
+    --label-good-bg: rgba(80,220,120,.25);
+    --label-good-text: #80f0a0;
+    --wheel-red: #ff0000;
+    --wheel-orange: #ff8800;
+    --wheel-yellow: #ffff00;
+    --wheel-lime: #88ff00;
+    --wheel-green: #00ff00;
+    --wheel-spring: #00ff88;
+    --wheel-cyan: #00ffff;
+    --wheel-azure: #0088ff;
+    --wheel-deep-blue: #0022aa;
+    --wheel-violet: #4400ff;
+    --wheel-purple: #8800ff;
+    --wheel-magenta: #ff00ff;
+    --wheel-rose: #ff0088;
+    --handle-shadow: rgba(0,0,0,.4);
+    --accent-alpha: rgba(108,108,255,.2);
+    --white: #ffffff;
+    --blue-light: #006adf;
+    --yellow-soft: #f0f060;
+    --overlay-bg: rgba(0,0,0,.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--klein-blue), var(--cyan-mid), var(--lemon-yellow), transparent);
+    top: 30%;
+    opacity: .15;
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--lemon-yellow), var(--cyan-mid), var(--klein-blue), transparent);
+    bottom: 30%;
+    opacity: .1;
+    pointer-events: none;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, var(--klein-blue), var(--lemon-yellow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p {
+    color: var(--text-dim);
+    font-size: 1.1rem;
+    text-align: center;
+    max-width: 520px;
+  }
+  .scroll-hint {
+    margin-top: 48px;
+    animation: bounce 2s infinite;
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+  @keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+  }
+
+  /* ── Section ── */
+  section {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 80px 24px;
+  }
+  .section-label {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .section-desc {
+    color: var(--text-dim);
+    font-size: 1rem;
+    max-width: 600px;
+    margin-bottom: 40px;
+  }
+
+  /* ── Gradient Comparison ── */
+  .gradient-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+  @media (max-width: 640px) {
+    .gradient-row { grid-template-columns: 1fr; }
+  }
+  .gradient-card {
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border-subtle);
+  }
+  .gradient-swatch {
+    height: 200px;
+    position: relative;
+  }
+  .gradient-swatch.direct {
+    background: linear-gradient(90deg, var(--klein-blue), var(--lemon-yellow));
+  }
+  .gradient-swatch.intermediate {
+    background: linear-gradient(90deg, var(--klein-blue), var(--cyan-mid), var(--lemon-yellow));
+  }
+  .gradient-info {
+    padding: 20px;
+  }
+  .gradient-info h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .gradient-info p {
+    font-size: .875rem;
+    color: var(--text-dim);
+  }
+  .tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 10px;
+  }
+  .tag.bad { background: var(--tag-bad-bg); color: var(--tag-bad-text); }
+  .tag.good { background: var(--tag-good-bg); color: var(--tag-good-text); }
+
+  /* ── Color Wheel ── */
+  .wheel-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+  .wheel-wrap {
+    position: relative;
+    width: 280px;
+    height: 280px;
+  }
+  .wheel-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 0deg,
+      var(--wheel-red) 0deg 30deg,
+      var(--wheel-orange) 30deg 60deg,
+      var(--wheel-yellow) 60deg 90deg,
+      var(--wheel-lime) 90deg 120deg,
+      var(--wheel-green) 120deg 150deg,
+      var(--wheel-spring) 150deg 180deg,
+      var(--wheel-cyan) 180deg 210deg,
+      var(--wheel-azure) 210deg 240deg,
+      var(--wheel-deep-blue) 240deg 270deg,
+      var(--wheel-violet) 270deg 300deg,
+      var(--wheel-purple) 300deg 330deg,
+      var(--wheel-magenta) 330deg 360deg
+    );
+    -webkit-mask: radial-gradient(circle, transparent 57%, black 58%, black 100%);
+    mask: radial-gradient(circle, transparent 57%, black 58%, black 100%);
+  }
+  .wheel-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  .wheel-explanation {
+    max-width: 340px;
+  }
+  .wheel-explanation h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .wheel-explanation p {
+    color: var(--text-dim);
+    font-size: .95rem;
+  }
+  .color-dot {
+    display: inline-block;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin: 0 3px;
+    border: 2px solid var(--border-wheel);
+  }
+
+  /* ── Technique Demo ── */
+  .technique-demo {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 32px;
+    border: 1px solid var(--border-subtle);
+  }
+  .technique-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 24px;
+  }
+  @media (max-width: 640px) {
+    .technique-comparison { grid-template-columns: 1fr; }
+  }
+  .technique-box {
+    text-align: center;
+  }
+  .technique-box h4 {
+    font-size: .95rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--text-dim);
+  }
+  .shape-container {
+    position: relative;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .shape {
+    width: 180px;
+    height: 140px;
+    border-radius: 20px;
+    position: relative;
+    overflow: visible;
+  }
+  .shape .fill {
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .shape.normal .fill {
+    background: linear-gradient(90deg, var(--klein-blue), var(--cyan-mid), var(--lemon-yellow));
+  }
+  .shape.extended .fill {
+    background: linear-gradient(90deg, var(--klein-blue), var(--cyan-mid), var(--lemon-yellow));
+    /* extended gradient via larger background */
+    width: 260px;
+    left: -40px;
+    background: linear-gradient(90deg, var(--klein-blue) 0%, var(--cyan-mid) 50%, var(--lemon-yellow) 100%);
+  }
+  .shape-guide {
+    position: absolute;
+    border: 1px dashed var(--border-wheel);
+    border-radius: 20px;
+    width: 180px;
+    height: 140px;
+    pointer-events: none;
+  }
+  .shape.extended .shape-gradient-bar {
+    position: absolute;
+    width: 260px;
+    height: 140px;
+    left: -40px;
+    top: 0;
+    border-radius: 12px;
+    background: linear-gradient(90deg, var(--klein-blue), var(--cyan-mid), var(--lemon-yellow));
+    opacity: .15;
+  }
+  .shape-label {
+    font-size: .85rem;
+    color: var(--text-dim);
+    margin-top: 12px;
+  }
+
+  /* ── Interactive Playground ── */
+  .playground {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 32px;
+    border: 1px solid var(--border-subtle);
+  }
+  .controls {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+    align-items: flex-end;
+  }
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .control-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-dim);
+  }
+  .control-group input[type="color"] {
+    width: 48px;
+    height: 36px;
+    border: 2px solid var(--border-light);
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+    padding: 2px;
+  }
+  .control-group select, .control-group input[type="range"] {
+    background: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .control-group input[type="range"] {
+    width: 140px;
+    padding: 0;
+    height: 6px;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 3px;
+    background: var(--surface-2);
+    outline: none;
+    margin-top: 10px;
+  }
+  .control-group input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    border: 2px solid var(--bg);
+  }
+  .preview-area {
+    height: 180px;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .preview-gradient {
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    transition: all .3s ease;
+  }
+  .preview-overflow {
+    position: absolute;
+    top: -10px; bottom: -10px;
+    border-radius: 12px;
+    transition: all .3s ease;
+    opacity: .3;
+    pointer-events: none;
+  }
+  .preview-shape {
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  /* ── Steps ── */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    margin-top: 20px;
+  }
+  .step {
+    display: flex;
+    gap: 20px;
+    padding: 20px 0;
+    position: relative;
+  }
+  .step-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--surface-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    position: relative;
+    z-index: 1;
+  }
+  .step:not(:last-child) .step-num::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: calc(100% + 20px);
+    background: var(--accent-alpha);
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .step-content h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .step-content p {
+    font-size: .9rem;
+    color: var(--text-dim);
+  }
+
+  /* ── Before/After Slider ── */
+  .ba-container {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    border-radius: var(--radius);
+    overflow: hidden;
+    height: 240px;
+    cursor: ew-resize;
+    user-select: none;
+  }
+  .ba-layer {
+    position: absolute;
+    inset: 0;
+  }
+  .ba-before {
+    background: linear-gradient(90deg, var(--klein-blue), var(--lemon-yellow));
+    z-index: 1;
+  }
+  .ba-after {
+    background: linear-gradient(90deg, var(--klein-blue), var(--cyan-mid), var(--green-mid), var(--lemon-yellow));
+    z-index: 0;
+  }
+  .ba-clip {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 2;
+    transition: clip-path .05s linear;
+  }
+  .ba-clip .ba-before {
+    position: absolute;
+    inset: 0;
+  }
+  .ba-handle {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 3px;
+    background: var(--white);
+    z-index: 3;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+  .ba-handle::after {
+    content: '⟵  ⟶';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--white);
+    color: var(--bg);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 12px var(--handle-shadow);
+  }
+  .ba-label {
+    position: absolute;
+    bottom: 16px;
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    z-index: 4;
+    pointer-events: none;
+    background: var(--overlay-bg);
+  }
+  .ba-label.left {
+    left: 16px;
+    background: var(--label-bad-bg);
+    color: var(--label-bad-text);
+  }
+  .ba-label.right {
+    right: 16px;
+    background: var(--label-good-bg);
+    color: var(--label-good-text);
+  }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--text-dim);
+    font-size: .85rem;
+    border-top: 1px solid var(--border-subtle);
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero" data-component="hero">
+  <h1>渐变色彩的秘密</h1>
+  <p>从脏兮兮的灰色到干净清爽的渐变，只需理解一个简单的原理</p>
+  <div class="scroll-hint">↓ 向下滚动探索</div>
+</div>
+
+<main>
+<!-- Section 1: The Problem -->
+<section data-component="problem">
+  <div class="section-label">问题</div>
+  <div class="section-title">克莱因蓝 + 柠檬黄 = 脏灰？</div>
+  <div class="section-desc">
+    将克莱因蓝和柠檬黄直接混合做渐变，中间会出现一段灰蒙蒙的"脏"区域。这是因为它们在色盘上处于对面位置，互相中和产生了灰色。
+  </div>
+
+  <div class="gradient-row">
+    <div class="gradient-card">
+      <div class="gradient-swatch direct"></div>
+      <div class="gradient-info">
+        <h3>直接渐变</h3>
+        <p>克莱因蓝 → 柠檬黄，中间出现明显的灰色脏区</p>
+        <span class="tag bad">脏兮兮 ✗</span>
+      </div>
+    </div>
+    <div class="gradient-card">
+      <div class="gradient-swatch intermediate"></div>
+      <div class="gradient-info">
+        <h3>加入中间色</h3>
+        <p>在两者之间插入青色过渡，灰色消失了</p>
+        <span class="tag good">干净清爽 ✓</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 2: Color Wheel -->
+<section data-component="color-wheel">
+  <div class="section-label">原理</div>
+  <div class="section-title">色盘上的对面 = 互相中和</div>
+  <div class="section-desc">
+    掏出祖传的色盘测一下，原来这两种颜色正好在色盘的对角位置。
+  </div>
+
+  <div class="wheel-container">
+    <div class="wheel-wrap">
+      <div class="wheel-ring" data-component="wheel-ring"></div>
+      <svg class="wheel-overlay" viewBox="0 0 280 280">
+        <!-- Inner circle (background) -->
+        <circle cx="140" cy="140" r="80" fill="var(--bg)"/>
+        <!-- Opposite line connecting the two markers -->
+        <line x1="37" y1="200" x2="243" y2="100" stroke="var(--border-wheel)" stroke-width="1" stroke-dasharray="4 4"/>
+        <!-- Klein blue marker at ~240° (lower-left) -->
+        <circle cx="37" cy="200" r="10" fill="var(--klein-blue)" stroke="var(--white)" stroke-width="2"/>
+        <text x="37" y="224" text-anchor="middle" fill="var(--white)" font-size="11" font-weight="600">克莱因蓝</text>
+        <!-- Lemon yellow marker at ~60° (upper-right) -->
+        <circle cx="243" cy="100" r="10" fill="var(--lemon-yellow)" stroke="var(--white)" stroke-width="2"/>
+        <text x="243" y="82" text-anchor="middle" fill="var(--lemon-yellow)" font-size="11" font-weight="600">柠檬黄</text>
+        <!-- Center text -->
+        <text x="140" y="136" text-anchor="middle" fill="var(--text-dim)" font-size="12">对面 = 中和</text>
+        <text x="140" y="152" text-anchor="middle" fill="var(--text-dim)" font-size="12">→ 灰色</text>
+      </svg>
+    </div>
+    <div class="wheel-explanation">
+      <h3>互补色的"中和反应"</h3>
+      <p>
+        在色盘上，<span class="color-dot" style="background:var(--klein-blue)"></span>克莱因蓝和<span class="color-dot" style="background:var(--lemon-yellow)"></span>柠檬黄几乎处于正对面。
+        当两种互补色直接混合时，它们会互相"抵消"各自的色彩特征，产生一段灰蒙蒙的中间区域。
+      </p>
+      <p style="margin-top: 12px;">
+        解决方法很简单：在两者之间插入一个<span class="color-dot" style="background:var(--cyan-mid)"></span>过渡色（如青色），让色彩沿着色盘的一侧平滑过渡，避免穿越灰色区域。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Section 3: Before/After -->
+<section data-component="comparison">
+  <div class="section-label">对比</div>
+  <div class="section-title">从灰蒙蒙到干净清爽</div>
+  <div class="section-desc">
+    拖动中间的滑块，对比直接渐变和加入中间色后的效果差异。
+  </div>
+
+  <div class="ba-container" id="baContainer">
+    <div class="ba-layer ba-after"></div>
+    <div class="ba-clip" id="baClip">
+      <div class="ba-layer ba-before"></div>
+    </div>
+    <div class="ba-handle" id="baHandle"></div>
+    <div class="ba-label left">直接渐变</div>
+    <div class="ba-label right">加入中间色</div>
+  </div>
+</section>
+
+<!-- Section 4: Technique -->
+<section data-component="technique">
+  <div class="section-label">技巧</div>
+  <div class="section-title">让渐变超出边界</div>
+  <div class="section-desc">
+    在软件里拉渐变时，让起始点和结束点适当超出图形范围，效果会更加自然和谐。
+  </div>
+
+  <div class="technique-demo">
+    <div class="technique-comparison">
+      <div class="technique-box">
+        <h4>❌ 渐变刚好在图形内</h4>
+        <div class="shape-container">
+          <div class="shape normal">
+            <div class="fill" style="background: linear-gradient(90deg, var(--klein-blue) 0%, var(--cyan-mid) 50%, var(--lemon-yellow) 100%);"></div>
+          </div>
+        </div>
+        <div class="shape-label">颜色在边缘处截断，过渡生硬</div>
+      </div>
+      <div class="technique-box">
+        <h4>✓ 渐变超出图形边界</h4>
+        <div class="shape-container">
+          <div class="shape" style="position:relative;">
+            <!-- Extended gradient bar behind -->
+            <div style="position:absolute; width:260px; height:140px; left:-40px; top:0; border-radius:12px; background:linear-gradient(90deg, var(--klein-blue), var(--cyan-mid), var(--lemon-yellow)); opacity:.2;"></div>
+            <!-- Clipped shape -->
+            <div class="fill" style="background: linear-gradient(90deg, var(--blue-light) 0%, var(--cyan-mid) 40%, var(--green-mid) 75%, var(--yellow-soft) 100%);"></div>
+          </div>
+        </div>
+        <div class="shape-label">颜色在边缘处仍在变化，过渡柔和自然</div>
+      </div>
+    </div>
+
+    <div class="steps" style="margin-top: 32px;">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>拉出渐变</h4>
+          <p>先正常拉一个从起始色到结束色的渐变</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>两端超出图形</h4>
+          <p>让渐变的起点和终点分别超出图形的左右边界，大约超出 20-30%</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>效果立竿见影</h4>
+          <p>图形内部的颜色过渡变得更加均匀柔和，不再有突兀的色块截断</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 5: Interactive Playground -->
+<section data-component="playground">
+  <div class="section-label">实验</div>
+  <div class="section-title">自己动手试试</div>
+  <div class="section-desc">
+    调整颜色、中间色和渐变范围，感受不同参数对渐变效果的影响。
+  </div>
+
+  <div class="playground">
+    <div class="controls">
+      <div class="control-group">
+        <label>起始色</label>
+        <input type="color" id="colorStart" value="#002FA7">
+      </div>
+      <div class="control-group">
+        <label>中间色</label>
+        <input type="color" id="colorMid" value="#00b4d8">
+      </div>
+      <div class="control-group">
+        <label>结束色</label>
+        <input type="color" id="colorEnd" value="#FFF44F">
+      </div>
+      <div class="control-group">
+        <label>渐变溢出: <span id="overflowVal">30</span>%</label>
+        <input type="range" id="overflow" min="0" max="60" value="30">
+      </div>
+      <div class="control-group">
+        <label>
+          <input type="checkbox" id="useMid" checked style="margin-right:6px;"> 使用中间色
+        </label>
+      </div>
+    </div>
+    <div class="preview-area" id="previewArea">
+      <div class="preview-gradient" id="previewGradient"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer data-component="footer">
+  渐变色彩理论演示 — 从脏灰到清爽的秘密
+</footer>
+
+<script>
+  // ── Before/After Slider ──
+  const baContainer = document.getElementById('baContainer');
+  const baClip = document.getElementById('baClip');
+  const baHandle = document.getElementById('baHandle');
+  let isDragging = false;
+
+  function updateBA(x) {
+    const rect = baContainer.getBoundingClientRect();
+    let pct = ((x - rect.left) / rect.width) * 100;
+    pct = Math.max(0, Math.min(100, pct));
+    baClip.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+    baHandle.style.left = pct + '%';
+  }
+
+  baContainer.addEventListener('mousedown', (e) => { isDragging = true; updateBA(e.clientX); });
+  window.addEventListener('mousemove', (e) => { if (isDragging) updateBA(e.clientX); });
+  window.addEventListener('mouseup', () => { isDragging = false; });
+  baContainer.addEventListener('touchstart', (e) => { isDragging = true; updateBA(e.touches[0].clientX); }, { passive: true });
+  window.addEventListener('touchmove', (e) => { if (isDragging) updateBA(e.touches[0].clientX); });
+  window.addEventListener('touchend', () => { isDragging = false; });
+
+  // Initialize at 50%
+  requestAnimationFrame(() => {
+    const rect = baContainer.getBoundingClientRect();
+    updateBA(rect.left + rect.width / 2);
+  });
+
+  // ── Interactive Playground ──
+  const colorStart = document.getElementById('colorStart');
+  const colorMid = document.getElementById('colorMid');
+  const colorEnd = document.getElementById('colorEnd');
+  const overflow = document.getElementById('overflow');
+  const overflowVal = document.getElementById('overflowVal');
+  const useMid = document.getElementById('useMid');
+  const previewGradient = document.getElementById('previewGradient');
+
+  function updatePlayground() {
+    const c1 = colorStart.value;
+    const c2 = colorMid.value;
+    const c3 = colorEnd.value;
+    const ov = parseInt(overflow.value);
+    const mid = useMid.checked;
+
+    overflowVal.textContent = ov;
+
+    let gradient;
+    if (mid) {
+      const totalExtra = ov;
+      const p1 = totalExtra / (100 + totalExtra * 2) * 100;
+      const p2 = (50 + totalExtra / 2) / (100 + totalExtra * 2) * 100;
+      const p3 = (100 + totalExtra) / (100 + totalExtra * 2) * 100;
+      gradient = `linear-gradient(90deg, ${c1} 0%, ${c2} ${p2.toFixed(0)}%, ${c3} 100%)`;
+    } else {
+      gradient = `linear-gradient(90deg, ${c1} 0%, ${c3} 100%)`;
+    }
+
+    previewGradient.style.background = gradient;
+  }
+
+  [colorStart, colorMid, colorEnd, overflow, useMid].forEach(el => {
+    el.addEventListener('input', updatePlayground);
+    el.addEventListener('change', updatePlayground);
+  });
+
+  updatePlayground();
+
+  // ── Scroll animations ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('section').forEach(s => {
+    s.style.opacity = '0';
+    s.style.transform = 'translateY(30px)';
+    s.style.transition = 'opacity .6s ease, transform .6s ease';
+    observer.observe(s);
+  });
+</script>
+</body>
+</html>

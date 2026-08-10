@@ -90,6 +90,17 @@ function run() {
     }
   })
 
+  // 按日期降序（新→旧）；无日期排在最后
+  result.sort((a, b) => {
+    if (!a.date && !b.date) return a.title.localeCompare(b.title, 'zh-CN')
+    if (!a.date) return 1
+    if (!b.date) return -1
+    return b.date.localeCompare(a.date)
+  })
+  result.forEach((item, index) => {
+    item.id = index + 1
+  })
+
   writeFileSync(OUTPUT_FILE, JSON.stringify(result, null, 2), 'utf-8')
   console.log(`✅ 已生成 ${result.length} 条记录 → ${OUTPUT_FILE}`)
   result.forEach((item) => console.log(`   [${item.id}] ${item.title}  (${item.date})`))

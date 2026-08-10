@@ -2,18 +2,16 @@ import { createRouter, createWebHistory } from 'vue-router'
 import BlogList from '../views/blog/List.vue'
 import BlogArticle from '../views/blog/Article.vue'
 
-const templateModules = import.meta.glob('../views/templates/*.vue')
+const docModules = import.meta.glob('../views/docs/*.vue')
 
-const templateChildren = Object.entries(templateModules).map(([filePath, component]) => {
+const docChildren = Object.entries(docModules).map(([filePath, component]) => {
   const name = filePath.match(/\/([^/]+)\.vue$/)[1]
   return {
     path: name,
-    name: `templates-${name}`,
+    name: `docs-${name}`,
     component
   }
 })
-
-const firstTemplatePath = templateChildren[0]?.path ?? ''
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,20 +27,50 @@ const router = createRouter({
       component: BlogArticle
     },
     {
-      path: '/show-case',
-      name: 'show-case',
-      component: () => import('../views/show-case/index.vue')
-    },
-    {
-      path: '/templates',
+      path: '/docs',
       component: () => import('../layout/sidebar.vue'),
       children: [
-        ...templateChildren,
+        ...docChildren,
         {
           path: '',
-          redirect: { name: `templates-${firstTemplatePath}` }
+          redirect: { name: 'docs-installation' }
         }
       ]
+    },
+    {
+      path: '/works',
+      name: 'works',
+      component: () => import('../views/works/index.vue')
+    },
+    {
+      path: '/works/:id',
+      name: 'works-detail',
+      component: () => import('../views/works/detail.vue')
+    },
+    // 旧路径兼容
+    {
+      path: '/templates/slides-api-management-intro',
+      redirect: '/works/slides-api-management-intro'
+    },
+    {
+      path: '/docs/slides-api-management-intro',
+      redirect: '/works/slides-api-management-intro'
+    },
+    {
+      path: '/docs/examples',
+      redirect: '/docs/css-card'
+    },
+    {
+      path: '/templates/:pathMatch(.*)*',
+      redirect: (to) => {
+        const rest = to.params.pathMatch
+        const suffix = Array.isArray(rest) ? rest.join('/') : rest || ''
+        return suffix ? `/docs/${suffix}` : '/docs'
+      }
+    },
+    {
+      path: '/show-case',
+      redirect: '/docs/css-card'
     }
   ]
 })

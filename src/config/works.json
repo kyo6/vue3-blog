@@ -1,0 +1,92 @@
+[
+  {
+    "id": "design-system",
+    "title": "Dashboard Design System",
+    "stack": "HTML / Tailwind",
+    "summary": "Dashboard 设计系统交互文档：色板、字体、间距、组件与层级规范。",
+    "type": "iframe",
+    "src": "/works/design_system.html",
+    "linkLabel": "查看页面",
+    "external": false
+  },
+  {
+    "id": "slides-api-management-intro",
+    "title": "API管理模块",
+    "stack": "Vue / Tailwind",
+    "summary": "测试平台 API 管理模块介绍幻灯片：接口定义、Schema 解析与文档生成。",
+    "type": "vue",
+    "component": "slides-api-management-intro",
+    "linkLabel": "查看项目",
+    "external": false
+  },
+  {
+    "id": "code-artifact",
+    "title": "智能用例体验复盘",
+    "stack": "HTML / Tailwind / Chart.js",
+    "summary": "智能生成用例的 UI/UX 体验升级复盘，含雷达图对比与交互说明。",
+    "type": "iframe",
+    "src": "/works/code_artifact.html",
+    "linkLabel": "查看页面",
+    "external": false
+  },
+  {
+    "id": "b2b-oauth-login",
+    "title": "企业统一认证登录",
+    "stack": "HTML / Tailwind",
+    "summary": "B2B 场景下的 CAS/OAuth 统一认证登录页，面向企业账号接入。",
+    "type": "iframe",
+    "src": "/works/b2b_oauth_login_page.html",
+    "linkLabel": "查看页面",
+    "external": false
+  },
+  {
+    "id": "login-with-gradient",
+    "title": "渐变风格登录页",
+    "stack": "HTML / Tailwind",
+    "summary": "企业统一认证登录的渐变视觉变体，强调品牌氛围与表单层次。",
+    "type": "iframe",
+    "src": "/works/login_with_gradient.html",
+    "linkLabel": "查看页面",
+    "external": false
+  },
+  {
+    "id": "weather-card",
+    "title": "Living Weather Card",
+    "stack": "HTML / Canvas",
+    "summary": "可交互的天气卡片：多层 Canvas 渲染天空、粒子与特效氛围。",
+    "type": "iframe",
+    "src": "/works/weather_card.html",
+    "linkLabel": "查看页面",
+    "external": false
+  },
+  {
+    "id": "3d-interactive-bookshelf",
+    "title": "3D Interactive Bookshelf",
+    "stack": "Three.js / GSAP",
+    "summary": "可交互的三维书架：OrbitControls 浏览，GSAP 驱动开合与聚焦动画。",
+    "type": "iframe",
+    "src": "/works/3d_interactive_bookshelf.html",
+    "linkLabel": "查看页面",
+    "external": false
+  },
+  {
+    "id": "gradient-color-theory",
+    "title": "渐变色彩理论 Demo",
+    "stack": "HTML / CSS",
+    "summary": "从脏灰到清爽：演示互补色混渐变为何发灰，以及更干净的过渡做法。",
+    "type": "iframe",
+    "src": "/works/gradient_color_theory_demo.html",
+    "linkLabel": "查看页面",
+    "external": false
+  },
+  {
+    "id": "color-design-guide",
+    "title": "配色判断指南",
+    "stack": "HTML / CSS",
+    "summary": "配色总是脏？用 5 个色彩判断标准，把「感觉好看」变成可执行决策。",
+    "type": "iframe",
+    "src": "/works/color_design_guide.html",
+    "linkLabel": "查看页面",
+    "external": false
+  }
+]

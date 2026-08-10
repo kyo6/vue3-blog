@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能生成用例 - UI/UX 体验升级复盘</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Chosen Palette: Warm neutrals (stone-50) for background, crisp white for content areas. Indigo-600 for primary branding/actions. Emerald-500 for success/completion states. Red-500/Orange-500 for error/destructive actions. -->
+    
+    <!-- Application Structure Plan: The SPA uses a classic left-navigation dashboard structure. This structure is chosen because a retrospective report contains multiple distinct facets (Overview, Step-by-Step Flow, Edge Cases, Tokens). A dashboard allows the reader to non-linearly explore the specific aspect of the UX upgrade they are most interested in, breaking the fatigue of reading a long top-to-bottom document. The "Interactive Flow" section uses a master-detail pattern to let users click through steps and see corresponding UI architectures. -->
+    
+    <!-- Visualization & Content Choices: 
+         1. V1 vs V2 Comparison -> Goal: Compare/Inform -> Radar Chart (Chart.js) -> Hover interaction -> Clearly visualizes the drastic improvement across UX dimensions. Chart.js chosen for Canvas rendering.
+         2. Agentic Workflow Steps (Step 0-3) -> Goal: Organize/Explain Flow -> Interactive Horizontal Step Timeline + HTML/CSS abstract UI wireframes -> Click interaction to switch context -> Replaces static flowcharts with explorable states without using SVG.
+         3. Rollback Mechanisms -> Goal: Compare relationships -> Split-path HTML/CSS diagram with interactive toggles -> Shows the distinct outcomes of Global vs Local rollback.
+         CONFIRMING NO SVG/MERMAID used. -->
+         
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+        
+        /* Required Chart Container Styling */
+        .chart-container { 
+            position: relative; 
+            width: 100%; 
+            max-width: 600px; 
+            margin-left: auto; 
+            margin-right: auto; 
+            height: 300px; 
+            max-height: 400px; 
+        }
+        @media (min-width: 768px) { .chart-container { height: 350px; } }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        .nav-btn.active { background-color: #eef2ff; color: #4f46e5; border-right: 3px solid #4f46e5; font-weight: 600; }
+        
+        .step-node { transition: all 0.3s ease; }
+        .step-node.active { background-color: #4f46e5; color: white; transform: scale(1.05); box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.4); }
+        .step-node.inactive { background-color: #f3f4f6; color: #6b7280; }
+        
+        .wireframe-block { transition: all 0.3s ease; border: 2px dashed #cbd5e1; background: #f8fafc; }
+        .wireframe-block.highlight { border-color: #4f46e5; background: #eef2ff; border-style: solid; }
+        .wireframe-block.danger { border-color: #ef4444; background: #fef2f2; border-style: solid; }
+    </style>
+</head>
+<body class="bg-stone-50 text-gray-800 h-screen flex overflow-hidden">
+
+    <!-- Sidebar Navigation -->
+    <nav class="w-64 bg-white border-r border-gray-200 flex flex-col shrink-0 z-20 shadow-sm">
+        <div class="p-5 border-b border-gray-100 flex items-center gap-2">
+            <span class="text-xl">✨</span>
+            <h1 class="text-base font-bold text-gray-900 tracking-tight">智能用例体验复盘</h1>
+        </div>
+        <div class="flex-1 overflow-y-auto py-3">
+            <ul class="space-y-1">
+                <li><button onclick="app.switchTab('overview')" id="nav-overview" class="nav-btn w-full text-left px-5 py-3 text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2"><span class="text-lg">🎯</span> 业务背景与改版概览</button></li>
+                <li><button onclick="app.switchTab('flow')" id="nav-flow" class="nav-btn w-full text-left px-5 py-3 text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2"><span class="text-lg">🔄</span> 核心交互流转演练</button></li>
+                <li><button onclick="app.switchTab('rollback')" id="nav-rollback" class="nav-btn w-full text-left px-5 py-3 text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2"><span class="text-lg">🛡️</span> 边界与容错防呆</button></li>
+                <li><button onclick="app.switchTab('tokens')" id="nav-tokens" class="nav-btn active w-full text-left px-5 py-3 text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2"><span class="text-lg">🎨</span> 规范与未来演进</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto p-6 lg:p-10 relative">
+
+        <!-- 视图 1: 概览与痛点 -->
+        <section id="view-overview" class="max-w-5xl mx-auto hidden animate-in fade-in duration-500">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">业务背景与升级概览</h2>
+                <p class="text-gray-600 leading-relaxed">为不熟悉此业务链路的评审团提供全局上下文基建。我们通过将松散的对话工具升级为强引导的 <strong>Agentic Workflow（智能体工作流）</strong>，彻底解决了信息层级混乱的问题。</p>
+            </div>
+
+            <!-- 整体流程简介 -->
+            <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-6 mb-8 shadow-sm">
+                <h3 class="text-lg font-bold text-indigo-900 mb-2 flex items-center gap-2"><span class="text-xl">🚀</span> 什么是“智能生成用例”？</h3>
+                <p class="text-sm text-indigo-800 mb-5 leading-relaxed">这是一个基于大模型的测试效能工具。它旨在将非结构化的长篇需求文档，自动化转化为结构化、可落地的测试用例。完整的业务流转被严谨地切分为以下三个核心阶段：</p>
+                
+                <div class="flex flex-col md:flex-row items-stretch md:items-center gap-3">
+                    <div class="flex-1 bg-white p-4 rounded-lg shadow-sm border border-indigo-100 relative">
+                        <span class="absolute top-0 right-0 bg-indigo-100 text-indigo-700 text-[10px] font-bold px-2 py-1 rounded-bl-lg rounded-tr-lg">Step 1</span>
+                        <h4 class="font-bold text-gray-900 text-sm mb-1">需求分析</h4>
+                        <p class="text-xs text-gray-500 leading-relaxed">用户输入 TB 需求或上传附件，AI 提取核心业务目标与非功能性要求。</p>
+                    </div>
+                    <div class="hidden md:block text-indigo-300 font-bold">➔</div>
+                    <div class="text-center md:hidden text-indigo-300 font-bold">⬇</div>
+                    <div class="flex-1 bg-white p-4 rounded-lg shadow-sm border border-indigo-100 relative">
+                        <span class="absolute top-0 right-0 bg-indigo-100 text-indigo-700 text-[10px] font-bold px-2 py-1 rounded-bl-lg rounded-tr-lg">Step 2</span>
+                        <h4 class="font-bold text-gray-900 text-sm mb-1">功能点拆分</h4>
+                        <p class="text-xs text-gray-500 leading-relaxed">将需求解析为具象化的“模块 -> 功能点”树状结构，供用户确认和勾选。</p>
+                    </div>
+                    <div class="hidden md:block text-indigo-300 font-bold">➔</div>
+                    <div class="text-center md:hidden text-indigo-300 font-bold">⬇</div>
+                    <div class="flex-1 bg-white p-4 rounded-lg shadow-sm border border-indigo-100 relative">
+                        <span class="absolute top-0 right-0 bg-indigo-100 text-indigo-700 text-[10px] font-bold px-2 py-1 rounded-bl-lg rounded-tr-lg">Step 3</span>
+                        <h4 class="font-bold text-gray-900 text-sm mb-1">用例生成</h4>
+                        <p class="text-xs text-gray-500 leading-relaxed">基于勾选的边界，AI 最终吐出包含前置条件与验证步骤的结构化用例表格。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- 痛点列表 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2"><span class="text-red-500">❌</span> V1 版本的历史局限与痛点</h3>
+                        <p class="text-xs text-gray-500 mb-4 leading-relaxed bg-gray-50 p-2 rounded border border-gray-100">
+                            <strong>关于 V1：</strong> V1 版本是我们上线的初版 MVP。它采用了类似 ChatGPT 的单向瀑布流聊天形态。在处理 B 端复杂的长文分析时，暴露出了严重的交互瓶颈：
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="p-3 bg-red-50 rounded-lg border border-red-100 flex items-start gap-3">
+                                <span class="mt-0.5 text-red-500">📍</span>
+                                <div><strong class="text-red-800 text-sm block mb-0.5">缺乏全局进度，终点迷失</strong><span class="text-xs text-gray-600">行内散落的标签导致用户无法预期全貌。</span></div>
+                            </li>
+                            <li class="p-3 bg-red-50 rounded-lg border border-red-100 flex items-start gap-3">
+                                <span class="mt-0.5 text-red-500">🌫️</span>
+                                <div><strong class="text-red-800 text-sm block mb-0.5">信息区块模糊，视线跳跃</strong><span class="text-xs text-gray-600">指令、摘要、待确认点平铺，人机边界缺失。</span></div>
+                            </li>
+                            <li class="p-3 bg-red-50 rounded-lg border border-red-100 flex items-start gap-3">
+                                <span class="mt-0.5 text-red-500">🖱️</span>
+                                <div><strong class="text-red-800 text-sm block mb-0.5">操作区缺乏视觉聚焦</strong><span class="text-xs text-gray-600">决定业务走向的操作被淹没在长文本中。</span></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 效果对比雷达图 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex flex-col">
+                    <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center gap-2"><span class="text-emerald-500">📈</span> 体验提升维度对比</h3>
+                    <p class="text-xs text-gray-500 mb-4">引入三大理念：Copilot表单、UI数据降维、状态-操作合一</p>
+                    <div class="flex-1 flex items-center justify-center">
+                        <div class="chart-container">
+                            <canvas id="radarChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 视图 2: 核心交互流转 -->
+        <section id="view-flow" class="max-w-6xl mx-auto hidden animate-in fade-in duration-500">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">核心页面流转与架构拆解</h2>
+                <p class="text-gray-600">点击下方不同阶段，查看每个步骤的设计动作及其在界面架构中的物理映射。</p>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2 md:gap-4 mb-8 bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+                <button onclick="app.selectStep('step0')" id="btn-step0" class="step-node active px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2"><span>1</span> 初始态 (IDLE)</button>
+                <span class="text-gray-300 font-bold hidden md:inline">➔</span>
+                <button onclick="app.selectStep('step1')" id="btn-step1" class="step-node inactive px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2"><span>2</span> 需求分析</button>
+                <span class="text-gray-300 font-bold hidden md:inline">➔</span>
+                <button onclick="app.selectStep('step2')" id="btn-step2" class="step-node inactive px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2"><span>3</span> 功能点拆分</button>
+                <span class="text-gray-300 font-bold hidden md:inline">➔</span>
+                <button onclick="app.selectStep('step3')" id="btn-step3" class="step-node inactive px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2"><span>4</span> 用例生成与确认</button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div class="lg:col-span-5 bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col justify-center">
+                    <div id="step-content"></div>
+                </div>
+                <div class="lg:col-span-7 bg-gray-50 rounded-xl shadow-inner border border-gray-200 p-6 flex flex-col gap-3 min-h-[400px]">
+                    <div class="wireframe-block rounded-md p-3 flex justify-between items-center bg-white shadow-sm border-gray-200">
+                        <div class="h-4 w-24 bg-gray-200 rounded"></div>
+                        <div class="h-4 w-48 bg-indigo-100 rounded"></div>
+                    </div>
+                    <div id="ui-wireframe-container" class="flex-1 flex flex-col gap-3"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 视图 3: 回退与防呆 -->
+        <section id="view-rollback" class="max-w-5xl mx-auto hidden animate-in fade-in duration-500">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">边界容错处理：防呆与时光机</h2>
+                <p class="text-gray-600">拆分了两套独立的回退机制，保障业务边界场景的安全性与顺畅度。</p>
+            </div>
+            <!-- 回退与防呆内容 (保留之前结构，已压缩) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- 破坏性重置 -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="bg-red-50 p-4 border-b border-red-100 flex items-center gap-2"><span class="text-xl">⚠️</span><h3 class="font-bold text-red-800">通道 A：全局重置 (破坏性)</h3></div>
+                    <div class="p-6">
+                        <p class="text-sm text-gray-600 mb-4"><strong>场景：</strong> 用户想彻底换一个需求做，完全推翻当前。</p>
+                        <div class="flex flex-col items-center gap-2">
+                            <div class="w-full border border-gray-200 rounded p-3 text-center text-sm font-medium">点击右上角 [开启新分析]</div>
+                            <div class="text-gray-400 font-bold">⬇</div>
+                            <div class="w-full border-2 border-red-400 bg-red-50 rounded-lg p-4 text-center"><span class="block text-red-600 font-bold mb-1">强制弹出二次确认框</span><span class="text-xs text-red-500">"清空进度，不可撤销"</span></div>
+                            <div class="text-gray-400 font-bold">⬇</div>
+                            <div class="w-full border border-gray-200 bg-gray-100 rounded p-3 text-center text-sm text-gray-500">状态机清空，打回 IDLE 白板</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 上下文纠偏 -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="bg-indigo-50 p-4 border-b border-indigo-100 flex items-center gap-2"><span class="text-xl">⏱️</span><h3 class="font-bold text-indigo-800">通道 B：局部回退 (时光机)</h3></div>
+                    <div class="p-6">
+                        <p class="text-sm text-gray-600 mb-4"><strong>场景：</strong> 用户到 Step 3，需微调 Step 2 漏选的功能点。</p>
+                        <div class="flex flex-col items-center gap-2">
+                            <div class="w-full border border-indigo-200 bg-white shadow-sm rounded p-3 flex justify-between items-center text-sm"><span class="text-gray-500">Step 2 历史卡片</span><span class="bg-indigo-100 text-indigo-700 px-2 py-1 rounded text-xs font-bold">已确认 ▾</span></div>
+                            <div class="text-indigo-400 font-bold">⬇ 下拉菜单点击</div>
+                            <div class="w-full border-2 border-indigo-400 bg-indigo-50 rounded-lg p-4 text-center"><span class="block text-indigo-700 font-bold mb-1">选择 [回退至此步骤]</span><span class="text-xs text-indigo-500">平滑回退，保留勾选记忆</span></div>
+                            <div class="text-indigo-400 font-bold">⬇</div>
+                            <div class="w-full border-2 border-indigo-500 bg-white rounded p-3 text-center text-sm font-bold text-indigo-600 shadow-md">Step 2 卡片重新激活 (Active)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 视图 4: 规范与演进 -->
+        <section id="view-tokens" class="max-w-5xl mx-auto block animate-in fade-in duration-500">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">设计规范沉淀 & UI 组件示例库</h2>
+                <p class="text-gray-600">沉淀一致的 Design Tokens（颜色、界线），并将抽象结构具象化为标准的组件画廊，供前后端研发无缝对齐。</p>
+            </div>
+
+            <!-- 【核心新增】页面底色声明与 Token 体系 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <h3 class="font-bold text-gray-900 mb-4 border-b pb-2">🎨 核心调色板 (Colors)</h3>
+                    <div class="space-y-4">
+                        <!-- 页面底色强调 -->
+                        <div class="flex items-center gap-3 p-2 bg-gray-50 rounded-lg border border-gray-100">
+                            <div class="w-8 h-8 rounded bg-[#F4F5F7] border border-gray-300 shadow-inner flex items-center justify-center text-[10px] font-bold text-gray-400">bg</div>
+                            <div>
+                                <p class="font-bold text-sm text-gray-800">Gray-50 (#F4F5F7)</p>
+                                <p class="text-xs text-gray-500">全局页面底色。<strong>极浅灰</strong>，专用于托底以衬托纯白卡片，营造空间深度。</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-indigo-600 shadow-sm"></div>
+                            <div><p class="font-bold text-sm text-gray-800">Indigo 600 (#4f46e5)</p><p class="text-xs text-gray-500">主品牌色 / 主要按钮 / 进度高亮</p></div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-emerald-500 shadow-sm"></div>
+                            <div><p class="font-bold text-sm text-gray-800">Emerald 500 / Green 500</p><p class="text-xs text-gray-500">沉淀状态 / 完成徽章 / 成功提示</p></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <h3 class="font-bold text-gray-900 mb-4 border-b pb-2">📏 角色界线色 (Indicator Lines)</h3>
+                    <div class="space-y-5 mt-4">
+                        <div class="flex items-start gap-3">
+                            <div class="w-1.5 h-10 bg-red-500 rounded-full mt-1"></div>
+                            <div><p class="font-bold text-sm text-gray-800">User 角色 (Red-500)</p><p class="text-xs text-gray-500 leading-relaxed mt-1">代表用户下发的原始指令，红色具有明确的主观输入属性。</p></div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-1.5 h-10 bg-gray-300 rounded-full mt-1"></div>
+                            <div><p class="font-bold text-sm text-gray-800">AI 历史记录 (Gray-300)</p><p class="text-xs text-gray-500 leading-relaxed mt-1">已沉淀的历史步骤，配合 Opacity-60 实现视觉降噪。</p></div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-1.5 h-10 bg-indigo-500 rounded-full mt-1"></div>
+                            <div><p class="font-bold text-sm text-gray-800">User Proxy 待操作 (Indigo-500)</p><p class="text-xs text-gray-500 leading-relaxed mt-1">底部操作拦截区，提示“此时需要人工介入流转”。</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 【核心新增】UI 组件示例库 (Component Gallery) -->
+            <div class="mb-10">
+                <h3 class="text-xl font-bold text-gray-900 mb-3 flex items-center gap-2">🧩 核心组件 UI 示例陈列室</h3>
+                <p class="text-sm text-gray-600 mb-5 leading-relaxed">
+                    下方模拟了基于 <strong class="text-indigo-600 bg-indigo-50 px-1 rounded">Gray-50 底色</strong> 环境下的真实组件渲染效果。请注意阴影 (`shadow-sm` / `shadow-md`) 和圆角 (`rounded-xl`) 在不同状态卡片上的区别。
+                </p>
+                
+                <!-- 结果：创建一个浅灰背景的沙盒区域，完美凸显纯白卡片的阴影和层级 -->
+                <div class="bg-[#F4F5F7] p-6 lg:p-8 rounded-2xl border border-gray-200 shadow-inner flex flex-col gap-6">
+                    
+                    <!-- 1. GlobalStepper -->
+                    <div class="w-full">
+                        <span class="text-xs font-bold text-gray-400 mb-2 block uppercase tracking-wider">1. GlobalStepper (全局步骤条)</span>
+                        <div class="bg-white border-y border-gray-200 px-4 py-3 shadow-sm flex items-center justify-between rounded-lg">
+                            <div class="flex items-center gap-2 text-indigo-600 font-bold text-sm">✨ 智能生成用例</div>
+                            <div class="flex items-center gap-3 text-xs font-medium">
+                                <span class="text-gray-500 flex items-center gap-1">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+                                    1. 需求分析
+                                </span>
+                                <span class="text-gray-300">➔</span>
+                                <span class="text-indigo-600 flex items-center gap-1">
+                                    <span class="w-4 h-4 rounded-full bg-indigo-100 flex items-center justify-center text-[9px] font-bold">2</span> 
+                                    2. 功能点拆分
+                                </span>
+                                <span class="text-gray-300">➔</span>
+                                <span class="text-gray-400">3. 用例生成与确认</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. RequirementSourceCard -->
+                    <div class="w-full max-w-2xl">
+                        <span class="text-xs font-bold text-gray-400 mb-2 block uppercase tracking-wider">2. RequirementSourceCard (需求来源聚合卡片)</span>
+                        <!-- 结果：还原完整的大卡片形态，包含灰底的结构化需求选择和白底的非结构化输入框 -->
+                        <div class="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-200 overflow-hidden flex flex-col">
+                            
+                            <!-- 上半部：TB需求关联 -->
+                            <div class="p-5 border-b border-gray-100 bg-gray-50/50">
+                                <h4 class="text-sm font-bold text-gray-800 mb-3">选择关联的 TB 需求</h4>
+                                <div class="p-3 rounded-lg border-2 border-indigo-500 bg-indigo-50/40 flex items-center gap-3">
+                                    <input type="checkbox" checked class="w-3.5 h-3.5 text-indigo-600 rounded" readOnly/>
+                                    <span class="text-xs font-medium text-gray-800">库存查询新增出入库统计，对仓库统一管理</span>
+                                </div>
+                            </div>
+                            
+                            <!-- 下半部：内聚式输入表单 -->
+                            <div class="p-5">
+                                <div class="relative border border-gray-300 rounded-xl bg-white shadow-sm flex flex-col">
+                                    <textarea 
+                                        placeholder="在此输入自定义需求描述，或直接粘贴大段内容..." 
+                                        class="w-full min-h-[120px] p-3 pb-14 text-xs text-gray-800 bg-transparent border-none focus:outline-none focus:ring-0 resize-y placeholder-gray-400 leading-relaxed rounded-xl"
+                                        readOnly
+                                    ></textarea>
+                                    
+                                    <!-- 结果：使用绝对定位将附件和提交按钮死死钉在输入框内部底部 -->
+                                    <div class="absolute bottom-2 left-2 right-2 flex items-center justify-between pt-2">
+                                        <div class="flex items-center">
+                                            <button class="px-2 py-1.5 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors flex items-center gap-1.5 text-xs font-medium">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+                                                添加附件
+                                            </button>
+                                        </div>
+                                        <button class="flex items-center gap-1.5 px-4 py-1.5 bg-indigo-600 text-white rounded-lg text-xs font-bold shadow-sm">
+                                            智能分析 
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"></path><path d="M12 19V5"></path></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- 3. UserMessageCard -->
+                    <div class="w-full max-w-2xl pl-2">
+                        <span class="text-xs font-bold text-gray-400 mb-2 block uppercase tracking-wider">3. UserMessageCard (用户指令卡片)</span>
+                        <div class="flex gap-3">
+                            <div class="w-1 bg-red-500 rounded-full shrink-0 shadow-sm"></div>
+                            <div class="flex flex-col gap-0.5">
+                                <div class="text-gray-500 text-[11px] font-bold">USER</div>
+                                <p class="text-gray-800 text-sm font-medium">请基于选中的需求，开始拆分功能点。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. AgentRuningCard -->
+                    <div class="w-full max-w-2xl pl-6">
+                        <span class="text-xs font-bold text-gray-400 mb-2 block uppercase tracking-wider">4. AgentRuningCard (智能体加载卡片)</span>
+                        <div class="bg-white rounded-xl shadow-md border border-indigo-200 overflow-hidden ring-2 ring-indigo-50">
+                            <div class="bg-gradient-to-r from-indigo-50 to-white px-4 py-2.5 border-b border-indigo-100 flex items-center gap-2">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="animate-spin text-indigo-600"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
+                                <span class="text-xs font-bold text-indigo-700">智能体正在思考并拆分功能树...</span>
+                            </div>
+                            <div class="p-5 space-y-4 animate-pulse">
+                                <div class="h-3 w-1/3 bg-gray-200 rounded"></div>
+                                <div class="h-2 w-full bg-gray-100 rounded"></div>
+                                <div class="h-2 w-4/5 bg-gray-100 rounded"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. AgentCard (Done State) -->
+                    <div class="w-full max-w-2xl pl-6">
+                        <span class="text-xs font-bold text-gray-400 mb-2 block uppercase tracking-wider">5. AgentCard (智能体结果卡片)</span>
+                        <div class="bg-white rounded-xl shadow-[0_4px_12px_rgb(0,0,0,0.05)] border border-indigo-100 overflow-hidden">
+                            <div class="bg-indigo-50/50 px-4 py-2.5 border-b border-indigo-100 flex items-center justify-between">
+                                <span class="text-xs font-bold text-indigo-700 flex items-center gap-1.5"><span class="text-green-500">✓</span> 功能点拆分完成</span>
+                            </div>
+                            <div class="p-5">
+                                <h4 class="font-bold text-gray-900 text-sm mb-2">外控报表数据流改造</h4>
+                                <div class="p-3 border border-gray-200 rounded-lg bg-gray-50 text-xs text-gray-500">此处承载完整的树状拆分结构...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 6. AgentErrorCard (新增: 异常中断卡片) -->
+                    <div class="w-full max-w-2xl pl-6">
+                        <span class="text-xs font-bold text-gray-400 mb-2 block uppercase tracking-wider">6. AgentErrorCard (异常中断卡片)</span>
+                        <div class="bg-white rounded-xl shadow-md border border-red-200 overflow-hidden ring-2 ring-red-50">
+                            <!-- 结果：使用红色系顶部栏，搭配清晰的预警图标，在第一时间截断用户的等待焦虑 -->
+                            <div class="bg-red-50/80 px-4 py-2.5 border-b border-red-100 flex items-center justify-between">
+                                <span class="text-xs font-bold text-red-600 flex items-center gap-1.5">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                    智能体执行异常中断
+                                </span>
+                                <span class="text-[10px] text-red-400 font-medium">ERR_TIMEOUT</span>
+                            </div>
+                            <div class="p-5 flex flex-col items-start gap-4">
+                                <!-- 结果：将生硬的报错信息转化为友好的用户行动建议 -->
+                                <p class="text-xs text-red-800 bg-red-50 border border-red-100 p-3 rounded-lg w-full leading-relaxed">
+                                    AI 在提取业务逻辑时失去响应。这可能是由于长文本解析超时导致，建议原参重试。如果持续报错，请尝试精简文本后重新分析。
+                                </p>
+                                <!-- 结果：高内聚的“原参重试”按钮，降低阻断感 -->
+                                <button class="bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 hover:border-red-300 px-4 py-1.5 rounded-md text-xs font-bold shadow-sm transition-colors flex items-center gap-1.5">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hover:animate-spin"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+                                    原参数重新分析
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 7. HistoryAgentMessage -->
+                    <div class="w-full max-w-2xl pl-2">
+                        <span class="text-xs font-bold text-gray-400 mb-2 block uppercase tracking-wider">7. HistoryAgentMessage (历史折叠卡片)</span>
+                        <div class="flex gap-3 opacity-60 hover:opacity-100 transition-opacity">
+                            <div class="w-1 bg-gray-300 rounded-full shrink-0"></div>
+                            <div class="flex-1">
+                                <div class="text-gray-500 text-[11px] font-bold mb-1">需求分析智能体</div>
+                                <div class="bg-white rounded-lg border border-gray-200 p-3 flex items-center justify-between">
+                                    <span class="text-xs text-gray-600 flex items-center gap-1.5"><span class="text-green-500">✓</span> 结构化需求概要已生成...</span>
+                                    <span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded cursor-pointer">已确认 ▾</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 8. UserProxyAction -->
+                    <div class="w-full max-w-2xl pl-2">
+                        <span class="text-xs font-bold text-gray-400 mb-2 block uppercase tracking-wider">8. UserProxyAction (流转确认区)</span>
+                        <div class="flex gap-3">
+                            <div class="w-1 bg-indigo-500 rounded-full shrink-0"></div>
+                            <div class="flex-1 flex flex-col gap-2">
+                                <div class="text-indigo-600 text-[11px] font-bold">USER_ACTION</div>
+                                <div class="bg-white border border-indigo-100 rounded-lg p-4 shadow-sm">
+                                    <label class="block text-xs font-medium text-gray-700 mb-2">补充生成要求（可选）</label>
+                                    <div class="w-full h-16 p-2.5 text-xs border border-gray-200 rounded-md bg-gray-50 mb-3 text-gray-400 flex items-start">
+                                        例如：重点关注边界值、异常场景、权限校验等...
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <button class="text-gray-500 hover:text-gray-800 text-xs font-medium px-2 py-1 transition-colors">重新分析功能点</button>
+                                        <button class="bg-indigo-600 text-white px-4 py-1.5 rounded-md text-xs font-bold shadow-sm hover:bg-indigo-700 transition-colors">生成选中功能点测试用例 (3)</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="bg-indigo-50 border border-indigo-100 p-6 rounded-xl">
+                <h3 class="font-bold text-indigo-900 mb-4 flex items-center gap-2"><span class="text-xl">🚀</span> 未来架构演进 (Roadmap)</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-indigo-100">
+                        <strong class="block text-indigo-700 text-sm mb-1">沉浸式全屏模态框</strong>
+                        <p class="text-xs text-gray-600">针对 Step 3 动辄数百条的长文本用例，提供媲美 Excel 的宽屏重度编辑体验。</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-indigo-100">
+                        <strong class="block text-indigo-700 text-sm mb-1">前端草稿箱 (持久化)</strong>
+                        <p class="text-xs text-gray-600">引入 LocalStorage 或 IndexedDB，彻底解决意外关闭页面导致的进度丢失问题。</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-indigo-100">
+                        <strong class="block text-indigo-700 text-sm mb-1">RLHF 数据闭环反馈</strong>
+                        <p class="text-xs text-gray-600">结果卡片增加轻量化的赞/踩组件，打通用户行为与后端大模型训练反馈链路。</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        // Data for the Interactive Flow Diagram
+        const flowSteps = {
+            step0: {
+                title: "Step 0：初始态 (IDLE)",
+                subtitle: "高内聚的白板聚焦",
+                value: "打造沉浸式的输入体验（Blank Slate）。并引入防御性交互——在未提供物料前，锁定“开始分析”按钮，从源头杜绝 AI 空转报错。",
+                ui: `
+                    <div class="wireframe-block highlight p-8 flex flex-col items-center justify-center gap-4 text-center min-h-[300px]">
+                        <div class="text-4xl">📝</div>
+                        <strong class="text-indigo-700">巨大聚合输入容器</strong>
+                        <div class="w-full bg-white border border-indigo-200 rounded p-4 shadow-sm">
+                            <div class="h-8 bg-gray-100 rounded mb-2 w-full flex items-center px-2 text-xs text-gray-400">选择关联TB需求...</div>
+                            <div class="h-20 bg-gray-100 rounded w-full flex items-end justify-between p-2">
+                                <span class="text-xs text-gray-400">输入补充描述或附件...</span>
+                                <div class="px-3 py-1 bg-indigo-500 text-white rounded text-xs font-bold">开始分析</div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            step1: {
+                title: "Step 1：需求分析",
+                subtitle: "缓解等待焦虑与结果沉淀",
+                value: "RUNNING 态用“呼吸灯骨架屏”暗示生产力。DONE 态应用 Markdown 的 UI 化渲染（加粗、色底纹），将非结构化长文本提炼为业务要点摘要。",
+                ui: `
+                    <div class="wireframe-block p-3 border-gray-300 opacity-60">
+                        <div class="text-xs text-gray-500 mb-1">锁定输入源 (Read-only)</div>
+                        <div class="h-10 bg-gray-200 rounded"></div>
+                    </div>
+                    <div class="wireframe-block highlight p-4">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                            <span class="text-xs font-bold text-indigo-700">AI 智能体输出卡片 (Done)</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="h-4 w-1/3 bg-gray-300 rounded"></div>
+                            <div class="h-3 w-full bg-gray-200 rounded"></div>
+                            <div class="h-3 w-5/6 bg-gray-200 rounded"></div>
+                            <div class="p-2 border-l-2 border-indigo-400 bg-indigo-50 h-10 w-full mt-2"></div>
+                        </div>
+                    </div>
+                    <div class="wireframe-block border-indigo-300 bg-white p-3 flex justify-between items-center shadow-sm">
+                        <span class="text-xs text-gray-500 flex items-center gap-2"><div class="w-1 h-4 bg-indigo-500"></div> User Proxy Action</span>
+                        <div class="px-3 py-1 bg-green-500 text-white rounded text-xs font-bold">确认需求，去拆分</div>
+                    </div>
+                `
+            },
+            step2: {
+                title: "Step 2：功能点拆分 (核心)",
+                subtitle: "数据降维体验与树状结构",
+                value: "彻底抛弃臃肿列表。引入模块级“半选/全选联动”心智模型。根据模块 -> 业务流，设计包含彩色徽章和视觉线的父子树状界面。",
+                ui: `
+                    <div class="wireframe-block p-2 border-gray-300 opacity-40 h-10 flex items-center px-4"><span class="text-xs text-gray-500">历史卡片 (折叠)</span></div>
+                    <div class="wireframe-block highlight p-4">
+                        <div class="text-xs font-bold text-indigo-700 mb-3">功能拆分树状试图 (Tree View)</div>
+                        <div class="border border-indigo-100 rounded bg-white">
+                            <div class="bg-gray-50 p-2 border-b text-xs font-bold flex gap-2"><input type="checkbox" checked/> [模块 1] RPT056改造</div>
+                            <div class="p-2 pl-6 space-y-2">
+                                <div class="flex items-center gap-2 text-xs text-gray-600"><input type="checkbox" checked/> 1.1 数据过滤生成</div>
+                                <div class="flex items-center gap-2 text-xs text-gray-600"><input type="checkbox" checked/> 1.2 异常落库处理</div>
+                            </div>
+                        </div>
+                        <div class="border border-indigo-100 rounded bg-white mt-2">
+                            <div class="bg-gray-50 p-2 border-b text-xs font-bold flex gap-2"><input type="checkbox" style="opacity:0.5"/> [模块 2] RPT062改造 (半选)</div>
+                            <div class="p-2 pl-6 space-y-2">
+                                <div class="flex items-center gap-2 text-xs text-gray-600"><input type="checkbox" checked/> 2.1 字段提取</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wireframe-block border-indigo-300 bg-white p-3 flex justify-end">
+                        <div class="px-3 py-1 bg-indigo-600 text-white rounded text-xs font-bold">生成用例 (3)</div>
+                    </div>
+                `
+            },
+            step3: {
+                title: "Step 3：用例生成与确认",
+                subtitle: "数据看板(Metrics)驱动",
+                value: "在长表格上方引入“四格数据看板”，直观透出“总数、覆盖点、高风险”等核心业务指标。帮助管理层 3 秒完成质量宏观评估。",
+                ui: `
+                    <div class="wireframe-block highlight p-4">
+                        <div class="grid grid-cols-4 gap-2 mb-4">
+                            <div class="bg-white border rounded p-2 text-center"><div class="text-[10px] text-gray-500">生成用例</div><div class="font-bold text-lg">14</div></div>
+                            <div class="bg-white border rounded p-2 text-center"><div class="text-[10px] text-gray-500">覆盖点</div><div class="font-bold text-lg">3</div></div>
+                            <div class="bg-white border border-red-200 bg-red-50 rounded p-2 text-center"><div class="text-[10px] text-red-500">高风险</div><div class="font-bold text-lg text-red-600">12</div></div>
+                            <div class="bg-white border rounded p-2 text-center"><div class="text-[10px] text-gray-500">已选</div><div class="font-bold text-lg">0</div></div>
+                        </div>
+                        <div class="w-full h-32 bg-white border rounded overflow-hidden flex flex-col">
+                            <div class="h-6 bg-gray-100 border-b flex items-center px-2 gap-2 text-[10px]"><input type="checkbox"/> <span class="flex-1">名称</span><span>等级</span><span>操作</span></div>
+                            <div class="h-8 border-b flex items-center px-2 gap-2 text-[10px] bg-white"><input type="checkbox"/> <span class="flex-1 text-indigo-600">订单取消流程</span><span class="text-red-500">P0</span><span class="text-gray-400">编辑</span></div>
+                            <div class="h-8 flex items-center px-2 gap-2 text-[10px] bg-gray-50"><input type="checkbox"/> <span class="flex-1 text-indigo-600">用户鉴权校验</span><span class="text-indigo-500">P1</span><span class="text-gray-400">编辑</span></div>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        const app = {
+            radarChart: null,
+            
+            init() {
+                this.initChart();
+                this.switchTab('tokens'); // Set default to Tokens for review
+            },
+
+            switchTab(tabId) {
+                // Hide all views
+                document.querySelectorAll('main > section').forEach(el => el.classList.add('hidden'));
+                document.getElementById('view-' + tabId).classList.remove('hidden');
+                document.getElementById('view-' + tabId).classList.add('block');
+                
+                // Update nav styling
+                document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+                document.getElementById('nav-' + tabId).classList.add('active');
+            },
+
+            selectStep(stepKey) {
+                // Update button styling
+                document.querySelectorAll('.step-node').forEach(el => {
+                    el.classList.remove('active');
+                    el.classList.add('inactive');
+                });
+                document.getElementById('btn-' + stepKey).classList.remove('inactive');
+                document.getElementById('btn-' + stepKey).classList.add('active');
+
+                // Update text content
+                const data = flowSteps[stepKey];
+                document.getElementById('step-content').innerHTML = `
+                    <h3 class="text-xl font-bold text-indigo-600 mb-1">${data.title}</h3>
+                    <h4 class="text-sm font-semibold text-gray-800 mb-4">${data.subtitle}</h4>
+                    <p class="text-gray-600 text-sm leading-relaxed p-4 bg-indigo-50 rounded-lg border border-indigo-100 shadow-inner">
+                        <span class="text-lg mr-1">💡</span> ${data.value}
+                    </p>
+                `;
+
+                // Update UI Wireframe container
+                document.getElementById('ui-wireframe-container').innerHTML = data.ui;
+            },
+
+            initChart() {
+                const ctx = document.getElementById('radarChart').getContext('2d');
+                this.radarChart = new Chart(ctx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['全局掌控感', '信息信噪比', '操作防呆容错', '结构清晰度', '交互反馈效率'],
+                        datasets: [
+                            {
+                                label: 'V1 旧版架构',
+                                data: [30, 40, 30, 45, 50],
+                                fill: true,
+                                backgroundColor: 'rgba(156, 163, 175, 0.2)',
+                                borderColor: 'rgb(156, 163, 175)',
+                                pointBackgroundColor: 'rgb(156, 163, 175)',
+                                pointBorderColor: '#fff',
+                                pointHoverBackgroundColor: '#fff',
+                                pointHoverBorderColor: 'rgb(156, 163, 175)',
+                                borderDash: [5, 5],
+                                borderWidth: 2
+                            },
+                            {
+                                label: 'V2 智能体工作流升级',
+                                data: [95, 90, 95, 95, 90],
+                                fill: true,
+                                backgroundColor: 'rgba(79, 70, 229, 0.2)',
+                                borderColor: 'rgb(79, 70, 229)',
+                                pointBackgroundColor: 'rgb(79, 70, 229)',
+                                pointBorderColor: '#fff',
+                                pointHoverBackgroundColor: '#fff',
+                                pointHoverBorderColor: 'rgb(79, 70, 229)',
+                                borderWidth: 3
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                angleLines: { color: 'rgba(0, 0, 0, 0.05)' },
+                                grid: { color: 'rgba(0, 0, 0, 0.05)' },
+                                pointLabels: { font: { size: 11, family: 'sans-serif', weight: 'bold' }, color: '#4b5563' },
+                                ticks: { display: false, min: 0, max: 100 }
+                            }
+                        },
+                        plugins: {
+                            legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8, font: { size: 12 } } },
+                            tooltip: { backgroundColor: 'rgba(17, 24, 39, 0.9)', padding: 12, cornerRadius: 8 }
+                        }
+                    }
+                });
+            }
+        };
+
+        window.onload = function() {
+            app.init();
+        };
+    </script>
+</body>
+</html>
