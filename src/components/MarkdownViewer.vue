@@ -102,13 +102,50 @@ md.core.ruler.after('anchor', 'collect_headings', (state) => {
   state.env.headings = headings
 })
 
+/** GitHub Pages 等子路径部署时，根路径资源需拼接 BASE_URL（与 works/detail 一致） */
+const resolvePublicUrl = (url) => {
+  if (!url) return url
+  const trimmed = url.trim()
+  if (
+    /^(https?:|data:|blob:|mailto:|tel:)/i.test(trimmed) ||
+    trimmed.startsWith('#') ||
+    trimmed.startsWith('//')
+  ) {
+    return trimmed
+  }
+  const base = import.meta.env.BASE_URL || '/'
+  if (trimmed.startsWith(base)) return trimmed
+  if (trimmed.startsWith('/')) return `${base}${trimmed.slice(1)}`
+  return trimmed
+}
+
+const rewritePublicUrls = (html) => {
+  // 保留代码块原样，避免把示例路径也改成带 base 的地址
+  const placeholders = []
+  const withoutPre = html.replace(/<pre[\s\S]*?<\/pre>/gi, (block) => {
+    const key = `\u0000PRE${placeholders.length}\u0000`
+    placeholders.push(block)
+    return key
+  })
+
+  let out = withoutPre.replace(/\b(src|href)=(["'])([^"']*)\2/gi, (_, attr, quote, url) => {
+    return `${attr}=${quote}${resolvePublicUrl(url)}${quote}`
+  })
+  out = out.replace(/url\((['"]?)([^'")]+)\1\)/gi, (_, quote, url) => {
+    const resolved = resolvePublicUrl(url)
+    return quote ? `url(${quote}${resolved}${quote})` : `url(${resolved})`
+  })
+
+  return out.replace(/\u0000PRE(\d+)\u0000/g, (_, i) => placeholders[Number(i)])
+}
+
 const renderResult = computed(() => {
   try {
     if (!props.markdown) {
       return { html: '<p>No content</p>', headings: [] }
     }
     const env = {}
-    const html = md.render(props.markdown, env)
+    const html = rewritePublicUrls(md.render(props.markdown, env))
     return { html, headings: env.headings || [] }
   } catch (error) {
     console.error('Error rendering markdown:', error)
