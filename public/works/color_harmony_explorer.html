@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Color Harmony Explorer</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #111;
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+  .widget-title {
+    font-size: 28px;
+    font-weight: 400;
+    padding: 32px 40px 16px;
+    letter-spacing: -0.3px;
+  }
+
+  .canvas-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0 0;
+  }
+
+  canvas#wheel {
+    display: block;
+    width: 420px;
+    height: 340px;
+  }
+
+  .palette-bar {
+    display: flex;
+    gap: 8px;
+    max-width: 700px;
+    width: 100%;
+    margin: 24px auto 0;
+    padding: 0 40px;
+  }
+
+  .palette-block {
+    height: 44px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: #fff;
+    transition: background-color 0.3s;
+  }
+
+  .palette-block.primary   { flex: 6; }
+  .palette-block.secondary { flex: 3; }
+  .palette-block.accent    { flex: 1; min-width: 60px; }
+
+  .hud-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    max-width: 700px;
+    margin: 28px auto 0;
+    padding: 0 40px;
+  }
+
+  .hud-item {
+    flex: 1;
+    text-align: center;
+    padding: 0 16px;
+  }
+
+  .hud-label {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 4px;
+  }
+
+  .hud-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .hud-divider {
+    width: 1px;
+    height: 28px;
+    background: #444;
+    flex-shrink: 0;
+  }
+
+  .controls-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    max-width: 700px;
+    margin: 32px auto 0;
+    padding: 0 40px 40px;
+    flex-wrap: wrap;
+  }
+
+  .control-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .control-label {
+    font-size: 15px;
+    color: #ccc;
+    white-space: nowrap;
+  }
+
+  select.ctrl-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: #1e1e1e;
+    color: #fff;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 8px 32px 8px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999' d='M3 5l3 3 3-3'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    transition: border-color 0.2s;
+  }
+
+  select.ctrl-select:hover { border-color: #555; }
+  select.ctrl-select:focus { border-color: #666; }
+
+  .slider-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+  }
+
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 160px;
+    height: 4px;
+    border-radius: 2px;
+    background: #333;
+    outline: none;
+    cursor: pointer;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    border: none;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    cursor: pointer;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    border: none;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    cursor: pointer;
+  }
+
+  input[type="number"] {
+    background: #1e1e1e;
+    color: #fff;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
+    width: 64px;
+    text-align: center;
+    outline: none;
+    -moz-appearance: textfield;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"]:focus { border-color: #555; }
+</style>
+</head>
+<body>
+
+<div class="widget-title">Color Harmony Explorer</div>
+
+<div class="canvas-wrap">
+  <canvas id="wheel" width="420" height="340"></canvas>
+</div>
+
+<div class="palette-bar">
+  <div class="palette-block primary"   id="block-primary"></div>
+  <div class="palette-block secondary" id="block-secondary"></div>
+  <div class="palette-block accent"    id="block-accent"></div>
+</div>
+
+<div class="hud-row">
+  <div class="hud-item">
+    <div class="hud-label">Primary</div>
+    <div class="hud-value" id="hud-primary">60%</div>
+  </div>
+  <div class="hud-divider"></div>
+  <div class="hud-item">
+    <div class="hud-label">Secondary</div>
+    <div class="hud-value" id="hud-secondary">30%</div>
+  </div>
+  <div class="hud-divider"></div>
+  <div class="hud-item">
+    <div class="hud-label">Accent</div>
+    <div class="hud-value" id="hud-accent">10%</div>
+  </div>
+</div>
+
+<div class="controls-row">
+  <div class="control-group">
+    <span class="control-label">Harmony Logic</span>
+    <select class="ctrl-select" id="harmony-select">
+      <option value="monochromatic">monochromatic</option>
+      <option value="analogous" selected>analogous</option>
+      <option value="complementary">complementary</option>
+    </select>
+  </div>
+  <div class="slider-group">
+    <span class="control-label">Base Hue</span>
+    <input type="range" id="hue-slider" min="0" max="360" step="1" value="210">
+    <input type="number" id="hue-input" min="0" max="360" step="1" value="210">
+  </div>
+</div>
+
+<script>
+(() => {
+  const canvas = document.getElementById('wheel');
+  const ctx = canvas.getContext('2d');
+  const select = document.getElementById('harmony-select');
+  const slider = document.getElementById('hue-slider');
+  const input  = document.getElementById('hue-input');
+
+  const blockPrimary   = document.getElementById('block-primary');
+  const blockSecondary = document.getElementById('block-secondary');
+  const blockAccent    = document.getElementById('block-accent');
+
+  // High-DPI support — keep CSS size fixed; only grow the backing store.
+  // Reading getBoundingClientRect after setting canvas.width without a CSS lock
+  // makes the display size follow the bitmap and grow on every redraw.
+  const LOGICAL_W = 420;
+  const LOGICAL_H = 340;
+  let dpr = 1;
+  let w = LOGICAL_W;
+  let h = LOGICAL_H;
+
+  function setupCanvas() {
+    dpr = window.devicePixelRatio || 1;
+    w = LOGICAL_W;
+    h = LOGICAL_H;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    canvas.style.width = `${w}px`;
+    canvas.style.height = `${h}px`;
+  }
+
+  function getHarmonyHues(base, mode) {
+    if (mode === 'monochromatic') {
+      return [
+        { h: base, s: 70, l: 40 },
+        { h: base, s: 50, l: 65 },
+        { h: base, s: 90, l: 20 }
+      ];
+    } else if (mode === 'analogous') {
+      return [
+        { h: base, s: 70, l: 50 },
+        { h: (base + 30) % 360, s: 70, l: 50 },
+        { h: (base - 30 + 360) % 360, s: 70, l: 50 }
+      ];
+    } else if (mode === 'complementary') {
+      const comp = (base + 180) % 360;
+      return [
+        { h: base, s: 70, l: 50 },
+        { h: base, s: 40, l: 75 },
+        { h: comp, s: 80, l: 50 }
+      ];
+    }
+    return [];
+  }
+
+  function draw() {
+    const harmony = select.value;
+    const baseHue = parseInt(slider.value, 10);
+
+    // Setting canvas.width/height clears the canvas AND resets the transform to identity
+    setupCanvas();
+    ctx.scale(dpr, dpr);
+
+    const cx = w / 2;
+    const cy = h * 0.44;
+    const radius = Math.min(w, h) * 0.32;
+    const innerRadius = radius * 0.52;
+    const harmonyColors = getHarmonyHues(baseHue, harmony);
+
+    // Draw 12-segment color wheel
+    for (let i = 0; i < 12; i++) {
+      const startAngle = (i * 30 - 105) * Math.PI / 180;
+      const endAngle   = ((i + 1) * 30 - 105) * Math.PI / 180;
+      const midHue = i * 30;
+
+      let isSelected = false;
+      let selectionColor = null;
+
+      for (const c of harmonyColors) {
+        const diff = Math.abs(c.h - midHue);
+        const wrapDiff = Math.min(diff, 360 - diff);
+        if (wrapDiff < 15) {
+          isSelected = true;
+          selectionColor = `hsl(${c.h}, ${c.s}%, ${c.l}%)`;
+          break;
+        }
+      }
+
+      const drawRadius = isSelected ? radius * 1.12 : radius;
+
+      ctx.beginPath();
+      ctx.moveTo(cx + Math.cos(startAngle) * innerRadius, cy + Math.sin(startAngle) * innerRadius);
+      ctx.arc(cx, cy, drawRadius, startAngle, endAngle);
+      ctx.arc(cx, cy, innerRadius, endAngle, startAngle, true);
+      ctx.closePath();
+
+      ctx.fillStyle = `hsl(${midHue}, 70%, 50%)`;
+      ctx.fill();
+
+      if (isSelected) {
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+      } else {
+        ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+    }
+
+    // Center label
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.font = 'bold 15px -apple-system, BlinkMacSystemFont, sans-serif';
+    ctx.fillStyle = '#fff';
+    ctx.fillText(harmony.toUpperCase(), cx, cy);
+
+    // Palette blocks
+    const labels = ['60% Primary', '30% Secondary', '10% Accent'];
+    const blocks = [blockPrimary, blockSecondary, blockAccent];
+    const ratios = [0.6, 0.3, 0.1];
+
+    harmonyColors.forEach((color, i) => {
+      const fill = `hsl(${color.h}, ${color.s}%, ${color.l}%)`;
+      blocks[i].style.backgroundColor = fill;
+      blocks[i].textContent = labels[i];
+      blocks[i].style.color = color.l > 60 ? '#000' : '#fff';
+    });
+  }
+
+  // Sync slider <-> number input
+  slider.addEventListener('input', () => {
+    input.value = slider.value;
+    draw();
+  });
+
+  input.addEventListener('input', () => {
+    let v = parseInt(input.value, 10);
+    if (isNaN(v)) return;
+    v = Math.max(0, Math.min(360, v));
+    slider.value = v;
+    draw();
+  });
+
+  select.addEventListener('change', draw);
+
+  window.addEventListener('resize', draw);
+  draw();
+})();
+</script>
+</body>
+</html>

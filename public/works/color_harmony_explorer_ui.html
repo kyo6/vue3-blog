@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>色彩和谐探索器 (Color Harmony Explorer)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+
+        .color-wheel {
+            position: relative;
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            background: conic-gradient(
+                hsl(0, 100%, 50%), 
+                hsl(60, 100%, 50%), 
+                hsl(120, 100%, 50%), 
+                hsl(180, 100%, 50%), 
+                hsl(240, 100%, 50%), 
+                hsl(300, 100%, 50%), 
+                hsl(360, 100%, 50%)
+            );
+            box-shadow: inset 0 0 0 8px white, 0 8px 24px -6px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+
+        .color-wheel::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1) inset;
+        }
+
+        .marker {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border: 3px solid #111;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            transition: top 0.1s, left 0.1s, opacity 0.3s;
+        }
+
+        .marker.primary { width: 24px; height: 24px; border-width: 4px; }
+        .marker.accent { border-color: #fff; box-shadow: 0 0 0 2px #111, 0 4px 8px rgba(0,0,0,0.3); }
+
+        /* Custom Range Slider */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 2px solid #e5e7eb;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            cursor: pointer;
+            margin-top: -8px;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            background: linear-gradient(to right, 
+                hsl(0, 100%, 50%), hsl(60, 100%, 50%), hsl(120, 100%, 50%), 
+                hsl(180, 100%, 50%), hsl(240, 100%, 50%), hsl(300, 100%, 50%), hsl(360, 100%, 50%)
+            );
+            border-radius: 9999px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 sm:p-8">
+
+    <div class="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Left Column: Controls & Theory -->
+        <div class="lg:col-span-5 flex flex-col gap-6">
+            
+            <div class="bg-white rounded-2xl shadow-xl shadow-gray-200/50 p-6 sm:p-8 border border-gray-100">
+                <div class="mb-8">
+                    <h1 class="text-2xl font-bold text-gray-900 tracking-tight">色彩和谐探索器</h1>
+                    <p class="text-sm text-gray-500 mt-2">实时可视化配色逻辑与 60-30-10 原则</p>
+                </div>
+
+                <!-- Controls -->
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3">
+                            色彩逻辑 (Harmony Logic)
+                        </label>
+                        <div class="grid grid-cols-3 gap-2 p-1 bg-gray-100 rounded-lg">
+                            <button class="harmony-btn active px-3 py-2 text-xs font-medium rounded-md bg-white shadow-sm text-gray-900 transition-all" data-mode="monochromatic">
+                                同色系
+                            </button>
+                            <button class="harmony-btn px-3 py-2 text-xs font-medium rounded-md text-gray-500 hover:text-gray-900 transition-all" data-mode="analogous">
+                                邻近色
+                            </button>
+                            <button class="harmony-btn px-3 py-2 text-xs font-medium rounded-md text-gray-500 hover:text-gray-900 transition-all" data-mode="complementary">
+                                对比色
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-gray-100">
+                        <div class="flex justify-between items-center mb-3">
+                            <label class="block text-sm font-semibold text-gray-700">
+                                主色相 (Base Hue)
+                            </label>
+                            <span id="hue-value" class="text-xs font-mono font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded">210°</span>
+                        </div>
+                        <input type="range" id="hue-slider" min="0" max="360" value="210" class="w-full">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theory Description Card -->
+            <div class="bg-white rounded-2xl shadow-lg shadow-gray-200/40 p-6 border border-gray-100 flex-1">
+                <h3 class="text-sm font-bold text-gray-900 mb-2 uppercase tracking-wide flex items-center gap-2">
+                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    当前原理
+                </h3>
+                <p id="theory-desc" class="text-sm text-gray-600 leading-relaxed">
+                    <!-- Injected by JS -->
+                </p>
+            </div>
+        </div>
+
+        <!-- Right Column: Visualization -->
+        <div class="lg:col-span-7 flex flex-col gap-6">
+            
+            <!-- Top Visualization Area -->
+            <div class="bg-gray-900 rounded-2xl shadow-xl overflow-hidden relative flex flex-col sm:flex-row items-center justify-center p-8 gap-12 min-h-[320px]">
+                
+                <!-- Color Wheel -->
+                <div class="relative flex-shrink-0">
+                    <div class="color-wheel" id="color-wheel">
+                        <!-- Markers injected by JS -->
+                    </div>
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+                        <div class="text-center">
+                            <div class="text-[10px] uppercase tracking-widest text-gray-400 font-semibold">Base</div>
+                            <div id="center-hex" class="text-sm font-mono font-bold text-gray-900 mt-0.5">#000000</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 60-30-10 Blocks -->
+                <div class="flex-1 w-full max-w-xs flex flex-col gap-3">
+                    <div class="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">面积法则 60-30-10</div>
+                    
+                    <!-- 60% Primary -->
+                    <div class="relative group">
+                        <div class="h-16 w-full rounded-xl shadow-lg transition-colors duration-300 flex items-end p-3" id="block-60">
+                            <span class="text-xs font-bold opacity-80" id="text-60">60% 主色 (Primary)</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 30% Secondary -->
+                    <div class="relative group">
+                        <div class="h-10 w-[70%] rounded-lg shadow-md transition-colors duration-300 flex items-end p-2" id="block-30">
+                            <span class="text-[10px] font-bold opacity-80" id="text-30">30% 辅色 (Secondary)</span>
+                        </div>
+                    </div>
+
+                    <!-- 10% Accent -->
+                    <div class="relative group">
+                        <div class="h-8 w-[50%] rounded-md shadow-sm transition-colors duration-300 flex items-end p-2" id="block-10">
+                            <span class="text-[10px] font-bold opacity-80" id="text-10">10% 点缀（Accent）</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Practical UI Application -->
+            <div class="bg-white rounded-2xl shadow-lg shadow-gray-200/40 p-6 border border-gray-100 flex-1 transition-colors duration-500" id="ui-mockup-bg">
+                <h3 class="text-sm font-bold text-gray-900 mb-6 uppercase tracking-wide">
+                    界面落地演示 (UI Mockup)
+                </h3>
+                
+                <!-- Mockup App Window -->
+                <div class="max-w-md mx-auto bg-white rounded-xl overflow-hidden shadow-2xl border border-gray-100 flex flex-col transition-all duration-300">
+                    
+                    <!-- Mockup Header -->
+                    <div class="h-16 flex items-center justify-between px-6 transition-colors duration-300" id="mockup-header">
+                        <div class="w-8 h-8 rounded-full bg-white/30 flex items-center justify-center">
+                            <div class="w-3 h-3 rounded-full bg-white"></div>
+                        </div>
+                        <div class="flex gap-2">
+                            <div class="w-4 h-4 rounded-full bg-white/20"></div>
+                            <div class="w-4 h-4 rounded-full bg-white/20"></div>
+                        </div>
+                    </div>
+
+                    <!-- Mockup Content -->
+                    <div class="p-6">
+                        <div class="w-1/3 h-3 bg-gray-200 rounded-full mb-3"></div>
+                        <div class="w-2/3 h-5 bg-gray-800 rounded-full mb-6"></div>
+
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <!-- Card 1 -->
+                            <div class="rounded-xl p-4 transition-colors duration-300" id="mockup-card-1">
+                                <div class="w-6 h-6 rounded-full mb-3 transition-colors duration-300" id="mockup-icon-1"></div>
+                                <div class="w-full h-2 bg-gray-800/10 rounded-full mb-2"></div>
+                                <div class="w-2/3 h-2 bg-gray-800/10 rounded-full"></div>
+                            </div>
+                            <!-- Card 2 -->
+                            <div class="rounded-xl p-4 transition-colors duration-300" id="mockup-card-2">
+                                <div class="w-6 h-6 rounded-full mb-3 transition-colors duration-300" id="mockup-icon-2"></div>
+                                <div class="w-full h-2 bg-gray-800/10 rounded-full mb-2"></div>
+                                <div class="w-2/3 h-2 bg-gray-800/10 rounded-full"></div>
+                            </div>
+                        </div>
+
+                        <!-- CTA Button -->
+                        <button class="w-full py-3 rounded-lg font-bold text-sm shadow-md transition-all duration-300 hover:shadow-lg transform hover:-translate-y-0.5 flex items-center justify-center gap-2" id="mockup-cta">
+                            立即升级 (Upgrade Now)
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const hueSlider = document.getElementById('hue-slider');
+        const hueValue = document.getElementById('hue-value');
+        const harmonyBtns = document.querySelectorAll('.harmony-btn');
+        const colorWheel = document.getElementById('color-wheel');
+        const centerHex = document.getElementById('center-hex');
+        const theoryDesc = document.getElementById('theory-desc');
+        
+        // 60-30-10 Blocks
+        const block60 = document.getElementById('block-60');
+        const text60 = document.getElementById('text-60');
+        const block30 = document.getElementById('block-30');
+        const text30 = document.getElementById('text-30');
+        const block10 = document.getElementById('block-10');
+        const text10 = document.getElementById('text-10');
+
+        // UI Mockup Elements
+        const uiBg = document.getElementById('ui-mockup-bg');
+        const mockupHeader = document.getElementById('mockup-header');
+        const mockupCard1 = document.getElementById('mockup-card-1');
+        const mockupCard2 = document.getElementById('mockup-card-2');
+        const mockupIcon1 = document.getElementById('mockup-icon-1');
+        const mockupIcon2 = document.getElementById('mockup-icon-2');
+        const mockupCta = document.getElementById('mockup-cta');
+
+        // State
+        let currentMode = 'monochromatic';
+        let currentHue = parseInt(hueSlider.value);
+
+        // Theory Texts
+        const theories = {
+            'monochromatic': "<strong>同色系 (Monochromatic)：</strong>锁定单一色相，仅通过明度 (Lightness) 和纯度 (Saturation) 的变化来构建层次。这是最安全的配色法，能最大程度降低视觉噪音，适合需要高度专注或专业感极强的B端后台界面。",
+            'analogous': "<strong>邻近色 (Analogous)：</strong>在色环上取相距 30° 左右的颜色。它们拥有相似的光谱波长，视觉过渡极为平滑自然。常用于构建氛围感，但切记要分出主次（60-30-10），不能让几个颜色面积均等。",
+            'complementary': "<strong>对比色 (Complementary)：</strong>取色环上相距 180° 的颜色。这种搭配能产生最强烈的视觉冲击。在 UI 设计中，对比色通常极度克制地仅用于 10% 的点缀（如 CTA 按钮、警报），切忌 1:1 的面积划分。"
+        };
+
+        // Utility: Convert HSL to HEX for display
+        function hslToHex(h, s, l) {
+            l /= 100;
+            const a = s * Math.min(l, 1 - l) / 100;
+            const f = n => {
+                const k = (n + h / 30) % 12;
+                const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+                return Math.round(255 * color).toString(16).padStart(2, '0');
+            };
+            return `#${f(0)}${f(8)}${f(4)}`.toUpperCase();
+        }
+
+        // Calculate harmony colors based on mode and hue
+        function calculatePalette(hue, mode) {
+            let primary, secondary, accent;
+            let wheelMarkers = []; // Array of hues for markers
+
+            // Primary is usually the brand color (60%)
+            // Secondary supports the primary (30%)
+            // Accent is for highlights (10%)
+
+            if (mode === 'monochromatic') {
+                primary = { h: hue, s: 70, l: 50 };
+                secondary = { h: hue, s: 30, l: 85 }; // Muted, light version
+                accent = { h: hue, s: 90, l: 25 };    // Dark, saturated version
+                wheelMarkers = [{ h: hue, type: 'primary' }];
+            } 
+            else if (mode === 'analogous') {
+                primary = { h: hue, s: 70, l: 50 };
+                const secHue = (hue + 30) % 360;
+                secondary = { h: secHue, s: 60, l: 75 };
+                const accHue = (hue - 30 + 360) % 360;
+                accent = { h: accHue, s: 80, l: 45 };
+                wheelMarkers = [
+                    { h: hue, type: 'primary' },
+                    { h: secHue, type: 'secondary' },
+                    { h: accHue, type: 'accent' }
+                ];
+            } 
+            else if (mode === 'complementary') {
+                primary = { h: hue, s: 70, l: 50 };
+                secondary = { h: hue, s: 15, l: 90 }; // Very muted tint for background elements
+                const accHue = (hue + 180) % 360;
+                accent = { h: accHue, s: 85, l: 50 }; // High saturation complement
+                wheelMarkers = [
+                    { h: hue, type: 'primary' },
+                    { h: accHue, type: 'accent' }
+                ];
+            }
+
+            return { primary, secondary, accent, wheelMarkers };
+        }
+
+        // Apply colors to the UI
+        function updateUI() {
+            const palette = calculatePalette(currentHue, currentMode);
+            
+            // 1. Update text
+            hueValue.textContent = `${currentHue}°`;
+            centerHex.textContent = hslToHex(palette.primary.h, palette.primary.s, palette.primary.l);
+            theoryDesc.innerHTML = theories[currentMode];
+
+            // 2. Update Color Wheel Markers
+            // Clear old markers
+            colorWheel.innerHTML = '';
+            const radius = 120; // Half of 240px
+            const offset = radius * 0.75; // Distance from center
+
+            palette.wheelMarkers.forEach(m => {
+                const marker = document.createElement('div');
+                marker.className = `marker ${m.type}`;
+                
+                // SVG / Canvas angles: 0 is right, 90 is bottom.
+                // CSS conic gradient: 0 is TOP, increases clockwise.
+                // So angle = hue - 90 to match math standard where 0 is top.
+                const angleRad = (m.h - 90) * (Math.PI / 180);
+                
+                // Calculate position relative to center (120, 120)
+                const x = 120 + offset * Math.cos(angleRad);
+                const y = 120 + offset * Math.sin(angleRad);
+                
+                marker.style.left = `${x}px`;
+                marker.style.top = `${y}px`;
+                
+                // Color the marker to match exactly
+                if(m.type === 'primary') {
+                    marker.style.backgroundColor = `hsl(${palette.primary.h}, ${palette.primary.s}%, ${palette.primary.l}%)`;
+                } else if(m.type === 'accent') {
+                    marker.style.backgroundColor = `hsl(${palette.accent.h}, ${palette.accent.s}%, ${palette.accent.l}%)`;
+                } else {
+                    // secondary analogous
+                    marker.style.backgroundColor = `hsl(${palette.secondary.h}, ${palette.secondary.s}%, 50%)`;
+                }
+
+                colorWheel.appendChild(marker);
+            });
+
+            // 3. Update 60-30-10 Blocks
+            const p = palette.primary;
+            const s = palette.secondary;
+            const a = palette.accent;
+
+            block60.style.backgroundColor = `hsl(${p.h}, ${p.s}%, ${p.l}%)`;
+            text60.style.color = p.l > 60 ? '#1f2937' : '#ffffff';
+
+            block30.style.backgroundColor = `hsl(${s.h}, ${s.s}%, ${s.l}%)`;
+            text30.style.color = s.l > 60 ? '#1f2937' : '#ffffff';
+
+            block10.style.backgroundColor = `hsl(${a.h}, ${a.s}%, ${a.l}%)`;
+            text10.style.color = a.l > 60 ? '#1f2937' : '#ffffff';
+
+            // 4. Update UI Mockup Application
+            // App background gets a very light tint of the primary or secondary depending on mode
+            const bgLightness = currentMode === 'monochromatic' ? 97 : 95;
+            uiBg.style.backgroundColor = `hsl(${p.h}, 20%, ${bgLightness}%)`;
+
+            // Header uses 60% Primary
+            mockupHeader.style.backgroundColor = `hsl(${p.h}, ${p.s}%, ${p.l}%)`;
+            
+            // Cards use 30% Secondary (or tinted white if secondary is too dark, but our logic handles it)
+            const cardBg = `hsl(${s.h}, ${s.s}%, ${currentMode==='complementary' ? 95 : Math.max(s.l, 85)}%)`;
+            mockupCard1.style.backgroundColor = cardBg;
+            mockupCard2.style.backgroundColor = cardBg;
+
+            // Icons in cards use Primary or Accent
+            mockupIcon1.style.backgroundColor = `hsl(${p.h}, ${p.s}%, ${p.l}%)`;
+            mockupIcon2.style.backgroundColor = `hsl(${p.h}, ${p.s}%, ${p.l}%)`;
+
+            // CTA Button uses 10% Accent
+            mockupCta.style.backgroundColor = `hsl(${a.h}, ${a.s}%, ${a.l}%)`;
+            mockupCta.style.color = a.l > 60 ? '#111827' : '#ffffff';
+        }
+
+        // Event Listeners
+        hueSlider.addEventListener('input', (e) => {
+            currentHue = parseInt(e.target.value);
+            updateUI();
+        });
+
+        harmonyBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // Update active state
+                harmonyBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-white', 'shadow-sm', 'text-gray-900');
+                    b.classList.add('text-gray-500');
+                });
+                const target = e.target;
+                target.classList.remove('text-gray-500');
+                target.classList.add('active', 'bg-white', 'shadow-sm', 'text-gray-900');
+                
+                // Update logic
+                currentMode = target.dataset.mode;
+                updateUI();
+            });
+        });
+
+        // Initialize
+        updateUI();
+
+    </script>
+</body>
+</html>

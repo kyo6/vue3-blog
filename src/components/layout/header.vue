@@ -99,7 +99,7 @@
   </div>
 </template>
 <script>
-import logo from '@/assets/logo.svg'
+import logo from '@/assets/logo.png'
 import ThemeToggle from '@/components/ThemeToggle.vue'
 export default {
   name: 'FrameHeader',

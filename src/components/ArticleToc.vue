@@ -42,7 +42,7 @@ function scrollTo(id) {
             class="block py-0.5 pl-2 border-l-2 transition-colors leading-snug outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50 rounded-r"
             :class="
               activeId === heading.id
-                ? 'border-violet-500 text-violet-600 dark:text-violet-400 font-medium'
+                ? 'border-gray-500 text-gray-600 dark:text-gray-300 font-medium'
                 : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600'
             "
             @click.prevent="scrollTo(heading.id)"

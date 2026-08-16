@@ -154,7 +154,7 @@ watch(
     font-size: 2rem;
     line-height: 1.2;
     margin-bottom: 0.5em;
-    color: #000;
+    color: inherit;
     letter-spacing: -0.02em;
   }
 
@@ -183,6 +183,18 @@ watch(
     height: 2px;
     background-color: #ddd;
     margin-top: 12px;
+  }
+
+  .illustration {
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    border-radius: 4px;
+    flex-direction: column;
+    align-items: center;
+    margin: 2.5em 0;
+    padding: 1.5rem;
+    display: flex;
+    box-shadow: 0 1px 3px #0000000d;
   }
 
   p {

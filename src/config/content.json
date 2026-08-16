@@ -1,61 +1,96 @@
 [
   {
     "id": 1,
-    "title": "站点三分结构改造：Blog Docs Works",
-    "date": "2026-08-10",
+<<<<<<< Updated upstream
+    "title": "CSS Responsive Web Design",
+    "date": "2026-02-22",
+=======
+    "title": "网页插画素材资源整理",
+    "date": "2026-08-16",
     "tag": [
-      "Vue3",
-      "路由重构",
-      "架构",
-      "Vite"
+      "设计",
+      "插画",
+      "素材",
+      "资源整理",
+      "灵感"
     ],
-    "summary": "将站点拆分为 Blog / Docs / Works 三块的改造记录",
-    "filename": "站点三分结构改造：Blog Docs Works.md"
+    "summary": "作为一个常年沉浸在设计和插画世界的人，整理了我最常用的 10 个高质量网页插画 / 图标素材站点：Open Doodles、Freepik、Humaaans、Open Peeps、Ouch! by Icons8、IRA Design、CocoMaterial、Blush，以及 SVG Repo 的 Nature Flat Icons 合集和 Koboyo Icons。每个站点都附上网页截图、核心特点与适用场景，方便你在社交媒体视觉、品牌包装、网页设计或个人创作中快速找到合适的插画或图标风格。",
+    "filename": "网页插画素材资源整理.md"
   },
   {
     "id": 2,
+    "title": "站点三分结构改造：Blog Docs Works",
+    "date": "2026-08-10",
+>>>>>>> Stashed changes
+    "tag": [
+      "响应式布局"
+    ],
+    "summary": "在 \"Mobile First\" 喊了这么多年的今天，响应式布局（Responsive Web Design, RWD）早已不是一个新概念，而是前端开发的**基建技能**。",
+    "filename": "CSS Responsive Web Design.md"
+  },
+  {
+<<<<<<< Updated upstream
+    "id": 2,
+    "title": "CSS light and dark theme",
+    "date": "2025-02-16",
+=======
+    "id": 3,
     "title": "给前端开发者的颜色理论",
     "date": "2026-08-10",
+>>>>>>> Stashed changes
     "tag": [
-      "颜色理论",
-      "CSS",
-      "HSL",
-      "配色",
-      "前端"
+      "color-scheme",
+      "暗色模式适配"
     ],
-    "summary": "给前端开发者的颜色理论速通。从色相、饱和度、明度三要素讲起，用 SVG 色相环和可交互的 HSL 调色器把颜色变成可以计算的数字；再沿着色环的 0°、30°、60°、90°、120°、180° 逐一拆解同类色到互补色六种配色关系；最后落到 CSS 颜色表示法、设计 tokens 与对比度可访问性的工程实践，每个知识点都配有可运行的示例。",
-    "filename": "给前端开发者的颜色理论.md"
+    "summary": "`prefers-color-scheme` 是一个 CSS 媒体特性，用于检测用户是否在操作系统或浏览器层面设置了偏好的主题色（亮色或暗色）。它可以帮助你为用户提供符合其系统偏好的网页显示模式。",
+    "filename": "CSS light and dark theme.md"
   },
   {
+<<<<<<< Updated upstream
     "id": 3,
+    "title": "CSS 文本效果",
+    "date": "2025-02-12",
+=======
+    "id": 4,
     "title": "CSS Grid 布局完全指南 知识点与难点概览",
     "date": "2026-08-08",
+>>>>>>> Stashed changes
     "tag": [
-      "CSS",
-      "Grid",
-      "布局",
-      "前端"
+      "文本效果",
+      "立体徽章效果"
     ],
-    "summary": "Grid 网格布局是当前最强大的 CSS 二维布局方案。本文从网格轨道、网格单元、网格线等核心概念讲起，系统梳理容器属性与项目属性，并针对网格线编号、隐式网格、auto-fill 与 auto-fit、fr 与 minmax 等高频难点逐一拆解，每个知识点都配有 HTML 实例与 SVG 示意图。",
-    "filename": "CSS Grid 布局完全指南 知识点与难点概览.md"
+    "summary": "该实现通过结构化拆解与CSS精密控制打造“100 DAYS CSS CHALLENGE”立体徽章效果",
+    "filename": "CSS 文本效果.md"
   },
   {
+<<<<<<< Updated upstream
     "id": 4,
+    "title": "Free.Solo.2018",
+    "date": "2026-03-15",
+=======
+    "id": 5,
     "title": "CSS文字样式大赏",
     "date": "2026-08-01",
+>>>>>>> Stashed changes
     "tag": [
-      "CSS",
-      "文字样式",
-      "font-face",
-      "text-shadow",
-      "writing-mode",
-      "background-clip"
+      "英语学习"
     ],
-    "summary": "从自定义字体、字重、文字投影、竖排排版到渐变文字和图片蒙版文字，6个让文字变好看的CSS实用技巧",
-    "filename": "CSS文字样式大赏.md"
+    "summary": "Free Solo 2018 英文字幕",
+    "filename": "Free.Solo.2018.md"
   },
   {
+<<<<<<< Updated upstream
     "id": 5,
+    "title": "Monorepo 组件库架构的改造",
+    "date": "",
+    "tag": [],
+    "summary": "Monorepo 组件库架构的改造",
+    "filename": "Monorepo 组件库架构的改造.md"
+  },
+  {
+=======
+>>>>>>> Stashed changes
+    "id": 6,
     "title": "SVG 坐标系统",
     "date": "2026-07-31",
     "tag": [
@@ -67,7 +102,9 @@
     "filename": "SVG 坐标系统.md"
   },
   {
-    "id": 6,
+    "id": 7,
+<<<<<<< Updated upstream
+=======
     "title": "设计译文｜渐进式披露",
     "date": "2026-07-31",
     "tag": [
@@ -78,7 +115,7 @@
     "filename": "设计译文｜渐进式披露.md"
   },
   {
-    "id": 7,
+    "id": 8,
     "title": "在古诗中感受春天",
     "date": "2026-03-22",
     "tag": [
@@ -88,7 +125,7 @@
     "filename": "在古诗中感受春天.md"
   },
   {
-    "id": 8,
+    "id": 9,
     "title": "Free.Solo.2018",
     "date": "2026-03-15",
     "tag": [
@@ -98,7 +135,7 @@
     "filename": "Free.Solo.2018.md"
   },
   {
-    "id": 9,
+    "id": 10,
     "title": "项目分析",
     "date": "2026-03-15",
     "tag": [
@@ -108,7 +145,7 @@
     "filename": "项目分析.md"
   },
   {
-    "id": 10,
+    "id": 11,
     "title": "CSS Responsive Web Design",
     "date": "2026-02-22",
     "tag": [
@@ -118,7 +155,7 @@
     "filename": "CSS Responsive Web Design.md"
   },
   {
-    "id": 11,
+    "id": 12,
     "title": "What Is OpenClaw, Formerly Moltbot Everything You Need To Know",
     "date": "2026-02-03",
     "tag": [
@@ -128,7 +165,7 @@
     "filename": "What Is OpenClaw, Formerly Moltbot Everything You Need To Know.md"
   },
   {
-    "id": 12,
+    "id": 13,
     "title": "Top 10 OpenClaw Use Cases in 2026 What People Actually Do With It",
     "date": "2026-01-01",
     "tag": [
@@ -138,7 +175,8 @@
     "filename": "Top 10 OpenClaw Use Cases in 2026 What People Actually Do With It.md"
   },
   {
-    "id": 13,
+    "id": 14,
+>>>>>>> Stashed changes
     "title": "Tailwind Docs Layout",
     "date": "2025-02-18",
     "tag": [
@@ -149,29 +187,59 @@
     "filename": "Tailwind Docs Layout.md"
   },
   {
-    "id": 14,
+<<<<<<< Updated upstream
+    "id": 8,
+    "title": "Top 10 OpenClaw Use Cases in 2026 What People Actually Do With It",
+    "date": "2026-01-01",
+=======
+    "id": 15,
     "title": "CSS light and dark theme",
     "date": "2025-02-16",
+>>>>>>> Stashed changes
     "tag": [
-      "color-scheme",
-      "暗色模式适配"
+      "OpenClaw"
     ],
-    "summary": "`prefers-color-scheme` 是一个 CSS 媒体特性，用于检测用户是否在操作系统或浏览器层面设置了偏好的主题色（亮色或暗色）。它可以帮助你为用户提供符合其系统偏好的网页显示模式。",
-    "filename": "CSS light and dark theme.md"
+    "summary": "OpenClaw went from obscure open-source project to the most talked-about AI agent of 2026. But between the hype and the security warnings, a practical question remains: What are people actually using it for?",
+    "filename": "Top 10 OpenClaw Use Cases in 2026 What People Actually Do With It.md"
   },
   {
-    "id": 15,
+<<<<<<< Updated upstream
+    "id": 9,
+    "title": "What Is OpenClaw, Formerly Moltbot Everything You Need To Know",
+    "date": "2026-02-03",
+=======
+    "id": 16,
     "title": "CSS 文本效果",
     "date": "2025-02-12",
+>>>>>>> Stashed changes
     "tag": [
-      "文本效果",
-      "立体徽章效果"
+      "OpenClaw"
     ],
-    "summary": "该实现通过结构化拆解与CSS精密控制打造“100 DAYS CSS CHALLENGE”立体徽章效果",
-    "filename": "CSS 文本效果.md"
+    "summary": "OpenClaw, aka Moltbot, is an open-source autonomous AI assistant",
+    "filename": "What Is OpenClaw, Formerly Moltbot Everything You Need To Know.md"
   },
   {
-    "id": 16,
+<<<<<<< Updated upstream
+    "id": 10,
+    "title": "What is OpenClaw The Viral AI Agent Explained (February 2026)",
+    "date": "",
+    "tag": [],
+    "summary": "157,000 GitHub stars in three weeks.",
+    "filename": "What is OpenClaw The Viral AI Agent Explained (February 2026).md"
+  },
+  {
+    "id": 11,
+    "title": "代码抽象-变与不变",
+    "date": "",
+    "tag": [],
+    "summary": "程序员身上有一种很常见的错觉。他以为代码难，是因为不够多。他以为变，是因为不熟。但真正难的东西，从来不是代码本身，而是分辨哪些代码值得写。",
+    "filename": "代码抽象-变与不变.md"
+  },
+  {
+    "id": 12,
+=======
+    "id": 17,
+>>>>>>> Stashed changes
     "title": "关于网页上英文字体的基础知识和选择",
     "date": "2025-02-12",
     "tag": [
@@ -181,7 +249,59 @@
     "filename": "关于网页上英文字体的基础知识和选择.md"
   },
   {
+<<<<<<< Updated upstream
+    "id": 13,
+    "title": "在古诗中感受春天",
+    "date": "2026-03-22",
+    "tag": [
+      "文学阅读"
+    ],
+    "summary": "春天是一个多情的季节，春天是一段浪漫的时光，春天是一种情怀，也是一片希冀。春天一直是文人的宠儿，是他们笔下的骄子。古往今来，歌春咏春的诗句便如雨后新芽，不胜枚举。",
+    "filename": "在古诗中感受春天.md"
+  },
+  {
+    "id": 14,
+    "title": "如何利用这个简单的框架来应对不可能完成的截止日期 --- How to Push Back on Impossible Deadlines Using This Simple Framework",
+    "date": "",
+    "tag": [],
+    "summary": "Opinions expressed by Entrepreneur contributors are their own.",
+    "filename": "如何利用这个简单的框架来应对不可能完成的截止日期 --- How to Push Back on Impossible Deadlines Using This Simple Framework.md"
+  },
+  {
+    "id": 15,
+    "title": "如何搭建整体框架 - TDesign",
+    "date": "",
+    "tag": [],
+    "summary": "1.  [什么是中后台系统](https://tdesign.tencent.com/design/offices#%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%AD%E5%90%8E%E5%8F%B0%E7%B3%B…",
+    "filename": "如何搭建整体框架 - TDesign.md"
+  },
+  {
+    "id": 16,
+    "title": "如何编写需求文档",
+    "date": "",
+    "tag": [],
+    "summary": "需求说明软件必须做什么才能够满足客户的需求，具体来说，包括：",
+    "filename": "如何编写需求文档.md"
+  },
+  {
     "id": 17,
+=======
+    "id": 18,
+    "title": "开发中保证你用得到的css小技巧",
+    "date": "2024-07-31",
+    "tag": [
+      "CSS",
+      "前端",
+      "小技巧",
+      "滤镜",
+      "渐变"
+    ],
+    "summary": "开发中保证你用得到的 CSS 小技巧：filter 滤镜家族（置灰 / 阴影 / 模糊 / 亮度）、单行与多行文本省略、linear-gradient 与 radial-gradient 渐变、mask 遮罩玩法、文字发光与毛玻璃效果，以及图片循环轮播、容器 / 文字扫光、元素倒影、元素交融展开等实战小案例，每个技巧都附带可直接运行的示例代码。",
+    "filename": "开发中保证你用得到的css小技巧.md"
+  },
+  {
+    "id": 19,
+>>>>>>> Stashed changes
     "title": "常用的英语句子",
     "date": "2022-01-17",
     "tag": [
@@ -191,15 +311,20 @@
     "filename": "常用的英语句子.md"
   },
   {
+<<<<<<< Updated upstream
     "id": 18,
+    "title": "新东方美文背诵30篇 (Born to win)",
+=======
+    "id": 20,
     "title": "代码抽象-变与不变",
+>>>>>>> Stashed changes
     "date": "",
     "tag": [],
-    "summary": "程序员身上有一种很常见的错觉。他以为代码难，是因为不够多。他以为变，是因为不熟。但真正难的东西，从来不是代码本身，而是分辨哪些代码值得写。",
-    "filename": "代码抽象-变与不变.md"
+    "summary": "# 新东方英语背诵美文30篇",
+    "filename": "新东方美文背诵30篇 (Born to win).md"
   },
   {
-    "id": 19,
+    "id": 21,
     "title": "看电影  浪浪山小妖怪到底是喜剧还是悲剧",
     "date": "",
     "tag": [],
@@ -207,7 +332,28 @@
     "filename": "看电影  浪浪山小妖怪到底是喜剧还是悲剧.md"
   },
   {
+<<<<<<< Updated upstream
     "id": 20,
+    "title": "设计译文｜渐进式披露",
+    "date": "2026-07-31",
+    "tag": [
+      "设计译文",
+      "交互设计"
+    ],
+    "summary": "渐进式披露是交互设计中的经典策略——初始只展示核心选项，按需揭示专业功能。本文系统梳理其原理、好处、可用性标准，以及与\"分阶段披露\"的差异，帮助你在功能丰富与界面简洁之间找到平衡。",
+    "filename": "设计译文｜渐进式披露.md"
+  },
+  {
+    "id": 21,
+    "title": "项目分析",
+    "date": "2026-03-15",
+    "tag": [
+      "项目分析"
+    ],
+    "summary": "对博客项目的功能分析",
+    "filename": "项目分析.md"
+=======
+    "id": 22,
     "title": "如何编写需求文档",
     "date": "",
     "tag": [],
@@ -215,7 +361,7 @@
     "filename": "如何编写需求文档.md"
   },
   {
-    "id": 21,
+    "id": 23,
     "title": "如何搭建整体框架 - TDesign",
     "date": "",
     "tag": [],
@@ -223,7 +369,7 @@
     "filename": "如何搭建整体框架 - TDesign.md"
   },
   {
-    "id": 22,
+    "id": 24,
     "title": "如何利用这个简单的框架来应对不可能完成的截止日期 --- How to Push Back on Impossible Deadlines Using This Simple Framework",
     "date": "",
     "tag": [],
@@ -231,7 +377,7 @@
     "filename": "如何利用这个简单的框架来应对不可能完成的截止日期 --- How to Push Back on Impossible Deadlines Using This Simple Framework.md"
   },
   {
-    "id": 23,
+    "id": 25,
     "title": "写好段落，不仅是技巧，更是结构和思维 - 知乎",
     "date": "",
     "tag": [],
@@ -239,7 +385,7 @@
     "filename": "写好段落，不仅是技巧，更是结构和思维 - 知乎.md"
   },
   {
-    "id": 24,
+    "id": 26,
     "title": "新东方美文背诵30篇 (Born to win)",
     "date": "",
     "tag": [],
@@ -247,7 +393,7 @@
     "filename": "新东方美文背诵30篇 (Born to win).md"
   },
   {
-    "id": 25,
+    "id": 27,
     "title": "Monorepo 组件库架构的改造",
     "date": "",
     "tag": [],
@@ -255,11 +401,12 @@
     "filename": "Monorepo 组件库架构的改造.md"
   },
   {
-    "id": 26,
+    "id": 28,
     "title": "What is OpenClaw The Viral AI Agent Explained (February 2026)",
     "date": "",
     "tag": [],
     "summary": "157,000 GitHub stars in three weeks.",
     "filename": "What is OpenClaw The Viral AI Agent Explained (February 2026).md"
+>>>>>>> Stashed changes
   }
 ]

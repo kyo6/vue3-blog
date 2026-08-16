@@ -88,5 +88,25 @@
     "src": "/works/color_design_guide.html",
     "linkLabel": "查看页面",
     "external": false
+  },
+  {
+    "id": "color-harmony-explorer",
+    "title": "Color Harmony Explorer",
+    "stack": "HTML / Canvas",
+    "summary": "交互式色相环配色探索：拖动主色，实时预览互补、类比、三角等和谐方案与色板比例。",
+    "type": "iframe",
+    "src": "/works/color_harmony_explorer.html",
+    "linkLabel": "查看页面",
+    "external": false
+  },
+  {
+    "id": "color-harmony-explorer-ui",
+    "title": "色彩和谐探索器",
+    "stack": "HTML / Tailwind",
+    "summary": "浅色面板版配色探索：实时可视化和谐逻辑与 60-30-10 原则，含理论说明与色板预览。",
+    "type": "iframe",
+    "src": "/works/color_harmony_explorer_ui.html",
+    "linkLabel": "查看页面",
+    "external": false
   }
 ]
