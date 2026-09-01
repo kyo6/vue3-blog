@@ -1,6 +1,78 @@
 [
   {
-    "filename": "网页插画素材资源整理.md",
+    "id": 1,
+    "title": "Playwright CLI 为组件库 NormalUpload 生成回归用例实战",
+    "date": "2026-08-28",
+    "tag": [
+      "Playwright",
+      "UI 自动化测试",
+      "E2E",
+      "组件库",
+      "视觉回归"
+    ],
+    "summary": "承接 Playwright CLI + Skills 系列，记录为 NormalUpload 落地回归用例的全过程。重点澄清：plan 不会自动编译成 TS——Agent 用 plan 定规格、用 CLI 探真页面拿 TS 草稿、手写 expect 后落盘；并覆盖 fixtures/seed、分 group 生成、布局契约与截图基线、何时更新基线。",
+    "filename": "Playwright CLI 为组件库 NormalUpload 生成回归用例实战.md"
+  },
+  {
+    "id": 2,
+    "title": "shadcn 后台管理系统精选：5 个高星开源项目的登录实现对比",
+    "date": "2026-08-28",
+    "tag": [
+      "shadcn/ui",
+      "后台管理",
+      "开源项目",
+      "登录界面",
+      "前端"
+    ],
+    "summary": "从 GitHub 星标、活跃维护、文档完善、登录功能完整四个维度，筛选 5 个基于 shadcn/ui 的高星开源后台管理模板（satnaing/shadcn-admin、Kiranism/next-shadcn-dashboard-starter、arhamkhnz/next-shadcn-admin-dashboard、Qualiora/shadboard、Whbbit1999/shadcn-vue-admin），逐一说明技术栈、登录路由、支持的登录方式与登录页设计特点，并附 Playwright 实际截图与横向对比。",
+    "filename": "shadcn 后台管理系统精选：5 个高星开源项目的登录实现对比.md"
+  },
+  {
+    "id": 3,
+    "title": "Codex 使用指南：安装、Skills、MCP 与 Hook 进阶",
+    "date": "2026-08-21",
+    "tag": [
+      "Codex",
+      "AI 编程",
+      "Skills",
+      "MCP",
+      "Hook",
+      "自动化",
+      "Projects"
+    ],
+    "summary": "一篇走通 Codex App 的实操指南：从安装登录、三栏界面、沙盒权限、上下文与模型选择，到 Git / worktree 并行开发、云端运行、AGENTS.md 记忆、插件与自动化，再到 Skills 与 MCP 扩展能力，并重点拆解进阶玩法——用 Hook 在关键生命周期节点做隐私检查、命令审查与收尾校验，以及用 Projects 组织相关工作。含 hooks.json / config.toml 配置示例。",
+    "filename": "Codex 使用指南：安装、Skills、MCP 与 Hook 进阶.md"
+  },
+  {
+    "id": 4,
+    "title": "Playwright CLI + Skills 实现 UI 自动化测试实战",
+    "date": "2026-08-20",
+    "tag": [
+      "Playwright",
+      "UI 自动化测试",
+      "E2E",
+      "AI",
+      "Skill"
+    ],
+    "summary": "从 midscene.js 的视觉识别切到 Playwright CLI + 无障碍树：用 @playwright/cli 的 ref 快照稳定定位元素，配合可安装 Skill 把「页面探索 → 用例生成 → 执行 → 自愈」整条 UI 自动化链路交给 AI Agent，token 成本仅为 MCP 的约 1/5，且快、稳、可复用。含登录实战与 Skill 设计。",
+    "filename": "Playwright CLI + Skills 实现 UI 自动化测试实战.md"
+  },
+  {
+    "id": 5,
+    "title": "Playwright CLI + Skills 跑通电商下单链路-实战案例",
+    "date": "2026-08-20",
+    "tag": [
+      "Playwright",
+      "UI 自动化测试",
+      "E2E",
+      "实战案例",
+      "Skill"
+    ],
+    "summary": "承接《基于 Playwright CLI + Skills 实现 UI 自动化测试实战》，本文是第二个实战案例：在登录态复用的基础上，用 @playwright/cli 的 ref 快照 + 可安装 Skill 跑通电商「搜索 → 加购 → 结算 → 下单」端到端链路，重点拆解跨页面 ref 失效重快照、金额/数量动态断言、auth 状态复用与脚本自愈。",
+    "filename": "Playwright CLI + Skills 跑通电商下单链路-实战案例.md"
+  },
+  {
+    "id": 6,
     "title": "网页插画素材资源整理",
     "date": "2026-08-16",
     "tag": [
@@ -11,24 +83,10 @@
       "灵感"
     ],
     "summary": "作为一个常年沉浸在设计和插画世界的人，整理了我最常用的 10 个高质量网页插画 / 图标素材站点：Open Doodles、Freepik、Humaaans、Open Peeps、Ouch! by Icons8、IRA Design、CocoMaterial、Blush，以及 SVG Repo 的 Nature Flat Icons 合集和 Koboyo Icons。每个站点都附上网页截图、核心特点与适用场景，方便你在社交媒体视觉、品牌包装、网页设计或个人创作中快速找到合适的插画或图标风格。",
-    "id": 1
+    "filename": "网页插画素材资源整理.md"
   },
   {
-    "filename": "开发中保证你用得到的css小技巧.md",
-    "title": "开发中保证你用得到的css小技巧",
-    "date": "2024-07-31",
-    "tag": [
-      "CSS",
-      "前端",
-      "小技巧",
-      "滤镜",
-      "渐变"
-    ],
-    "summary": "开发中保证你用得到的 CSS 小技巧：filter 滤镜家族（置灰 / 阴影 / 模糊 / 亮度）、单行与多行文本省略、linear-gradient 与 radial-gradient 渐变、mask 遮罩玩法、文字发光与毛玻璃效果，以及图片循环轮播、容器 / 文字扫光、元素倒影、元素交融展开等实战小案例，每个技巧都附带可直接运行的示例代码。",
-    "id": 2
-  },
-  {
-    "id": 3,
+    "id": 7,
     "title": "站点三分结构改造：Blog Docs Works",
     "date": "2026-08-10",
     "tag": [
@@ -41,7 +99,7 @@
     "filename": "站点三分结构改造：Blog Docs Works.md"
   },
   {
-    "id": 4,
+    "id": 8,
     "title": "给前端开发者的颜色理论",
     "date": "2026-08-10",
     "tag": [
@@ -55,7 +113,7 @@
     "filename": "给前端开发者的颜色理论.md"
   },
   {
-    "id": 5,
+    "id": 9,
     "title": "CSS Grid 布局完全指南 知识点与难点概览",
     "date": "2026-08-08",
     "tag": [
@@ -68,7 +126,7 @@
     "filename": "CSS Grid 布局完全指南 知识点与难点概览.md"
   },
   {
-    "id": 6,
+    "id": 10,
     "title": "CSS文字样式大赏",
     "date": "2026-08-01",
     "tag": [
@@ -83,7 +141,7 @@
     "filename": "CSS文字样式大赏.md"
   },
   {
-    "id": 7,
+    "id": 11,
     "title": "SVG 坐标系统",
     "date": "2026-07-31",
     "tag": [
@@ -95,7 +153,7 @@
     "filename": "SVG 坐标系统.md"
   },
   {
-    "id": 8,
+    "id": 12,
     "title": "设计译文｜渐进式披露",
     "date": "2026-07-31",
     "tag": [
@@ -106,7 +164,7 @@
     "filename": "设计译文｜渐进式披露.md"
   },
   {
-    "id": 9,
+    "id": 13,
     "title": "在古诗中感受春天",
     "date": "2026-03-22",
     "tag": [
@@ -116,7 +174,7 @@
     "filename": "在古诗中感受春天.md"
   },
   {
-    "id": 10,
+    "id": 14,
     "title": "Free.Solo.2018",
     "date": "2026-03-15",
     "tag": [
@@ -126,7 +184,7 @@
     "filename": "Free.Solo.2018.md"
   },
   {
-    "id": 11,
+    "id": 15,
     "title": "项目分析",
     "date": "2026-03-15",
     "tag": [
@@ -136,7 +194,7 @@
     "filename": "项目分析.md"
   },
   {
-    "id": 12,
+    "id": 16,
     "title": "CSS Responsive Web Design",
     "date": "2026-02-22",
     "tag": [
@@ -146,7 +204,7 @@
     "filename": "CSS Responsive Web Design.md"
   },
   {
-    "id": 13,
+    "id": 17,
     "title": "What Is OpenClaw, Formerly Moltbot Everything You Need To Know",
     "date": "2026-02-03",
     "tag": [
@@ -156,7 +214,7 @@
     "filename": "What Is OpenClaw, Formerly Moltbot Everything You Need To Know.md"
   },
   {
-    "id": 14,
+    "id": 18,
     "title": "Top 10 OpenClaw Use Cases in 2026 What People Actually Do With It",
     "date": "2026-01-01",
     "tag": [
@@ -166,7 +224,7 @@
     "filename": "Top 10 OpenClaw Use Cases in 2026 What People Actually Do With It.md"
   },
   {
-    "id": 15,
+    "id": 19,
     "title": "Tailwind Docs Layout",
     "date": "2025-02-18",
     "tag": [
@@ -177,7 +235,7 @@
     "filename": "Tailwind Docs Layout.md"
   },
   {
-    "id": 16,
+    "id": 20,
     "title": "CSS light and dark theme",
     "date": "2025-02-16",
     "tag": [
@@ -188,7 +246,7 @@
     "filename": "CSS light and dark theme.md"
   },
   {
-    "id": 17,
+    "id": 21,
     "title": "CSS 文本效果",
     "date": "2025-02-12",
     "tag": [
@@ -199,7 +257,7 @@
     "filename": "CSS 文本效果.md"
   },
   {
-    "id": 18,
+    "id": 22,
     "title": "关于网页上英文字体的基础知识和选择",
     "date": "2025-02-12",
     "tag": [
@@ -209,7 +267,21 @@
     "filename": "关于网页上英文字体的基础知识和选择.md"
   },
   {
-    "id": 19,
+    "id": 23,
+    "title": "开发中保证你用得到的css小技巧",
+    "date": "2024-07-31",
+    "tag": [
+      "CSS",
+      "前端",
+      "小技巧",
+      "滤镜",
+      "渐变"
+    ],
+    "summary": "开发中保证你用得到的 CSS 小技巧：filter 滤镜家族（置灰 / 阴影 / 模糊 / 亮度）、单行与多行文本省略、linear-gradient 与 radial-gradient 渐变、mask 遮罩玩法、文字发光与毛玻璃效果，以及图片循环轮播、容器 / 文字扫光、元素倒影、元素交融展开等实战小案例，每个技巧都附带可直接运行的示例代码。",
+    "filename": "开发中保证你用得到的css小技巧.md"
+  },
+  {
+    "id": 24,
     "title": "常用的英语句子",
     "date": "2022-01-17",
     "tag": [
@@ -219,7 +291,7 @@
     "filename": "常用的英语句子.md"
   },
   {
-    "id": 20,
+    "id": 25,
     "title": "代码抽象-变与不变",
     "date": "",
     "tag": [],
@@ -227,7 +299,7 @@
     "filename": "代码抽象-变与不变.md"
   },
   {
-    "id": 21,
+    "id": 26,
     "title": "看电影  浪浪山小妖怪到底是喜剧还是悲剧",
     "date": "",
     "tag": [],
@@ -235,7 +307,7 @@
     "filename": "看电影  浪浪山小妖怪到底是喜剧还是悲剧.md"
   },
   {
-    "id": 22,
+    "id": 27,
     "title": "如何编写需求文档",
     "date": "",
     "tag": [],
@@ -243,7 +315,7 @@
     "filename": "如何编写需求文档.md"
   },
   {
-    "id": 23,
+    "id": 28,
     "title": "如何搭建整体框架 - TDesign",
     "date": "",
     "tag": [],
@@ -251,7 +323,7 @@
     "filename": "如何搭建整体框架 - TDesign.md"
   },
   {
-    "id": 24,
+    "id": 29,
     "title": "如何利用这个简单的框架来应对不可能完成的截止日期 --- How to Push Back on Impossible Deadlines Using This Simple Framework",
     "date": "",
     "tag": [],
@@ -259,7 +331,7 @@
     "filename": "如何利用这个简单的框架来应对不可能完成的截止日期 --- How to Push Back on Impossible Deadlines Using This Simple Framework.md"
   },
   {
-    "id": 25,
+    "id": 30,
     "title": "写好段落，不仅是技巧，更是结构和思维 - 知乎",
     "date": "",
     "tag": [],
@@ -267,7 +339,7 @@
     "filename": "写好段落，不仅是技巧，更是结构和思维 - 知乎.md"
   },
   {
-    "id": 26,
+    "id": 31,
     "title": "新东方美文背诵30篇 (Born to win)",
     "date": "",
     "tag": [],
@@ -275,7 +347,7 @@
     "filename": "新东方美文背诵30篇 (Born to win).md"
   },
   {
-    "id": 27,
+    "id": 32,
     "title": "Monorepo 组件库架构的改造",
     "date": "",
     "tag": [],
@@ -283,11 +355,25 @@
     "filename": "Monorepo 组件库架构的改造.md"
   },
   {
-    "id": 28,
+    "id": 33,
     "title": "What is OpenClaw The Viral AI Agent Explained (February 2026)",
     "date": "",
     "tag": [],
     "summary": "157,000 GitHub stars in three weeks.",
     "filename": "What is OpenClaw The Viral AI Agent Explained (February 2026).md"
+  },
+  {
+    "id": 35,
+    "title": "shadcn-admin 设计规范分析",
+    "date": "2026-08-28",
+    "tag": [
+      "shadcn/ui",
+      "设计规范",
+      "Design Token",
+      "后台管理",
+      "前端"
+    ],
+    "summary": "基于 satnaing/shadcn-admin 最新源码（Tailwind v4 + CSS 变量方案）逐项拆解中后台控制台的设计规范：布局（内容区 1280px 上限、侧边栏 256/48/288px 三态、顶栏 64px）、间距层级（6/8/16/24px 递进）、色彩体系（OKLCH token + slate 基色 + 暗色反转映射）、Typography（Inter 可变字体 + 24/14/12px 字阶）与组件视觉属性（10px 圆角基、shadow-xs/sm/lg 分层、1px 边框、3px 焦点环），并标注对应 CSS 变量与 Tailwind token 及响应式断点适配规则。",
+    "filename": "shadcn-admin设计规范分析.md"
   }
 ]

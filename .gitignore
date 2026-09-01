@@ -31,3 +31,5 @@ coverage
 .workbuddy/*
 .cursor/*
 .pnpm-store/*
+# vite build temp
+vite.config.*.timestamp-*.mjs
