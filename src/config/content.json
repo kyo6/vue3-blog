@@ -29,6 +29,34 @@
   },
   {
     "id": 3,
+    "title": "shadcn-admin设计规范分析",
+    "date": "2026-08-28",
+    "tag": [
+      "shadcn/ui",
+      "设计规范",
+      "Design Token",
+      "后台管理",
+      "前端"
+    ],
+    "summary": "基于 satnaing/shadcn-admin 最新源码（Tailwind v4 + CSS 变量方案）逐项拆解中后台控制台的设计规范：布局（内容区 1280px 上限、侧边栏 256/48/288px 三态、顶栏 64px）、间距层级（6/8/16/24px 递进）、色彩体系（OKLCH token + slate 基色 + 暗色反转映射）、Typography（Inter 可变字体 + 24/14/12px 字阶）与组件视觉属性（10px 圆角基、shadow-xs/sm/lg 分层、1px 边框、3px 焦点环），并标注对应 CSS 变量与 Tailwind token 及响应式断点适配规则。",
+    "filename": "shadcn-admin设计规范分析.md"
+  },
+  {
+    "id": 4,
+    "title": "生成 SVG 图标应该注意什么",
+    "date": "2026-08-22",
+    "tag": [
+      "SVG",
+      "图标设计",
+      "前端",
+      "设计规范",
+      "图标字体"
+    ],
+    "summary": "生成 SVG 图标远不止\"画出来\"那么简单。本文结合 Cursor 一年手绘 600+ 图标的设计实践，从尺寸与线宽的双规格体系、轮廓与填充的风格系统、直线加圆角的构建方法、光学微调，到一致性的基础设施与图标字体的交付替换，系统梳理生成 SVG 图标时最容易被忽略的讲究，每个原则都配有可直接运行的代码示例。",
+    "filename": "生成 SVG 图标应该注意什么.md"
+  },
+  {
+    "id": 5,
     "title": "Codex 使用指南：安装、Skills、MCP 与 Hook 进阶",
     "date": "2026-08-21",
     "tag": [
@@ -44,7 +72,7 @@
     "filename": "Codex 使用指南：安装、Skills、MCP 与 Hook 进阶.md"
   },
   {
-    "id": 4,
+    "id": 6,
     "title": "Playwright CLI + Skills 实现 UI 自动化测试实战",
     "date": "2026-08-20",
     "tag": [
@@ -58,7 +86,7 @@
     "filename": "Playwright CLI + Skills 实现 UI 自动化测试实战.md"
   },
   {
-    "id": 5,
+    "id": 7,
     "title": "Playwright CLI + Skills 跑通电商下单链路-实战案例",
     "date": "2026-08-20",
     "tag": [
@@ -72,7 +100,7 @@
     "filename": "Playwright CLI + Skills 跑通电商下单链路-实战案例.md"
   },
   {
-    "id": 6,
+    "id": 8,
     "title": "网页插画素材资源整理",
     "date": "2026-08-16",
     "tag": [
@@ -86,7 +114,7 @@
     "filename": "网页插画素材资源整理.md"
   },
   {
-    "id": 7,
+    "id": 9,
     "title": "站点三分结构改造：Blog Docs Works",
     "date": "2026-08-10",
     "tag": [
@@ -99,7 +127,7 @@
     "filename": "站点三分结构改造：Blog Docs Works.md"
   },
   {
-    "id": 8,
+    "id": 10,
     "title": "给前端开发者的颜色理论",
     "date": "2026-08-10",
     "tag": [
@@ -113,7 +141,7 @@
     "filename": "给前端开发者的颜色理论.md"
   },
   {
-    "id": 9,
+    "id": 11,
     "title": "CSS Grid 布局完全指南 知识点与难点概览",
     "date": "2026-08-08",
     "tag": [
@@ -126,7 +154,7 @@
     "filename": "CSS Grid 布局完全指南 知识点与难点概览.md"
   },
   {
-    "id": 10,
+    "id": 12,
     "title": "CSS文字样式大赏",
     "date": "2026-08-01",
     "tag": [
@@ -141,7 +169,7 @@
     "filename": "CSS文字样式大赏.md"
   },
   {
-    "id": 11,
+    "id": 13,
     "title": "SVG 坐标系统",
     "date": "2026-07-31",
     "tag": [
@@ -153,7 +181,7 @@
     "filename": "SVG 坐标系统.md"
   },
   {
-    "id": 12,
+    "id": 14,
     "title": "设计译文｜渐进式披露",
     "date": "2026-07-31",
     "tag": [
@@ -164,7 +192,35 @@
     "filename": "设计译文｜渐进式披露.md"
   },
   {
-    "id": 13,
+    "id": 15,
+    "title": "Agent 驱动的服务端端到端测试：小红书专场分享回顾",
+    "date": "2026-06-24",
+    "tag": [
+      "AI Agent",
+      "端到端测试",
+      "自动化测试",
+      "AI Testing",
+      "技术分享"
+    ],
+    "summary": "整理自 QECon 小红书专场分享（转自小红书技术 REDtech 公众号）：用 Agent 驱动服务端端到端测试。针对跨域、长链路、组合爆炸三大痛点，放弃\"面向人\"的流程编排，改走\"面向意图\"的自主调用——Coding Agent + 知识库渐进式加载 + 逆向链式推导做规划，Debug-first + 双层经验沉淀写脚本，跨域造数从小时级压到分钟级、常见场景秒级完成，用例生成实现脚本直接复用与结果自动校验。",
+    "filename": "Agent 驱动的服务端端到端测试：小红书专场分享回顾.md"
+  },
+  {
+    "id": 16,
+    "title": "Agent驱动的测试：小红书 GUI Agent 实战回顾",
+    "date": "2026-05-12",
+    "tag": [
+      "GUI Agent",
+      "自动化测试",
+      "AI Coding",
+      "测试提效",
+      "技术分享"
+    ],
+    "summary": "整理自小红书质效研发部 QCon 北京 2026 分享：把 UI 自动化当 AI Coding 来做——人定义意图，Agent 探索、执行、演进。春节大促 106 种设备 × 128 场景全自动跑出 4.3w+ 次执行、自动化率 58%、AI 用例采纳率 82%、单用例成本 $1。核心架构为业务意图层 / Agent 探索层 / 可执行代码层三层分离，Coding Agent + Skill 负责沉淀资产，自研视觉子 Agent（Gemini 3 Flash）+ ToolCall 负责原子感知，配合操作图谱与三层知识库压制幻觉，回归固化后逼近零 Token。",
+    "filename": "Agent驱动的测试：小红书 GUI Agent 实战回顾.md"
+  },
+  {
+    "id": 17,
     "title": "在古诗中感受春天",
     "date": "2026-03-22",
     "tag": [
@@ -174,7 +230,7 @@
     "filename": "在古诗中感受春天.md"
   },
   {
-    "id": 14,
+    "id": 18,
     "title": "Free.Solo.2018",
     "date": "2026-03-15",
     "tag": [
@@ -184,7 +240,7 @@
     "filename": "Free.Solo.2018.md"
   },
   {
-    "id": 15,
+    "id": 19,
     "title": "项目分析",
     "date": "2026-03-15",
     "tag": [
@@ -194,7 +250,7 @@
     "filename": "项目分析.md"
   },
   {
-    "id": 16,
+    "id": 20,
     "title": "CSS Responsive Web Design",
     "date": "2026-02-22",
     "tag": [
@@ -204,7 +260,7 @@
     "filename": "CSS Responsive Web Design.md"
   },
   {
-    "id": 17,
+    "id": 21,
     "title": "What Is OpenClaw, Formerly Moltbot Everything You Need To Know",
     "date": "2026-02-03",
     "tag": [
@@ -214,7 +270,7 @@
     "filename": "What Is OpenClaw, Formerly Moltbot Everything You Need To Know.md"
   },
   {
-    "id": 18,
+    "id": 22,
     "title": "Top 10 OpenClaw Use Cases in 2026 What People Actually Do With It",
     "date": "2026-01-01",
     "tag": [
@@ -224,7 +280,7 @@
     "filename": "Top 10 OpenClaw Use Cases in 2026 What People Actually Do With It.md"
   },
   {
-    "id": 19,
+    "id": 23,
     "title": "Tailwind Docs Layout",
     "date": "2025-02-18",
     "tag": [
@@ -235,7 +291,7 @@
     "filename": "Tailwind Docs Layout.md"
   },
   {
-    "id": 20,
+    "id": 24,
     "title": "CSS light and dark theme",
     "date": "2025-02-16",
     "tag": [
@@ -246,7 +302,7 @@
     "filename": "CSS light and dark theme.md"
   },
   {
-    "id": 21,
+    "id": 25,
     "title": "CSS 文本效果",
     "date": "2025-02-12",
     "tag": [
@@ -257,7 +313,7 @@
     "filename": "CSS 文本效果.md"
   },
   {
-    "id": 22,
+    "id": 26,
     "title": "关于网页上英文字体的基础知识和选择",
     "date": "2025-02-12",
     "tag": [
@@ -267,7 +323,7 @@
     "filename": "关于网页上英文字体的基础知识和选择.md"
   },
   {
-    "id": 23,
+    "id": 27,
     "title": "开发中保证你用得到的css小技巧",
     "date": "2024-07-31",
     "tag": [
@@ -281,7 +337,7 @@
     "filename": "开发中保证你用得到的css小技巧.md"
   },
   {
-    "id": 24,
+    "id": 28,
     "title": "常用的英语句子",
     "date": "2022-01-17",
     "tag": [
@@ -291,7 +347,7 @@
     "filename": "常用的英语句子.md"
   },
   {
-    "id": 25,
+    "id": 29,
     "title": "代码抽象-变与不变",
     "date": "",
     "tag": [],
@@ -299,7 +355,7 @@
     "filename": "代码抽象-变与不变.md"
   },
   {
-    "id": 26,
+    "id": 30,
     "title": "看电影  浪浪山小妖怪到底是喜剧还是悲剧",
     "date": "",
     "tag": [],
@@ -307,7 +363,7 @@
     "filename": "看电影  浪浪山小妖怪到底是喜剧还是悲剧.md"
   },
   {
-    "id": 27,
+    "id": 31,
     "title": "如何编写需求文档",
     "date": "",
     "tag": [],
@@ -315,7 +371,7 @@
     "filename": "如何编写需求文档.md"
   },
   {
-    "id": 28,
+    "id": 32,
     "title": "如何搭建整体框架 - TDesign",
     "date": "",
     "tag": [],
@@ -323,7 +379,7 @@
     "filename": "如何搭建整体框架 - TDesign.md"
   },
   {
-    "id": 29,
+    "id": 33,
     "title": "如何利用这个简单的框架来应对不可能完成的截止日期 --- How to Push Back on Impossible Deadlines Using This Simple Framework",
     "date": "",
     "tag": [],
@@ -331,7 +387,7 @@
     "filename": "如何利用这个简单的框架来应对不可能完成的截止日期 --- How to Push Back on Impossible Deadlines Using This Simple Framework.md"
   },
   {
-    "id": 30,
+    "id": 34,
     "title": "写好段落，不仅是技巧，更是结构和思维 - 知乎",
     "date": "",
     "tag": [],
@@ -339,7 +395,7 @@
     "filename": "写好段落，不仅是技巧，更是结构和思维 - 知乎.md"
   },
   {
-    "id": 31,
+    "id": 35,
     "title": "新东方美文背诵30篇 (Born to win)",
     "date": "",
     "tag": [],
@@ -347,7 +403,15 @@
     "filename": "新东方美文背诵30篇 (Born to win).md"
   },
   {
-    "id": 32,
+    "id": 36,
+    "title": "AI语音处理爆发：3个值得了解的GitHub开源项目",
+    "date": "",
+    "tag": [],
+    "summary": "AI 语音处理爆发：3 个值得了解的 GitHub 开源项目",
+    "filename": "AI语音处理爆发：3个值得了解的GitHub开源项目.md"
+  },
+  {
+    "id": 37,
     "title": "Monorepo 组件库架构的改造",
     "date": "",
     "tag": [],
@@ -355,25 +419,11 @@
     "filename": "Monorepo 组件库架构的改造.md"
   },
   {
-    "id": 33,
+    "id": 38,
     "title": "What is OpenClaw The Viral AI Agent Explained (February 2026)",
     "date": "",
     "tag": [],
     "summary": "157,000 GitHub stars in three weeks.",
     "filename": "What is OpenClaw The Viral AI Agent Explained (February 2026).md"
-  },
-  {
-    "id": 35,
-    "title": "shadcn-admin 设计规范分析",
-    "date": "2026-08-28",
-    "tag": [
-      "shadcn/ui",
-      "设计规范",
-      "Design Token",
-      "后台管理",
-      "前端"
-    ],
-    "summary": "基于 satnaing/shadcn-admin 最新源码（Tailwind v4 + CSS 变量方案）逐项拆解中后台控制台的设计规范：布局（内容区 1280px 上限、侧边栏 256/48/288px 三态、顶栏 64px）、间距层级（6/8/16/24px 递进）、色彩体系（OKLCH token + slate 基色 + 暗色反转映射）、Typography（Inter 可变字体 + 24/14/12px 字阶）与组件视觉属性（10px 圆角基、shadow-xs/sm/lg 分层、1px 边框、3px 焦点环），并标注对应 CSS 变量与 Tailwind token 及响应式断点适配规则。",
-    "filename": "shadcn-admin设计规范分析.md"
   }
 ]

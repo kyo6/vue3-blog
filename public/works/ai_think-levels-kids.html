@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>机器人动脑筋 · 宝宝全看懂版</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family:"PingFang SC","Microsoft YaHei",sans-serif;
+    background:#fff7e6; color:#3a2e1a; -webkit-font-smoothing:antialiased;
+  }
+  .page {
+    min-height:100vh; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; padding:40px 20px; text-align:center;
+  }
+  .bigword { font-size:clamp(36px,9vw,82px); font-weight:900; line-height:1.1; margin:10px 0; letter-spacing:2px; }
+  .midword { font-size:clamp(28px,7vw,56px); font-weight:900; margin:8px 0; }
+  .tiny { font-size:clamp(17px,4.2vw,28px); font-weight:bold; color:#7a6a4a; margin-top:8px; line-height:1.5; max-width:760px; }
+  .tag { display:inline-block; background:#ffd966; border-radius:30px; padding:8px 18px; font-size:clamp(15px,3.6vw,24px); font-weight:900; color:#5a4a20; margin:5px; }
+  .box { background:#fff; border:4px dashed #d9c79a; border-radius:24px; padding:16px 20px; margin-top:14px; max-width:680px; }
+  .row { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:14px; }
+  svg { max-width:92vw; height:auto; }
+  .p1{background:#e8f7ff;} .p2{background:#fff0d6;} .p3{background:#ffe0e0;}
+  .p4{background:#e9ffe8;} .p5{background:#f0e8ff;} .p6{background:#e8fff7;} .p7{background:#fff3e0;}
+  .p1 .bigword{color:#1f7fb8;} .p2 .bigword{color:#d98a00;} .p3 .bigword{color:#d6453b;}
+  .p4 .bigword{color:#2e9b46;} .p5 .bigword{color:#7b4fd1;} .p6 .bigword{color:#11998e;} .p7 .bigword{color:#c0521b;}
+  .emoji{font-size:clamp(56px,14vw,110px);}
+  .scrollhint{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#3a2e1a;color:#fff;padding:8px 18px;border-radius:20px;font-size:16px;font-weight:bold;animation:bob 1.3s infinite;}
+  @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+  .bounce{animation:wob 2s infinite ease-in-out;transform-origin:center;}
+  @keyframes wob{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+  .pulse{animation:pl 1.4s infinite ease-in-out;}
+  @keyframes pl{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+  .floaty{animation:fl 2.4s infinite ease-in-out;}
+  @keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+</style>
+</head>
+<body>
+
+<!-- 封面 -->
+<section class="page p1">
+  <div class="emoji bounce">🤖</div>
+  <div class="bigword">机器人<br>动脑筋啦！</div>
+  <div class="tiny">这一回，宝宝要把"为啥分级别"和"算力"都搞懂～</div>
+  <div class="row">
+    <span class="tag">为啥分</span><span class="tag">在哪儿用</span><span class="tag">算力是啥</span><span class="tag">花啥钱</span>
+  </div>
+</section>
+
+<!-- 为啥要分级别 -->
+<section class="page p2">
+  <div class="bigword">为啥要分？</div>
+  <svg class="floaty" width="340" height="240" viewBox="0 0 340 240">
+    <!-- 小蚂蚁问题 -->
+    <circle cx="70" cy="120" r="40" fill="#fff" stroke="#d98a00" stroke-width="5"/>
+    <text x="70" y="132" font-size="40" text-anchor="middle">🐜</text>
+    <text x="70" y="190" font-size="18" text-anchor="middle" fill="#d98a00" font-weight="bold">小问题</text>
+    <!-- 大象问题 -->
+    <circle cx="270" cy="120" r="55" fill="#fff" stroke="#d98a00" stroke-width="5"/>
+    <text x="270" y="135" font-size="52" text-anchor="middle">🐘</text>
+    <text x="270" y="200" font-size="18" text-anchor="middle" fill="#d98a00" font-weight="bold">大问题</text>
+    <!-- 等号 -->
+    <text x="170" y="130" font-size="40" text-anchor="middle" fill="#d98a00">≠</text>
+  </svg>
+  <div class="tiny">小问题像"1+1"，大问题像"造火箭" 🚀<br>都用大力气 = 白白浪费钱钱电电！</div>
+  <div class="box">
+    <div class="tiny" style="color:#3a2e1a">分级别 = 给小问题用小力气，给大问题用大力气。<br><b>刚刚好，不浪费！</b></div>
+  </div>
+</section>
+
+<!-- 第1级 轻轻想 + 用在哪 -->
+<section class="page p1">
+  <div class="bigword">第 1 级 · 轻轻想</div>
+  <svg class="bounce" width="300" height="260" viewBox="0 0 300 260">
+    <rect x="50" y="100" width="200" height="150" rx="40" fill="#bfe6ff" stroke="#1f7fb8" stroke-width="6"/>
+    <circle cx="100" cy="150" r="16" fill="#fff" stroke="#1f7fb8" stroke-width="5"/>
+    <circle cx="200" cy="150" r="16" fill="#fff" stroke="#1f7fb8" stroke-width="5"/>
+    <circle cx="100" cy="150" r="6" fill="#1f7fb8"/><circle cx="200" cy="150" r="6" fill="#1f7fb8"/>
+    <path d="M110 205 q40 22 80 0" stroke="#1f7fb8" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <rect x="142" y="66" width="16" height="34" fill="#1f7fb8"/>
+    <circle cx="150" cy="58" r="20" fill="#ffe066" stroke="#1f7fb8" stroke-width="5"/>
+    <text x="150" y="66" font-size="20" text-anchor="middle" fill="#1f7fb8" font-weight="bold">!</text>
+  </svg>
+  <div class="row">
+    <span class="tag">💡 一个小灯灯</span><span class="tag">🍪 吃一口饼</span><span class="tag">⚡ 最省电</span>
+  </div>
+  <div class="box">
+    <div class="midword" style="color:#1f7fb8">👶 AI开发里用它做：</div>
+    <div class="tiny" style="color:#3a2e1a">
+      · 客服说"你好呀～"<br>
+      · 把话翻成外语 🌍<br>
+      · 帮字自动补全（打字快快）<br>
+      · 分分类：这是猫还是狗 🐱🐶
+    </div>
+  </div>
+</section>
+
+<!-- 第2级 想一想 + 用在哪 -->
+<section class="page p2">
+  <div class="bigword">第 2 级 · 想一想</div>
+  <svg class="bounce" width="300" height="260" viewBox="0 0 300 260">
+    <rect x="50" y="100" width="200" height="150" rx="40" fill="#ffe2a8" stroke="#d98a00" stroke-width="6"/>
+    <circle cx="100" cy="150" r="16" fill="#fff" stroke="#d98a00" stroke-width="5"/>
+    <circle cx="200" cy="150" r="16" fill="#fff" stroke="#d98a00" stroke-width="5"/>
+    <circle cx="100" cy="150" r="6" fill="#d98a00"/><circle cx="200" cy="150" r="6" fill="#d98a00"/>
+    <path d="M105 203 q45 -18 90 0" stroke="#d98a00" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <rect x="140" y="64" width="7" height="36" fill="#d98a00"/>
+    <circle cx="143" cy="54" r="18" fill="#ffe066" stroke="#d98a00" stroke-width="5"/>
+    <rect x="158" y="64" width="7" height="36" fill="#d98a00"/>
+    <circle cx="161" cy="54" r="18" fill="#ffd933" stroke="#d98a00" stroke-width="5"/>
+    <path d="M188 80 q14 -18 32 -4 q16 -4 13 13 q-4 11 -22 7 q-18 5 -23 -7z" fill="#fff" stroke="#d98a00" stroke-width="4"/>
+  </svg>
+  <div class="row">
+    <span class="tag">💡💡 两个灯灯</span><span class="tag">🍪🍪 吃两口</span><span class="tag">⚡ 刚刚好</span>
+  </div>
+  <div class="box">
+    <div class="midword" style="color:#d98a00">👶 AI开发里用它做：</div>
+    <div class="tiny" style="color:#3a2e1a">
+      · 写一小段代码 💻<br>
+      · 把长文章变短（总结）<br>
+      · 普通聊天问答<br>
+      · 帮你改改作文 ✍️
+    </div>
+  </div>
+</section>
+
+<!-- 第3级 使劲想 + 用在哪 -->
+<section class="page p3">
+  <div class="bigword">第 3 级 · 使劲想！</div>
+  <svg class="pulse" width="320" height="270" viewBox="0 0 320 270">
+    <rect x="60" y="110" width="200" height="150" rx="40" fill="#ffc2c2" stroke="#d6453b" stroke-width="6"/>
+    <circle cx="110" cy="160" r="16" fill="#fff" stroke="#d6453b" stroke-width="5"/>
+    <circle cx="210" cy="160" r="16" fill="#fff" stroke="#d6453b" stroke-width="5"/>
+    <circle cx="110" cy="160" r="6" fill="#d6453b"/><circle cx="210" cy="160" r="6" fill="#d6453b"/>
+    <path d="M100 218 q60 -26 120 0" stroke="#d6453b" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <path d="M82 138 q-8 14 0 20 q8 -6 0 -20z" fill="#6fc3ff"/>
+    <path d="M238 138 q8 14 0 20 q-8 -6 0 -20z" fill="#6fc3ff"/>
+    <rect x="150" y="60" width="9" height="48" fill="#d6453b"/>
+    <circle cx="154" cy="48" r="28" fill="#ffd933" stroke="#d6453b" stroke-width="5"/>
+    <path d="M154 26 q11 16 0 24 q-11 -8 0 -24z" fill="#ff7b00"/>
+    <path d="M142 30 q-7 11 2 16 q3 -9 -2 -16z" fill="#ff7b00"/>
+    <path d="M166 30 q7 11 -2 16 q-3 -9 2 -16z" fill="#ff7b00"/>
+  </svg>
+  <div class="row">
+    <span class="tag">🔥 脑袋冒火</span><span class="tag">💡💡💡 好多灯</span><span class="tag">⚡ 最费电</span>
+  </div>
+  <div class="box">
+    <div class="midword" style="color:#d6453b">👶 AI开发里用它做：</div>
+    <div class="tiny" style="color:#3a2e1a">
+      · 解超难数学题 🧮<br>
+      · 帮你想"十步大计划" 🗺️<br>
+      · 写长长长报告 / 论文<br>
+      · 机器人自己一步步做事（Agent）🤖
+    </div>
+  </div>
+</section>
+
+<!-- 什么是算力 -->
+<section class="page p4">
+  <div class="bigword">算力是啥？</div>
+  <svg class="floaty" width="330" height="240" viewBox="0 0 330 240">
+    <!-- 电脑大脑 -->
+    <rect x="30" y="50" width="270" height="150" rx="20" fill="#cdeccd" stroke="#2e9b46" stroke-width="6"/>
+    <rect x="120" y="200" width="90" height="24" rx="8" fill="#2e9b46"/>
+    <rect x="90" y="224" width="150" height="12" rx="6" fill="#2e9b46"/>
+    <!-- 小计算器们 -->
+    <g>
+      <rect x="60" y="80" width="40" height="40" rx="8" fill="#fff" stroke="#2e9b46" stroke-width="4"/>
+      <text x="80" y="108" font-size="22" text-anchor="middle" fill="#2e9b46">➕</text>
+      <rect x="120" y="80" width="40" height="40" rx="8" fill="#fff" stroke="#2e9b46" stroke-width="4"/>
+      <text x="140" y="108" font-size="22" text-anchor="middle" fill="#2e9b46">➗</text>
+      <rect x="180" y="80" width="40" height="40" rx="8" fill="#fff" stroke="#2e9b46" stroke-width="4"/>
+      <text x="200" y="108" font-size="22" text-anchor="middle" fill="#2e9b46">✖️</text>
+      <rect x="240" y="80" width="40" height="40" rx="8" fill="#fff" stroke="#2e9b46" stroke-width="4"/>
+      <text x="260" y="108" font-size="22" text-anchor="middle" fill="#2e9b46">🔢</text>
+    </g>
+    <text x="165" y="160" font-size="20" text-anchor="middle" fill="#2e9b46" font-weight="bold">噼里啪啦算数字！</text>
+  </svg>
+  <div class="tiny">算力 = 电脑大脑"<b>跑步的力气</b>"💨<br>就是好多好多小计算器一起"噼里啪啦"算数字！</div>
+</section>
+
+<!-- 算力怎么来 -->
+<section class="page p5">
+  <div class="bigword">算力哪来的？</div>
+  <svg class="bounce" width="340" height="250" viewBox="0 0 340 250">
+    <!-- 大芯片 -->
+    <rect x="90" y="60" width="160" height="120" rx="14" fill="#e3d4ff" stroke="#7b4fd1" stroke-width="6"/>
+    <text x="170" y="105" font-size="30" text-anchor="middle">🔲</text>
+    <text x="170" y="135" font-size="16" text-anchor="middle" fill="#7b4fd1" font-weight="bold">小芯片(GPU)</text>
+    <!-- 小工人 -->
+    <g font-size="26" text-anchor="middle">
+      <text x="60" y="200">👷</text><text x="100" y="210">👷</text><text x="140" y="200">👷</text>
+      <text x="180" y="210">👷</text><text x="220" y="200">👷</text><text x="260" y="210">👷</text><text x="295" y="200">👷</text>
+    </g>
+    <!-- 箭头：工人进芯片 -->
+    <path d="M170 175 q0 -10 0 -15" stroke="#7b4fd1" stroke-width="4" fill="none" marker-end="url(#a)"/>
+    <defs><marker id="a" markerWidth="10" markerHeight="10" refX="5" refY="5"><circle cx="5" cy="5" r="4" fill="#7b4fd1"/></marker></defs>
+  </svg>
+  <div class="tiny">电脑里住着<b>小芯片(GPU)</b>，像一大群小工人 👷<br>他们排排坐，一起搬"数字积木" 🧱<br><b>工人越多、手越快 = 算力越大！</b></div>
+</section>
+
+<!-- 成本花什么 -->
+<section class="page p6">
+  <div class="bigword">花啥钱？</div>
+  <div class="row" style="margin-bottom:10px">
+    <span class="tag">🔌 电费</span><span class="tag">💰 买机器</span><span class="tag">❄️ 散热</span><span class="tag">⏰ 时间</span>
+  </div>
+  <svg class="pulse" width="340" height="220" viewBox="0 0 340 220">
+    <!-- 插头冒火 -->
+    <rect x="30" y="80" width="50" height="50" rx="10" fill="#fff" stroke="#11998e" stroke-width="5"/>
+    <rect x="38" y="60" width="10" height="22" fill="#11998e"/>
+    <rect x="62" y="60" width="10" height="22" fill="#11998e"/>
+    <path d="M55 40 l-8 14 l10 0 l-8 16" stroke="#ff7b00" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <text x="55" y="160" font-size="16" text-anchor="middle" fill="#11998e" font-weight="bold">插座滋滋冒火</text>
+    <!-- 钱袋 -->
+    <text x="130" y="120" font-size="46" text-anchor="middle">💰</text>
+    <text x="130" y="160" font-size="16" text-anchor="middle" fill="#11998e" font-weight="bold">请小工人贵</text>
+    <!-- 风扇 -->
+    <circle cx="220" cy="100" r="34" fill="#fff" stroke="#11998e" stroke-width="5"/>
+    <path d="M220 100 l0 -26 M220 100 l22 14 M220 100 l-22 14" stroke="#11998e" stroke-width="4" fill="none"/>
+    <text x="220" y="160" font-size="16" text-anchor="middle" fill="#11998e" font-weight="bold">风扇呼呼吹</text>
+    <!-- 时钟 -->
+    <text x="300" y="115" font-size="44" text-anchor="middle">⏰</text>
+    <text x="300" y="160" font-size="16" text-anchor="middle" fill="#11998e" font-weight="bold">占机器久</text>
+  </svg>
+  <div class="tiny">想得越久 → 占机器越久 → 电费越多、机器越累 🥵<br><b>所以"使劲想"最贵，"轻轻想"最便宜！</b></div>
+</section>
+
+<!-- 记住啦 -->
+<section class="page p7">
+  <div class="emoji pulse">🌟</div>
+  <div class="bigword">全记住啦！</div>
+  <div class="tiny">
+    · 分级别，是因为<b>问题有大有小</b>，不能都用大力气<br>
+    · <b>轻轻想</b>=简单活(客服/翻译) · <b>想一想</b>=普通活(写码/总结) · <b>使劲想</b>=难活(解题/计划/Agent)<br>
+    · <b>算力</b>=电脑大脑跑步的力气，小芯片里小工人一起算<br>
+    · 成本 = <b>电费 + 买机器 + 散热 + 时间</b>
+  </div>
+  <div class="row">
+    <span class="tag">动脑越多</span><span class="tag">算力越费</span><span class="tag">花钱越多</span><span class="tag">答案越棒</span>
+  </div>
+  <div class="tiny">宝宝真的看懂啦！👶✨</div>
+</section>
+
+<div class="scrollhint">往下滑呀 👇</div>
+<script>
+  window.addEventListener('scroll',()=>{ const h=document.querySelector('.scrollhint'); if(window.scrollY>100) h.style.display='none'; });
+</script>
+</body>
+</html>

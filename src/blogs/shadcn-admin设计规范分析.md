@@ -188,6 +188,166 @@ function CardHeader({ className, ...props }) {
 | `--ring` | `#90a1b9` | `#6a7282` | slate-400 ↔ slate-500 | 焦点环 |
 | `--chart-1`~`--chart-5` | `#f54900 / #009689 / #104e64 / #ffb900 / #fe9a00` | `#1447e6 / #00bc7d / #fe9a00 / #ad46ff / #ff2056` | 彩色系 | 图表序列色 |
 
+**核心 token 可视化**（hex 为 OKLCH 近似转换，源码以 `oklch()` 为准；色块内文字按亮度自动取深/浅色，透明色块带棋盘格底纹示意透明度。点击下方标签可在 **浅色 / 深色** 两个模式间切换）：
+
+<div class="clr-wrap" style="margin:1.6rem 0 2.4rem">
+<style>
+.clr-wrap{--cbg:#ffffff;--cbd:#e2e8f0;--ctx:#0f172a;--cmt:#62748e;--cso:#f1f5f9;--cborder:rgba(0,0,0,.08);--cdash:rgba(0,0,0,.12)}
+.dark .clr-wrap{--cbg:#0b1220;--cbd:rgba(255,255,255,.09);--ctx:#e2e8f0;--cmt:#90a1b9;--cso:rgba(255,255,255,.07);--cborder:rgba(255,255,255,.12);--cdash:rgba(255,255,255,.12)}
+.clr-tab-ipt{position:absolute;width:0;height:0;opacity:0;pointer-events:none}
+.clr-tabbar{display:flex;gap:8px;margin-bottom:14px}
+.clr-tab{display:inline-block;cursor:pointer;font-size:.78rem;font-weight:600;line-height:1;padding:7px 16px;border-radius:999px;border:1px solid var(--cbd);color:var(--cmt);background:var(--cso);user-select:none;transition:color .15s,background .15s,border-color .15s}
+.clr-tab:hover{color:var(--ctx)}
+#clr-tb-light:checked ~ .clr-tabbar label[for=clr-tb-light],
+#clr-tb-dark:checked ~ .clr-tabbar label[for=clr-tb-dark]{background:var(--ctx);color:var(--cbg);border-color:var(--ctx)}
+#clr-tb-light:checked ~ .clr-grid .sw-dark,
+#clr-tb-light:checked ~ .clr-chart .clr-chart-row.sw-dark{display:none}
+#clr-tb-dark:checked ~ .clr-grid .sw-light,
+#clr-tb-dark:checked ~ .clr-chart .clr-chart-row.sw-light{display:none}
+.clr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.clr-card{background:var(--cbg);border:1px solid var(--cbd);border-radius:10px;padding:14px}
+.clr-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+.clr-token{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.78rem;font-weight:600;color:var(--ctx);background:var(--cso);border-radius:6px;padding:2px 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.clr-use{font-size:.68rem;color:var(--cmt);background:var(--cso);border:1px solid var(--cbd);border-radius:999px;padding:1px 8px;white-space:nowrap}
+.clr-pair{display:grid;grid-template-columns:1fr}
+.clr-sw{position:relative;overflow:hidden;height:76px;border-radius:8px;border:1px solid var(--cborder);padding:10px;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start}
+.clr-sw.is-alpha::before{content:"";position:absolute;inset:0;background-image:linear-gradient(45deg,rgba(0,0,0,.07) 25%,transparent 25%,transparent 75%,rgba(0,0,0,.07) 75%),linear-gradient(45deg,rgba(0,0,0,.07) 25%,transparent 25%,transparent 75%,rgba(0,0,0,.07) 75%);background-size:12px 12px;background-position:0 0,6px 6px}
+.dark .clr-sw.is-alpha::before{background-image:linear-gradient(45deg,rgba(255,255,255,.08) 25%,transparent 25%,transparent 75%,rgba(255,255,255,.08) 75%),linear-gradient(45deg,rgba(255,255,255,.08) 25%,transparent 25%,transparent 75%,rgba(255,255,255,.08) 75%)}
+.clr-sw>*{position:relative;z-index:1}
+.clr-hex{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.72rem;font-weight:600;line-height:1.4}
+.clr-mode{font-size:.62rem;opacity:.75;line-height:1.4}
+.clr-sw.st-dark{color:#0f172a}.clr-sw.st-light{color:#f8fafc}
+.clr-map{margin-top:10px;padding-top:8px;border-top:1px dashed var(--cdash);font-size:.72rem;color:var(--cmt)}
+.clr-map b{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;color:var(--ctx)}
+.clr-chart{background:var(--cbg);border:1px solid var(--cbd);border-radius:10px;padding:16px;margin-top:12px}
+.clr-chart-row{display:flex;gap:10px;margin-top:10px}
+.clr-chart-item{flex:1;min-width:0}
+.clr-chart-item .clr-sw{height:54px;padding:8px}
+.clr-chart-item .clr-name{margin-top:6px;padding-left:2px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.6rem;color:var(--cmt)}
+</style>
+<input type="radio" class="clr-tab-ipt" id="clr-tb-light" name="clr-tab-mode" checked>
+<input type="radio" class="clr-tab-ipt" id="clr-tb-dark" name="clr-tab-mode">
+<div class="clr-tabbar">
+<label class="clr-tab" for="clr-tb-light">浅色模式</label>
+<label class="clr-tab" for="clr-tb-dark">深色模式</label>
+</div>
+<div class="clr-grid">
+<div class="clr-card">
+  <div class="clr-head"><span class="clr-token">--background</span><span class="clr-use">页面背景</span></div>
+  <div class="clr-pair">
+    <div class="clr-sw sw-light st-dark" style="background:#ffffff"><span class="clr-hex">#ffffff</span><span class="clr-mode">white</span></div>
+    <div class="clr-sw sw-dark st-light" style="background:#020618"><span class="clr-hex">#020618</span><span class="clr-mode">slate-950</span></div>
+  </div>
+  <div class="clr-map">色阶映射：<b>white ↔ slate-950</b></div>
+</div>
+<div class="clr-card">
+  <div class="clr-head"><span class="clr-token">--foreground</span><span class="clr-use">主文字色</span></div>
+  <div class="clr-pair">
+    <div class="clr-sw sw-light st-light" style="background:#020618"><span class="clr-hex">#020618</span><span class="clr-mode">slate-950</span></div>
+    <div class="clr-sw sw-dark st-dark" style="background:#f8fafc"><span class="clr-hex">#f8fafc</span><span class="clr-mode">slate-50</span></div>
+  </div>
+  <div class="clr-map">色阶映射：<b>slate-950 ↔ slate-50</b></div>
+</div>
+<div class="clr-card">
+  <div class="clr-head"><span class="clr-token">--card / --popover</span><span class="clr-use">卡片/弹层背景</span></div>
+  <div class="clr-pair">
+    <div class="clr-sw sw-light st-dark" style="background:#ffffff"><span class="clr-hex">#ffffff</span><span class="clr-mode">white</span></div>
+    <div class="clr-sw sw-dark st-light" style="background:#020919"><span class="clr-hex">#020919</span><span class="clr-mode">深蓝黑</span></div>
+  </div>
+  <div class="clr-map">色阶映射：<b>white ↔ 深蓝黑</b></div>
+</div>
+<div class="clr-card">
+  <div class="clr-head"><span class="clr-token">--primary</span><span class="clr-use">主操作色（暗色反转）</span></div>
+  <div class="clr-pair">
+    <div class="clr-sw sw-light st-light" style="background:#0f172b"><span class="clr-hex">#0f172b</span><span class="clr-mode">slate-900</span></div>
+    <div class="clr-sw sw-dark st-dark" style="background:#e2e8f0"><span class="clr-hex">#e2e8f0</span><span class="clr-mode">slate-200</span></div>
+  </div>
+  <div class="clr-map">色阶映射：<b>slate-900 ↔ slate-200</b></div>
+</div>
+<div class="clr-card">
+  <div class="clr-head"><span class="clr-token">--primary-foreground</span><span class="clr-use">主色上的文字</span></div>
+  <div class="clr-pair">
+    <div class="clr-sw sw-light st-dark" style="background:#f8fafc"><span class="clr-hex">#f8fafc</span><span class="clr-mode">slate-50</span></div>
+    <div class="clr-sw sw-dark st-light" style="background:#0f172b"><span class="clr-hex">#0f172b</span><span class="clr-mode">slate-900</span></div>
+  </div>
+  <div class="clr-map">色阶映射：<b>slate-50 ↔ slate-900</b></div>
+</div>
+<div class="clr-card">
+  <div class="clr-head"><span class="clr-token">--secondary / --muted / --accent</span><span class="clr-use">次级/强调背景</span></div>
+  <div class="clr-pair">
+    <div class="clr-sw sw-light st-dark" style="background:#f1f5f9"><span class="clr-hex">#f1f5f9</span><span class="clr-mode">slate-100</span></div>
+    <div class="clr-sw sw-dark st-light" style="background:#1d293d"><span class="clr-hex">#1d293d</span><span class="clr-mode">深蓝灰</span></div>
+  </div>
+  <div class="clr-map">色阶映射：<b>slate-100 ↔ 深蓝灰</b></div>
+</div>
+<div class="clr-card">
+  <div class="clr-head"><span class="clr-token">--secondary-foreground / --accent-foreground</span><span class="clr-use">次级/强调上文字</span></div>
+  <div class="clr-pair">
+    <div class="clr-sw sw-light st-light" style="background:#0f172b"><span class="clr-hex">#0f172b</span><span class="clr-mode">slate-900</span></div>
+    <div class="clr-sw sw-dark st-dark" style="background:#f8fafc"><span class="clr-hex">#f8fafc</span><span class="clr-mode">slate-50</span></div>
+  </div>
+  <div class="clr-map">色阶映射：<b>—</b></div>
+</div>
+<div class="clr-card">
+  <div class="clr-head"><span class="clr-token">--muted-foreground</span><span class="clr-use">次级说明文字</span></div>
+  <div class="clr-pair">
+    <div class="clr-sw sw-light st-light" style="background:#62748e"><span class="clr-hex">#62748e</span><span class="clr-mode">slate-500</span></div>
+    <div class="clr-sw sw-dark st-dark" style="background:#90a1b9"><span class="clr-hex">#90a1b9</span><span class="clr-mode">slate-400</span></div>
+  </div>
+  <div class="clr-map">色阶映射：<b>slate-500 ↔ slate-400</b></div>
+</div>
+<div class="clr-card">
+  <div class="clr-head"><span class="clr-token">--destructive</span><span class="clr-use">危险操作（删除等）</span></div>
+  <div class="clr-pair">
+    <div class="clr-sw sw-light st-light" style="background:#e7000b"><span class="clr-hex">#e7000b</span><span class="clr-mode">red-600</span></div>
+    <div class="clr-sw sw-dark st-light" style="background:#ff6467"><span class="clr-hex">#ff6467</span><span class="clr-mode">red-400</span></div>
+  </div>
+  <div class="clr-map">色阶映射：<b>red-600 ↔ red-400</b></div>
+</div>
+<div class="clr-card">
+  <div class="clr-head"><span class="clr-token">--border</span><span class="clr-use">边框</span></div>
+  <div class="clr-pair">
+    <div class="clr-sw sw-light st-dark" style="background:#e2e8f0"><span class="clr-hex">#e2e8f0</span><span class="clr-mode">slate-200</span></div>
+    <div class="clr-sw sw-dark st-light is-alpha" style="background:rgba(255,255,255,0.10)"><span class="clr-hex">rgba(255,255,255,0.10)</span><span class="clr-mode">白 10% 透明</span></div>
+  </div>
+  <div class="clr-map">色阶映射：<b>slate-200 ↔ 白 10%</b></div>
+</div>
+<div class="clr-card">
+  <div class="clr-head"><span class="clr-token">--input</span><span class="clr-use">输入框边框</span></div>
+  <div class="clr-pair">
+    <div class="clr-sw sw-light st-dark" style="background:#e2e8f0"><span class="clr-hex">#e2e8f0</span><span class="clr-mode">slate-200</span></div>
+    <div class="clr-sw sw-dark st-light is-alpha" style="background:rgba(255,255,255,0.15)"><span class="clr-hex">rgba(255,255,255,0.15)</span><span class="clr-mode">白 15% 透明</span></div>
+  </div>
+  <div class="clr-map">色阶映射：<b>同 border ↔ 白 15%</b></div>
+</div>
+<div class="clr-card">
+  <div class="clr-head"><span class="clr-token">--ring</span><span class="clr-use">焦点环</span></div>
+  <div class="clr-pair">
+    <div class="clr-sw sw-light st-dark" style="background:#90a1b9"><span class="clr-hex">#90a1b9</span><span class="clr-mode">slate-400</span></div>
+    <div class="clr-sw sw-dark st-light" style="background:#6a7282"><span class="clr-hex">#6a7282</span><span class="clr-mode">slate-500</span></div>
+  </div>
+  <div class="clr-map">色阶映射：<b>slate-400 ↔ slate-500</b></div>
+</div>
+</div>
+<div class="clr-chart">
+  <div class="clr-head"><span class="clr-token">--chart-1 ~ --chart-5</span><span class="clr-use">图表序列色</span></div>
+  <div class="clr-chart-row sw-light">
+    <div class="clr-chart-item"><div class="clr-sw st-light" style="background:#f54900"><span class="clr-hex">#f54900</span></div><div class="clr-name">chart-1</div></div>
+    <div class="clr-chart-item"><div class="clr-sw st-light" style="background:#009689"><span class="clr-hex">#009689</span></div><div class="clr-name">chart-2</div></div>
+    <div class="clr-chart-item"><div class="clr-sw st-light" style="background:#104e64"><span class="clr-hex">#104e64</span></div><div class="clr-name">chart-3</div></div>
+    <div class="clr-chart-item"><div class="clr-sw st-dark" style="background:#ffb900"><span class="clr-hex">#ffb900</span></div><div class="clr-name">chart-4</div></div>
+    <div class="clr-chart-item"><div class="clr-sw st-dark" style="background:#fe9a00"><span class="clr-hex">#fe9a00</span></div><div class="clr-name">chart-5</div></div>
+  </div>
+  <div class="clr-chart-row sw-dark">
+    <div class="clr-chart-item"><div class="clr-sw st-light" style="background:#1447e6"><span class="clr-hex">#1447e6</span></div><div class="clr-name">chart-1</div></div>
+    <div class="clr-chart-item"><div class="clr-sw st-light" style="background:#00bc7d"><span class="clr-hex">#00bc7d</span></div><div class="clr-name">chart-2</div></div>
+    <div class="clr-chart-item"><div class="clr-sw st-dark" style="background:#fe9a00"><span class="clr-hex">#fe9a00</span></div><div class="clr-name">chart-3</div></div>
+    <div class="clr-chart-item"><div class="clr-sw st-light" style="background:#ad46ff"><span class="clr-hex">#ad46ff</span></div><div class="clr-name">chart-4</div></div>
+    <div class="clr-chart-item"><div class="clr-sw st-light" style="background:#ff2056"><span class="clr-hex">#ff2056</span></div><div class="clr-name">chart-5</div></div>
+  </div>
+</div>
+</div>
+
 ### 3.2 Sidebar 专用 token（全部引用主 token）
 
 ```

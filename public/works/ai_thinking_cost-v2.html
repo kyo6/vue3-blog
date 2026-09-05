@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 动脑三档位 · 霓虹卡片版</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; scroll-snap-type:y mandatory; }
+  body {
+    font-family:"PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+    background:#050914; color:#e2e8f0; -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .page {
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    padding:22px; scroll-snap-align:start; position:relative;
+  }
+  .card {
+    width:min(760px,100%); background:linear-gradient(145deg,#0f172a,#131c31);
+    border:1px solid #1e293b; border-radius:32px;
+    padding:28px 24px 32px; box-shadow:0 25px 80px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.06);
+    position:relative; overflow:hidden;
+  }
+  .card::before {
+    content:""; position:absolute; inset:-2px; border-radius:34px;
+    background:linear-gradient(135deg,var(--glow1),var(--glow2)); opacity:.18; z-index:-1;
+  }
+  .topbar { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+  .badge {
+    background:rgba(34,211,238,.12); color:#22d3ee; border:1px solid rgba(34,211,238,.35);
+    border-radius:999px; padding:5px 13px; font-size:13px; font-weight:800; letter-spacing:.5px;
+  }
+  .counter { color:#64748b; font-size:14px; font-weight:800; letter-spacing:1px; }
+  .bigword {
+    font-size:clamp(32px,7.5vw,64px); font-weight:900; line-height:1.12; margin:8px 0 6px;
+    color:#fff; letter-spacing:-.5px;
+  }
+  .midword { font-size:clamp(24px,5.5vw,42px); font-weight:900; margin:6px 0; color:#fff; }
+  .tiny { font-size:clamp(15px,3.6vw,22px); color:#94a3b8; line-height:1.6; margin-top:8px; font-weight:600; }
+  .pic { display:flex; justify-content:center; margin:18px 0 10px; }
+  svg { max-width:100%; height:auto; }
+  .tags { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:14px; }
+  .tag {
+    background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12);
+    border-radius:999px; padding:7px 14px; font-size:14px; font-weight:800; color:#e2e8f0;
+  }
+  .tag.cyan { color:#22d3ee; border-color:rgba(34,211,238,.35); background:rgba(34,211,238,.08); }
+  .tag.orange { color:#fb923c; border-color:rgba(251,146,60,.35); background:rgba(251,146,60,.08); }
+  .tag.pink { color:#f472b6; border-color:rgba(244,114,182,.35); background:rgba(244,114,182,.08); }
+  .tag.purple { color:#c084fc; border-color:rgba(192,132,252,.35); background:rgba(192,132,252,.08); }
+  .dots {
+    position:fixed; bottom:18px; left:50%; transform:translateX(-50%);
+    display:flex; gap:8px; z-index:10;
+  }
+  .dot { width:8px; height:8px; border-radius:50%; background:#334155; transition:.25s; }
+  .dot.active { background:#22d3ee; box-shadow:0 0 10px #22d3ee; transform:scale(1.35); }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowBig" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="9" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="botBody" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f8fafc"/><stop offset="100%" stop-color="#cbd5e1"/>
+    </linearGradient>
+    <linearGradient id="botApron" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#0ea5e9"/>
+    </linearGradient>
+    <linearGradient id="chefHat" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- 1 封面 -->
+<section class="page" style="--glow1:#22d3ee;--glow2:#3b82f6">
+  <div class="card">
+    <div class="topbar"><span class="badge">小学生</span><span class="counter">01 / 09</span></div>
+    <div class="bigword">AI 大模型<br>动脑要花多少钱？</div>
+    <div class="tiny">把"思考力度"当成厨房档位，看图就懂～</div>
+    <div class="pic">
+      <svg width="320" height="240" viewBox="0 0 320 240">
+        <!-- 厨房背景 -->
+        <rect x="20" y="20" width="280" height="200" rx="28" fill="#0b1221" stroke="#1e293b" stroke-width="2"/>
+        <rect x="40" y="40" width="52" height="80" rx="10" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+        <rect x="44" y="44" width="44" height="38" rx="4" fill="#0f172a"/>
+        <rect x="44" y="88" width="44" height="26" rx="4" fill="#0f172a"/>
+        <rect x="110" y="55" width="70" height="55" rx="10" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+        <rect x="118" y="62" width="54" height="30" rx="4" fill="#fb923c" opacity=".7"/>
+        <circle cx="145" cy="100" r="5" fill="#f87171" filter="url(#glow)"/>
+        <rect x="220" y="40" width="60" height="110" rx="10" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+        <rect x="228" y="48" width="44" height="80" rx="4" fill="#0f172a"/>
+        <!-- 机器人厨师 -->
+        <g transform="translate(120,115)">
+          <ellipse cx="40" cy="98" rx="38" ry="12" fill="#000" opacity=".35"/>
+          <path d="M15,25 h50 a22,22 0 0,1 22,22 v48 a22,22 0 0,1 -22,22 h-50 a22,22 0 0,1 -22,-22 v-48 a22,22 0 0,1 22,-22z" fill="url(#botBody)"/>
+          <path d="M20,55 h40 a8,8 0 0,1 8,8 v42 a8,8 0 0,1 -8,8 h-40 a8,8 0 0,1 -8,-8 v-42 a8,8 0 0,1 8,-8z" fill="url(#botApron)"/>
+          <circle cx="40" cy="18" r="24" fill="url(#botBody)" stroke="#38bdf8" stroke-width="2"/>
+          <ellipse cx="40" cy="-2" rx="22" ry="16" fill="url(#chefHat)" stroke="#94a3b8" stroke-width="1.5"/>
+          <circle cx="31" cy="17" r="5" fill="#0f172a"/><circle cx="49" cy="17" r="5" fill="#0f172a"/>
+          <circle cx="32" cy="16" r="2" fill="#22d3ee" filter="url(#glow)"/><circle cx="50" cy="16" r="2" fill="#22d3ee" filter="url(#glow)"/>
+          <path d="M34,30 q6,6 12,0" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <line x1="40" y1="-6" x2="40" y2="-18" stroke="#38bdf8" stroke-width="2"/>
+          <circle cx="40" cy="-20" r="4" fill="#22d3ee" filter="url(#glow)"/>
+          <rect x="75" y="62" width="8" height="28" rx="4" fill="#cbd5e1" stroke="#94a3b8" stroke-width="1"/>
+          <circle cx="79" cy="58" r="6" fill="#f8fafc" stroke="#94a3b8" stroke-width="1"/>
+        </g>
+        <!-- 打蛋器 -->
+        <text x="225" y="175" font-size="34" text-anchor="middle">🥄</text>
+      </svg>
+    </div>
+    <div class="tags">
+      <span class="tag cyan">思考力度</span>
+      <span class="tag orange">算力</span>
+      <span class="tag pink">成本</span>
+    </div>
+  </div>
+</section>
+
+<!-- 2 大模型是啥 -->
+<section class="page" style="--glow1:#22d3ee;--glow2:#22d3ee">
+  <div class="card">
+    <div class="topbar"><span class="badge">小学生</span><span class="counter">02 / 09</span></div>
+    <div class="bigword">AI 大模型 =<br>会答题的机器人大厨</div>
+    <div class="tiny">你点菜（提问），它炒菜（思考），然后端出来（回答）。</div>
+    <div class="pic">
+      <svg width="300" height="200" viewBox="0 0 300 200">
+        <rect x="20" y="30" width="260" height="140" rx="22" fill="#0b1221" stroke="#1e293b" stroke-width="2"/>
+        <!-- 机器人 -->
+        <g transform="translate(115,55)">
+          <circle cx="35" cy="25" r="26" fill="url(#botBody)" stroke="#38bdf8" stroke-width="2"/>
+          <circle cx="26" cy="24" r="5" fill="#0f172a"/><circle cx="44" cy="24" r="5" fill="#0f172a"/>
+          <circle cx="27" cy="23" r="2" fill="#22d3ee" filter="url(#glow)"/><circle cx="45" cy="23" r="2" fill="#22d3ee" filter="url(#glow)"/>
+          <path d="M29,37 q6,5 12,0" stroke="#0f172a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <line x1="35" y1="-1" x2="35" y2="-10" stroke="#38bdf8" stroke-width="2"/>
+          <circle cx="35" cy="-12" r="4" fill="#22d3ee" filter="url(#glow)"/>
+          <rect x="10" y="55" width="50" height="46" rx="14" fill="url(#botBody)" stroke="#38bdf8" stroke-width="2"/>
+          <path d="M15,72 h40 a4,4 0 0,1 4,4 v18 a4,4 0 0,1 -4,4 h-40 a4,4 0 0,1 -4,-4 v-18 a4,4 0 0,1 4,-4z" fill="url(#botApron)"/>
+        </g>
+        <!-- 气泡 -->
+        <rect x="35" y="55" width="70" height="42" rx="18" fill="#0f172a" stroke="#22d3ee" stroke-width="2"/>
+        <text x="70" y="82" font-size="20" text-anchor="middle" fill="#22d3ee" font-weight="bold">❓</text>
+        <rect x="190" y="90" width="80" height="44" rx="18" fill="#0f172a" stroke="#22d3ee" stroke-width="2"/>
+        <text x="230" y="118" font-size="20" text-anchor="middle" fill="#22d3ee" font-weight="bold">💬</text>
+      </svg>
+    </div>
+    <div class="tags"><span class="tag cyan">提问 = 点菜</span><span class="tag orange">思考 = 炒菜</span><span class="tag pink">回答 = 上菜</span></div>
+  </div>
+</section>
+
+<!-- 3 思考力度 = 档位 -->
+<section class="page" style="--glow1:#fb923c;--glow2:#f472b6">
+  <div class="card">
+    <div class="topbar"><span class="badge">小学生</span><span class="counter">03 / 09</span></div>
+    <div class="bigword">思考力度 = 厨房档位</div>
+    <div class="tiny">煮泡面一档，煎牛排二档，满汉全席三档。你调多高，它干多狠。</div>
+    <div class="pic">
+      <svg width="300" height="200" viewBox="0 0 300 200">
+        <rect x="25" y="25" width="250" height="150" rx="22" fill="#0b1221" stroke="#1e293b" stroke-width="2"/>
+        <!-- 档位杆 -->
+        <rect x="120" y="60" width="60" height="100" rx="14" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+        <rect x="130" y="75" width="40" height="16" rx="6" fill="#334155"/>
+        <rect x="130" y="102" width="40" height="16" rx="6" fill="#334155"/>
+        <rect x="130" y="129" width="40" height="16" rx="6" fill="#334155"/>
+        <text x="108" y="88" font-size="14" fill="#94a3b8" font-weight="bold">1</text>
+        <text x="108" y="115" font-size="14" fill="#94a3b8" font-weight="bold">2</text>
+        <text x="108" y="142" font-size="14" fill="#94a3b8" font-weight="bold">3</text>
+        <!-- 把手在二档 -->
+        <rect x="145" y="98" width="42" height="22" rx="11" fill="#fb923c" filter="url(#glow)"/>
+        <circle cx="150" cy="109" r="5" fill="#fff"/>
+        <text x="200" y="115" font-size="20" fill="#fb923c" font-weight="bold">调档</text>
+      </svg>
+    </div>
+    <div class="tags"><span class="tag cyan">一档 = 轻轻想</span><span class="tag orange">二档 = 想一想</span><span class="tag pink">三档 = 使劲想</span></div>
+  </div>
+</section>
+
+<!-- 4 档位1 -->
+<section class="page" style="--glow1:#22d3ee;--glow2:#22d3ee">
+  <div class="card">
+    <div class="topbar"><span class="badge">小学生</span><span class="counter">04 / 09</span></div>
+    <div class="midword" style="color:#22d3ee">档位 1</div>
+    <div class="bigword">轻轻想</div>
+    <div class="tiny">简单问题，像煮个白水煮蛋，小锅小火。</div>
+    <div class="pic">
+      <svg width="300" height="210" viewBox="0 0 300 210">
+        <rect x="25" y="20" width="250" height="170" rx="22" fill="#0b1221" stroke="#1e293b" stroke-width="2"/>
+        <!-- 小锅 -->
+        <path d="M110,95 h80 a10,10 0 0,1 10,10 v35 a35,35 0 0,1 -35,35 h-30 a35,35 0 0,1 -35,-35 v-35 a10,10 0 0,1 10,-10z" fill="#334155" stroke="#94a3b8" stroke-width="2"/>
+        <rect x="100" y="105" width="10" height="8" rx="2" fill="#94a3b8"/>
+        <rect x="190" y="105" width="10" height="8" rx="2" fill="#94a3b8"/>
+        <!-- 小火 -->
+        <circle cx="150" cy="145" r="22" fill="#f97316" opacity=".25" filter="url(#glowBig)"/>
+        <path d="M150,135 q-6,10 0,20 q6,-10 0,-20z" fill="#fb923c"/>
+        <!-- 蛋 -->
+        <text x="150" y="82" font-size="34" text-anchor="middle">🥚</text>
+        <!-- 1个灯泡 -->
+        <rect x="175" y="60" width="8" height="24" fill="#22d3ee"/>
+        <circle cx="179" cy="52" r="16" fill="#fff" stroke="#22d3ee" stroke-width="3"/>
+      </svg>
+    </div>
+    <div class="tags">
+      <span class="tag cyan">💡 1 个灯</span>
+      <span class="tag cyan">👷 1 个工人</span>
+      <span class="tag cyan">🪙 1 块钱</span>
+      <span class="tag cyan">⚡ 最快</span>
+    </div>
+  </div>
+</section>
+
+<!-- 5 档位2 -->
+<section class="page" style="--glow1:#fb923c;--glow2:#fb923c">
+  <div class="card">
+    <div class="topbar"><span class="badge">小学生</span><span class="counter">05 / 09</span></div>
+    <div class="midword" style="color:#fb923c">档位 2</div>
+    <div class="bigword">想一想</div>
+    <div class="tiny">一般问题，像煎牛排，中火中锅。</div>
+    <div class="pic">
+      <svg width="300" height="210" viewBox="0 0 300 210">
+        <rect x="25" y="20" width="250" height="170" rx="22" fill="#0b1221" stroke="#1e293b" stroke-width="2"/>
+        <!-- 中锅 -->
+        <path d="M90,95 h120 a10,10 0 0,1 10,10 v35 a35,35 0 0,1 -35,35 h-70 a35,35 0 0,1 -35,-35 v-35 a10,10 0 0,1 10,-10z" fill="#334155" stroke="#94a3b8" stroke-width="2"/>
+        <rect x="75" y="110" width="12" height="10" rx="2" fill="#94a3b8"/>
+        <rect x="213" y="110" width="12" height="10" rx="2" fill="#94a3b8"/>
+        <!-- 中火 -->
+        <circle cx="150" cy="150" r="28" fill="#f97316" opacity=".22" filter="url(#glowBig)"/>
+        <path d="M150,135 q-8,14 0,26 q8,-14 0,-26z" fill="#fb923c"/>
+        <path d="M140,138 q-4,10 2,16 q4,-8 -2,-16z" fill="#fb923c" opacity=".8"/>
+        <path d="M160,138 q4,10 -2,16 q-4,-8 2,-16z" fill="#fb923c" opacity=".8"/>
+        <!-- 牛排 -->
+        <text x="150" y="82" font-size="38" text-anchor="middle">🥩</text>
+        <!-- 3灯 -->
+        <g transform="translate(190,55)">
+          <rect x="0" y="0" width="6" height="18" fill="#fb923c"/><circle cx="3" cy="-6" r="11" fill="#fff" stroke="#fb923c" stroke-width="2.5"/>
+          <rect x="22" y="0" width="6" height="18" fill="#fb923c"/><circle cx="25" cy="-6" r="11" fill="#fff" stroke="#fb923c" stroke-width="2.5"/>
+          <rect x="44" y="0" width="6" height="18" fill="#fb923c"/><circle cx="47" cy="-6" r="11" fill="#fff" stroke="#fb923c" stroke-width="2.5"/>
+        </g>
+      </svg>
+    </div>
+    <div class="tags">
+      <span class="tag orange">💡💡💡 3 个灯</span>
+      <span class="tag orange">👷👷👷 3 个工人</span>
+      <span class="tag orange">🪙🪙🪙 3 块钱</span>
+    </div>
+  </div>
+</section>
+
+<!-- 6 档位3 -->
+<section class="page" style="--glow1:#f472b6;--glow2:#c084fc">
+  <div class="card">
+    <div class="topbar"><span class="badge">小学生</span><span class="counter">06 / 09</span></div>
+    <div class="midword" style="color:#f472b6">档位 3</div>
+    <div class="bigword">使劲想！</div>
+    <div class="tiny">超级难题，像做一桌满汉全席，所有灶一起开火。</div>
+    <div class="pic">
+      <svg width="300" height="210" viewBox="0 0 300 210">
+        <rect x="25" y="20" width="250" height="170" rx="22" fill="#0b1221" stroke="#1e293b" stroke-width="2"/>
+        <!-- 多个锅 -->
+        <path d="M60,105 h70 a6,6 0 0,1 6,6 v25 a22,22 0 0,1 -22,22 h-38 a22,22 0 0,1 -22,-22 v-25 a6,6 0 0,1 6,-6z" fill="#334155" stroke="#94a3b8" stroke-width="2"/>
+        <path d="M170,105 h70 a6,6 0 0,1 6,6 v25 a22,22 0 0,1 -22,22 h-38 a22,22 0 0,1 -22,-22 v-25 a6,6 0 0,1 6,-6z" fill="#334155" stroke="#94a3b8" stroke-width="2"/>
+        <path d="M115,145 h70 a8,8 0 0,1 8,8 v25 a24,24 0 0,1 -24,24 h-38 a24,24 0 0,1 -24,-24 v-25 a8,8 0 0,1 8,-8z" fill="#334155" stroke="#94a3b8" stroke-width="2"/>
+        <!-- 大火 -->
+        <circle cx="95" cy="145" r="18" fill="#ef4444" opacity=".35" filter="url(#glowBig)"/>
+        <path d="M95,135 q-7,12 0,24 q7,-12 0,-24z" fill="#f87171"/>
+        <circle cx="205" cy="145" r="18" fill="#ef4444" opacity=".35" filter="url(#glowBig)"/>
+        <path d="M205,135 q-7,12 0,24 q7,-12 0,-24z" fill="#f87171"/>
+        <circle cx="150" cy="180" r="20" fill="#ef4444" opacity=".4" filter="url(#glowBig)"/>
+        <path d="M150,168 q-8,14 0,28 q8,-14 0,-28z" fill="#f87171"/>
+        <path d="M140,172 q-4,10 2,16 q4,-8 -2,-16z" fill="#f87171" opacity=".9"/>
+        <path d="M160,172 q4,10 -2,16 q-4,-8 2,-16z" fill="#f87171" opacity=".9"/>
+        <!-- 一堆灯 -->
+        <g transform="translate(70,45)">
+          <circle cx="0" cy="0" r="10" fill="#fff" stroke="#f472b6" stroke-width="2"/>
+          <circle cx="24" cy="-6" r="12" fill="#fff" stroke="#f472b6" stroke-width="2"/>
+          <circle cx="52" cy="-2" r="11" fill="#fff" stroke="#f472b6" stroke-width="2"/>
+          <circle cx="78" cy="-8" r="13" fill="#fff" stroke="#f472b6" stroke-width="2"/>
+          <circle cx="105" cy="0" r="10" fill="#fff" stroke="#f472b6" stroke-width="2"/>
+          <circle cx="132" cy="-4" r="12" fill="#fff" stroke="#f472b6" stroke-width="2"/>
+        </g>
+        <!-- 宴席 -->
+        <text x="150" y="65" font-size="34" text-anchor="middle">🍱🍜🥟</text>
+      </svg>
+    </div>
+    <div class="tags">
+      <span class="tag pink">🔥 一堆灯</span>
+      <span class="tag pink">👷 一群工人</span>
+      <span class="tag pink">💰💰💰 好贵</span>
+      <span class="tag purple">🐢 慢慢慢</span>
+    </div>
+  </div>
+</section>
+
+<!-- 7 算力是什么 -->
+<section class="page" style="--glow1:#c084fc;--glow2:#22d3ee">
+  <div class="card">
+    <div class="topbar"><span class="badge">小学生</span><span class="counter">07 / 09</span></div>
+    <div class="bigword">算力 = 厨房电器<br>一起干活的力气</div>
+    <div class="tiny">芯片(GPU)就像厨房里的电磁炉、烤箱、搅拌机。里面有很多"数字小工人"在算题。</div>
+    <div class="pic">
+      <svg width="300" height="200" viewBox="0 0 300 200">
+        <rect x="20" y="25" width="260" height="150" rx="22" fill="#0b1221" stroke="#1e293b" stroke-width="2"/>
+        <!-- 芯片 -->
+        <rect x="100" y="55" width="100" height="70" rx="12" fill="#1e293b" stroke="#c084fc" stroke-width="3" filter="url(#glow)"/>
+        <text x="150" y="100" font-size="28" text-anchor="middle" fill="#c084fc" font-weight="bold">GPU</text>
+        <!-- 小工人 -->
+        <text x="60" y="165" font-size="36" text-anchor="middle">👷</text>
+        <text x="110" y="165" font-size="36" text-anchor="middle">👷</text>
+        <text x="150" y="165" font-size="36" text-anchor="middle">👷</text>
+        <text x="190" y="165" font-size="36" text-anchor="middle">👷</text>
+        <text x="240" y="165" font-size="36" text-anchor="middle">👷</text>
+        <!-- 电 -->
+        <text x="150" y="45" font-size="28" text-anchor="middle">⚡</text>
+      </svg>
+    </div>
+    <div class="tags"><span class="tag purple">GPU = 厨房电器</span><span class="tag cyan">算力 = 干活力气</span></div>
+  </div>
+</section>
+
+<!-- 8 为什么贵 -->
+<section class="page" style="--glow1:#22d3ee;--glow2:#fb923c">
+  <div class="card">
+    <div class="topbar"><span class="badge">小学生</span><span class="counter">08 / 09</span></div>
+    <div class="bigword">档位越高<br>电费越贵</div>
+    <div class="tiny">高档位 = 开更多灶、烧更旺火、用更长时间 = 账单爆炸。</div>
+    <div class="pic">
+      <svg width="300" height="210" viewBox="0 0 300 210">
+        <rect x="20" y="20" width="260" height="170" rx="22" fill="#0b1221" stroke="#1e293b" stroke-width="2"/>
+        <!-- 链条 -->
+        <text x="45" y="70" font-size="34" text-anchor="middle">🎚️</text>
+        <text x="100" y="70" font-size="24" text-anchor="middle" fill="#22d3ee">👉</text>
+        <text x="155" y="70" font-size="34" text-anchor="middle">👷</text>
+        <text x="205" y="70" font-size="24" text-anchor="middle" fill="#22d3ee">👉</text>
+        <text x="255" y="70" font-size="34" text-anchor="middle">⚡</text>
+        <text x="150" y="105" font-size="15" text-anchor="middle" fill="#94a3b8" font-weight="bold">档位高 → 工人多 → 电费多</text>
+        <!-- 电表 -->
+        <rect x="75" y="125" width="150" height="42" rx="21" fill="#1e293b" stroke="#fb923c" stroke-width="3"/>
+        <rect x="83" y="133" width="134" height="26" rx="13" fill="#fb923c" opacity=".85"/>
+        <text x="150" y="152" font-size="14" text-anchor="middle" fill="#0f172a" font-weight="bold">电表呼呼转</text>
+        <!-- 钱 -->
+        <text x="150" y="198" font-size="28" text-anchor="middle">💰💰💰</text>
+      </svg>
+    </div>
+    <div class="tags"><span class="tag cyan">档位高</span><span class="tag orange">电表转</span><span class="tag pink">钱变少</span></div>
+  </div>
+</section>
+
+<!-- 9 一图看懂 -->
+<section class="page" style="--glow1:#22d3ee;--glow2:#3b82f6">
+  <div class="card">
+    <div class="topbar"><span class="badge">小学生</span><span class="counter">09 / 09</span></div>
+    <div class="bigword">一图看懂 👀</div>
+    <div class="tiny">难度、档位、成本，对照一下就明白。</div>
+    <div class="pic">
+      <svg width="340" height="250" viewBox="0 0 340 250">
+        <rect x="10" y="20" width="320" height="210" rx="18" fill="#0b1221" stroke="#1e293b" stroke-width="2"/>
+        <!-- 表头 -->
+        <rect x="18" y="30" width="90" height="34" rx="8" fill="#1e293b"/>
+        <text x="63" y="53" font-size="13" text-anchor="middle" fill="#22d3ee" font-weight="bold">档位</text>
+        <rect x="114" y="30" width="110" height="34" rx="8" fill="#1e293b"/>
+        <text x="169" y="53" font-size="13" text-anchor="middle" fill="#22d3ee" font-weight="bold">问题难度</text>
+        <rect x="230" y="30" width="92" height="34" rx="8" fill="#1e293b"/>
+        <text x="276" y="53" font-size="13" text-anchor="middle" fill="#22d3ee" font-weight="bold">成本</text>
+        <!-- 行1 -->
+        <rect x="18" y="72" width="90" height="44" rx="8" fill="rgba(34,211,238,.12)" stroke="rgba(34,211,238,.3)" stroke-width="1"/>
+        <text x="63" y="100" font-size="13" text-anchor="middle" fill="#22d3ee" font-weight="bold">1 轻轻想</text>
+        <rect x="114" y="72" width="110" height="44" rx="8" fill="#1e293b"/>
+        <text x="169" y="100" font-size="14" text-anchor="middle" fill="#e2e8f0">1+1、分类</text>
+        <rect x="230" y="72" width="92" height="44" rx="8" fill="#1e293b"/>
+        <text x="276" y="100" font-size="22" text-anchor="middle">🪙</text>
+        <!-- 行2 -->
+        <rect x="18" y="124" width="90" height="44" rx="8" fill="rgba(251,146,60,.12)" stroke="rgba(251,146,60,.3)" stroke-width="1"/>
+        <text x="63" y="152" font-size="13" text-anchor="middle" fill="#fb923c" font-weight="bold">2 想一想</text>
+        <rect x="114" y="124" width="110" height="44" rx="8" fill="#1e293b"/>
+        <text x="169" y="152" font-size="14" text-anchor="middle" fill="#e2e8f0">写代码、总结</text>
+        <rect x="230" y="124" width="92" height="44" rx="8" fill="#1e293b"/>
+        <text x="276" y="152" font-size="22" text-anchor="middle">🪙🪙</text>
+        <!-- 行3 -->
+        <rect x="18" y="176" width="90" height="44" rx="8" fill="rgba(244,114,182,.12)" stroke="rgba(244,114,182,.3)" stroke-width="1"/>
+        <text x="63" y="204" font-size="13" text-anchor="middle" fill="#f472b6" font-weight="bold">3 使劲想</text>
+        <rect x="114" y="176" width="110" height="44" rx="8" fill="#1e293b"/>
+        <text x="169" y="204" font-size="14" text-anchor="middle" fill="#e2e8f0">难题、Agent</text>
+        <rect x="230" y="176" width="92" height="44" rx="8" fill="#1e293b"/>
+        <text x="276" y="204" font-size="22" text-anchor="middle">💰💰</text>
+      </svg>
+    </div>
+    <div class="tags"><span class="tag cyan">简单 → 便宜</span><span class="tag pink">复杂 → 贵</span><span class="tag orange">刚刚好 = 省钱</span></div>
+  </div>
+</section>
+
+<div class="dots" id="dots"></div>
+<script>
+  const pages=document.querySelectorAll('.page');
+  const dotsWrap=document.getElementById('dots');
+  pages.forEach((_,i)=>{ const d=document.createElement('div'); d.className='dot'; if(i===0)d.classList.add('active'); dotsWrap.appendChild(d); });
+  const dots=dotsWrap.querySelectorAll('.dot');
+  const observer=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ const i=Array.from(pages).indexOf(e.target); dots.forEach(d=>d.classList.remove('active')); dots[i].classList.add('active'); } });
+  },{threshold:.55});
+  pages.forEach(p=>observer.observe(p));
+</script>
+</body>
+</html>

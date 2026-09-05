@@ -61,21 +61,7 @@
     "vue 3 boilerplate",
     "vue3 boilerplate",
     "vue 3 skeleton",
-    "vue3 skeleton",
-    "vue 3 starter",
-    "vue3 starter",
-    "vue 3 webpack boilerplate",
-    "vue3 webpack boilerplate",
-    "vue 3 webpack skeleton",
-    "vue3 webpack skeleton",
-    "vue 3 webpack starter",
-    "vue3 webpack starter",
-    "vue3 enterprise boilerplate",
-    "vue 3 enterprise boilerplate",
-    "vue3 enterprise skeleton",
-    "vue 3 enterprise skeleton",
-    "vue3 enterprise starter",
-    "vue 3 enterprise starter"
+    "vue3 skeleton"
   ],
   "author": "richardevcom <hello@richardev.com> (https://github.com/richardevcom/)",
   "packageManager": "pnpm@11.17.0+sha512.cca3cea332ad254bb84145f966d19f4879615210346fc92c79a047f23a0d7b3cca3c3792f0076ba1f1831d277efbcf0a9119b31a9a60eca7fb3d6231f331ef72"
