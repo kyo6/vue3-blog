@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import content from '@/config/content.json'
 import columnsMeta from '@/config/columns.json'
 import { columnName } from '@/config/columns.js'
+import { canonicalTag } from '@/config/tagAliases.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -19,7 +20,7 @@ function sortByDateDesc(posts) {
 }
 
 const activeColumn = computed(() => route.query.column || '')
-const activeTag = computed(() => route.query.tag || '')
+const activeTag = computed(() => canonicalTag(route.query.tag))
 const isFiltered = computed(() => Boolean(activeColumn.value || activeTag.value))
 const totalCount = computed(() => content.length)
 

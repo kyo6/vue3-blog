@@ -1,6 +1,7 @@
 ---
 tag: ['TDesign', '设计规范', '文档规范']
 column: 学习笔记
+detail: 中后台页面框架该如何选？借 TDesign 的页面导航、布局和常见页面类型，整理搭建整体框架时可查的设计要点。
 ---
 
 1.  [什么是中后台系统](https://tdesign.tencent.com/design/offices#%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%AD%E5%90%8E%E5%8F%B0%E7%B3%BB%E7%BB%9F)

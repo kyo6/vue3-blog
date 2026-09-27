@@ -2,7 +2,7 @@
 tag: ['shadcn/ui', '设计规范', 'Design Token', '后台管理', '前端']
 date: 2026-08-28
 column: 技术研究
-detail: 基于 satnaing/shadcn-admin 最新源码（Tailwind v4 + CSS 变量方案）逐项拆解中后台控制台的设计规范：布局（内容区 1280px 上限、侧边栏 256/48/288px 三态、顶栏 64px）、间距层级（6/8/16/24px 递进）、色彩体系（OKLCH token + slate 基色 + 暗色反转映射）、Typography（Inter 可变字体 + 24/14/12px 字阶）与组件视觉属性（10px 圆角基、shadow-xs/sm/lg 分层、1px 边框、3px 焦点环），并标注对应 CSS 变量与 Tailwind token 及响应式断点适配规则。
+detail: 想复用 shadcn-admin 的后台视觉规范？拆解其布局尺寸、间距、色彩变量、字体和组件状态，帮助你建立一致的设计规则。
 ---
 
 # shadcn-admin 设计规范分析

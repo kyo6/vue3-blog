@@ -1,8 +1,8 @@
 ---
-tag: ["color-scheme", "暗色模式适配"]
+tag: ["CSS", "color-scheme", "暗色模式适配"]
 date: '2025-02-16'
 column: 教程
-detail: `prefers-color-scheme` 是一个 CSS 媒体特性，用于检测用户是否在操作系统或浏览器层面设置了偏好的主题色（亮色或暗色）。它可以帮助你为用户提供符合其系统偏好的网页显示模式。
+detail: 想让网页主题跟随系统明暗偏好？结合 prefers-color-scheme 的取值、CSS 示例和切换逻辑，说明暗色模式的实现方式。
 ---
 
 ## CSS 媒体特性 prefers-color-scheme

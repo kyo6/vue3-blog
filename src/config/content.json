@@ -6,19 +6,20 @@
     "column": "教程",
     "tag": [
       "Playwright",
+      "自动化测试",
       "UI 自动化测试",
       "E2E",
       "组件库",
       "视觉回归"
     ],
-    "summary": "承接 Playwright CLI + Skills 系列，记录为 NormalUpload 落地回归用例的全过程。重点澄清：plan 不会自动编译成 TS——Agent 用 plan 定规格、用 CLI 探真页面拿 TS 草稿、手写 expect 后落盘；并覆盖 fixtures/seed、分 group 生成、布局契约与截图基线、何时更新基线。",
+    "summary": "想给上传组件建立可维护的回归测试？从场景清单、测试素材和 Playwright 用例，到布局断言与截图基线，梳理一套可复用的落地流程。",
     "filename": "Playwright CLI 为组件库 NormalUpload 生成回归用例实战.md"
   },
   {
     "id": 2,
     "title": "shadcn 后台管理系统精选：5 个高星开源项目的登录实现对比",
     "date": "2026-08-28",
-    "column": "项目复盘",
+    "column": "技术研究",
     "tag": [
       "shadcn/ui",
       "后台管理",
@@ -26,7 +27,7 @@
       "登录界面",
       "前端"
     ],
-    "summary": "从 GitHub 星标、活跃维护、文档完善、登录功能完整四个维度，筛选 5 个基于 shadcn/ui 的高星开源后台管理模板（satnaing/shadcn-admin、Kiranism/next-shadcn-dashboard-starter、arhamkhnz/next-shadcn-admin-dashboard、Qualiora/shadboard、Whbbit1999/shadcn-vue-admin），逐一说明技术栈、登录路由、支持的登录方式与登录页设计特点，并附 Playwright 实际截图与横向对比。",
+    "summary": "选 shadcn 后台模板时，登录页是演示还是真能接入认证？对比 5 个项目的登录路由、认证能力和页面布局，帮助你按技术栈与需求选型。",
     "filename": "shadcn 后台管理系统精选：5 个高星开源项目的登录实现对比.md"
   },
   {
@@ -41,7 +42,7 @@
       "后台管理",
       "前端"
     ],
-    "summary": "基于 satnaing/shadcn-admin 最新源码（Tailwind v4 + CSS 变量方案）逐项拆解中后台控制台的设计规范：布局（内容区 1280px 上限、侧边栏 256/48/288px 三态、顶栏 64px）、间距层级（6/8/16/24px 递进）、色彩体系（OKLCH token + slate 基色 + 暗色反转映射）、Typography（Inter 可变字体 + 24/14/12px 字阶）与组件视觉属性（10px 圆角基、shadow-xs/sm/lg 分层、1px 边框、3px 焦点环），并标注对应 CSS 变量与 Tailwind token 及响应式断点适配规则。",
+    "summary": "想复用 shadcn-admin 的后台视觉规范？拆解其布局尺寸、间距、色彩变量、字体和组件状态，帮助你建立一致的设计规则。",
     "filename": "shadcn-admin设计规范分析.md"
   },
   {
@@ -56,7 +57,7 @@
       "设计规范",
       "图标字体"
     ],
-    "summary": "生成 SVG 图标远不止\"画出来\"那么简单。本文结合 Cursor 一年手绘 600+ 图标的设计实践，从尺寸与线宽的双规格体系、轮廓与填充的风格系统、直线加圆角的构建方法、光学微调，到一致性的基础设施与图标字体的交付替换，系统梳理生成 SVG 图标时最容易被忽略的讲究，每个原则都配有可直接运行的代码示例。",
+    "summary": "生成 SVG 图标时总觉得风格不统一？从尺寸线宽、轮廓、光学微调到图标字体交付，整理可检查的设计与实现准则。",
     "filename": "生成 SVG 图标应该注意什么.md"
   },
   {
@@ -73,7 +74,7 @@
       "自动化",
       "Projects"
     ],
-    "summary": "一篇走通 Codex App 的实操指南：从安装登录、三栏界面、沙盒权限、上下文与模型选择，到 Git / worktree 并行开发、云端运行、AGENTS.md 记忆、插件与自动化，再到 Skills 与 MCP 扩展能力，并重点拆解进阶玩法——用 Hook 在关键生命周期节点做隐私检查、命令审查与收尾校验，以及用 Projects 组织相关工作。含 hooks.json / config.toml 配置示例。",
+    "summary": "初次使用 Codex App，怎样配置并组织实际开发？覆盖安装、权限、项目、Skills、MCP 与 Hook，帮助你建立可重复的工作流程。",
     "filename": "Codex 使用指南：安装、Skills、MCP 与 Hook 进阶.md"
   },
   {
@@ -83,12 +84,13 @@
     "column": "教程",
     "tag": [
       "Playwright",
+      "自动化测试",
       "UI 自动化测试",
       "E2E",
       "AI",
-      "Skill"
+      "Skills"
     ],
-    "summary": "从 midscene.js 的视觉识别切到 Playwright CLI + 无障碍树：用 @playwright/cli 的 ref 快照稳定定位元素，配合可安装 Skill 把「页面探索 → 用例生成 → 执行 → 自愈」整条 UI 自动化链路交给 AI Agent，token 成本仅为 MCP 的约 1/5，且快、稳、可复用。含登录实战与 Skill 设计。",
+    "summary": "想让 AI 协助编写可靠的 UI 自动化用例？用 Playwright CLI 与 Skills 跑通页面探索、用例生成、断言和修复，并结合登录场景说明做法。",
     "filename": "Playwright CLI + Skills 实现 UI 自动化测试实战.md"
   },
   {
@@ -98,12 +100,13 @@
     "column": "教程",
     "tag": [
       "Playwright",
+      "自动化测试",
       "UI 自动化测试",
       "E2E",
       "实战案例",
-      "Skill"
+      "Skills"
     ],
-    "summary": "承接《基于 Playwright CLI + Skills 实现 UI 自动化测试实战》，本文是第二个实战案例：在登录态复用的基础上，用 @playwright/cli 的 ref 快照 + 可安装 Skill 跑通电商「搜索 → 加购 → 结算 → 下单」端到端链路，重点拆解跨页面 ref 失效重快照、金额/数量动态断言、auth 状态复用与脚本自愈。",
+    "summary": "电商下单测试跨页面易失效、金额难断言？用 Playwright CLI 与 Skills 跑通搜索到下单的链路，处理登录态、动态断言和脚本修复。",
     "filename": "Playwright CLI + Skills 跑通电商下单链路-实战案例.md"
   },
   {
@@ -118,7 +121,7 @@
       "资源整理",
       "灵感"
     ],
-    "summary": "作为一个常年沉浸在设计和插画世界的人，整理了我最常用的 10 个高质量网页插画 / 图标素材站点：Open Doodles、Freepik、Humaaans、Open Peeps、Ouch! by Icons8、IRA Design、CocoMaterial、Blush，以及 SVG Repo 的 Nature Flat Icons 合集和 Koboyo Icons。每个站点都附上网页截图、核心特点与适用场景，方便你在社交媒体视觉、品牌包装、网页设计或个人创作中快速找到合适的插画或图标风格。",
+    "summary": "找网页插画或图标素材总要反复翻站点？按风格与用途整理 10 个资源来源，帮助你为页面、品牌或内容创作快速选材。",
     "filename": "网页插画素材资源整理.md"
   },
   {
@@ -132,7 +135,7 @@
       "架构",
       "Vite"
     ],
-    "summary": "将站点拆分为 Blog / Docs / Works 三块的改造记录",
+    "summary": "博客的 Blog、Docs、Works 入口混杂时该怎么拆？记录导航、路由、目录与旧链接兼容的改造决策，供类似站点调整信息架构时参考。",
     "filename": "站点三分结构改造：Blog Docs Works.md"
   },
   {
@@ -142,9 +145,10 @@
     "column": "技术研究",
     "tag": [
       "颜色理论",
+      "CSS",
       "前端"
     ],
-    "summary": "给前端开发者的颜色理论速通。从色相、饱和度、明度三要素讲起，用 SVG 色相环和可交互的 HSL 调色器把颜色变成可以计算的数字；再沿着色环的 0°、30°、60°、90°、120°、180° 逐一拆解同类色到互补色六种配色关系；最后落到 CSS 颜色表示法、设计 tokens 与对比度可访问性的工程实践，每个知识点都配有可运行的示例。",
+    "summary": "前端配色只凭感觉？通过交互示例理解 HSL 与常见配色关系，并把颜色理论用于 CSS、设计变量和对比度检查。",
     "filename": "给前端开发者的颜色理论.md"
   },
   {
@@ -158,7 +162,7 @@
       "布局",
       "前端"
     ],
-    "summary": "Grid 网格布局是当前最强大的 CSS 二维布局方案。本文从网格轨道、网格单元、网格线等核心概念讲起，系统梳理容器属性与项目属性，并针对网格线编号、隐式网格、auto-fill 与 auto-fit、fr 与 minmax 等高频难点逐一拆解，每个知识点都配有 HTML 实例与 SVG 示意图。",
+    "summary": "Grid 的轨道、网格线和自动填充容易混淆？结合示例讲清容器与项目属性，并给出两栏、十二栅格等可直接套用的布局。",
     "filename": "CSS Grid 布局完全指南 知识点与难点概览.md"
   },
   {
@@ -174,7 +178,7 @@
       "writing-mode",
       "background-clip"
     ],
-    "summary": "从自定义字体、字重、文字投影、竖排排版到渐变文字和图片蒙版文字，6个让文字变好看的CSS实用技巧",
+    "summary": "想让网页文字更有层次？用字体、投影、竖排、渐变和蒙版等 6 类 CSS 技巧制作可套用的文字样式。",
     "filename": "CSS文字样式大赏.md"
   },
   {
@@ -187,7 +191,7 @@
       "坐标系统",
       "前端绘图"
     ],
-    "summary": "SVG 之所以能精准绘图，靠的是一套清晰的坐标系统。本文系统梳理坐标系的基本概念、视口（viewport）与视图框（viewBox）的区别与用法，以及坐标变换（transform）的核心机制，帮你彻底搞懂 SVG 的\"画图逻辑\"。",
+    "summary": "SVG 的 viewport、viewBox 和 transform 总分不清？通过坐标示意与示例理解它们如何决定图形的尺寸、位置和缩放。",
     "filename": "SVG 坐标系统.md"
   },
   {
@@ -199,7 +203,7 @@
       "设计译文",
       "交互设计"
     ],
-    "summary": "渐进式披露是交互设计中的经典策略——初始只展示核心选项，按需揭示专业功能。本文系统梳理其原理、好处、可用性标准，以及与\"分阶段披露\"的差异，帮助你在功能丰富与界面简洁之间找到平衡。",
+    "summary": "功能选项太多，界面容易变复杂？了解渐进式披露的原则、适用场景及其与分阶段披露的区别，帮助你安排默认与高级选项。",
     "filename": "设计译文｜渐进式披露.md"
   },
   {
@@ -209,12 +213,12 @@
     "column": "技术研究",
     "tag": [
       "AI Agent",
-      "端到端测试",
+      "E2E",
       "自动化测试",
       "AI Testing",
       "技术分享"
     ],
-    "summary": "整理自 QECon 小红书专场分享（转自小红书技术 REDtech 公众号）：用 Agent 驱动服务端端到端测试。针对跨域、长链路、组合爆炸三大痛点，放弃\"面向人\"的流程编排，改走\"面向意图\"的自主调用——Coding Agent + 知识库渐进式加载 + 逆向链式推导做规划，Debug-first + 双层经验沉淀写脚本，跨域造数从小时级压到分钟级、常见场景秒级完成，用例生成实现脚本直接复用与结果自动校验。",
+    "summary": "服务端端到端测试跨域、链路长、造数慢？梳理小红书分享的 Agent 规划、脚本生成与知识库做法，供测试体系设计参考。",
     "filename": "Agent 驱动的服务端端到端测试：小红书专场分享回顾.md"
   },
   {
@@ -223,13 +227,15 @@
     "date": "2026-05-12",
     "column": "技术研究",
     "tag": [
+      "AI Agent",
       "GUI Agent",
       "自动化测试",
-      "AI Coding",
+      "UI 自动化测试",
+      "AI 编程",
       "测试提效",
       "技术分享"
     ],
-    "summary": "整理自小红书质效研发部 QCon 北京 2026 分享：把 UI 自动化当 AI Coding 来做——人定义意图，Agent 探索、执行、演进。春节大促 106 种设备 × 128 场景全自动跑出 4.3w+ 次执行、自动化率 58%、AI 用例采纳率 82%、单用例成本 $1。核心架构为业务意图层 / Agent 探索层 / 可执行代码层三层分离，Coding Agent + Skill 负责沉淀资产，自研视觉子 Agent（Gemini 3 Flash）+ ToolCall 负责原子感知，配合操作图谱与三层知识库压制幻觉，回归固化后逼近零 Token。",
+    "summary": "大量设备与场景下，UI 自动化怎样落地？梳理小红书 GUI Agent 的意图分层、探索执行和脚本固化方案，以及实际运行结果。",
     "filename": "Agent驱动的测试：小红书 GUI Agent 实战回顾.md"
   },
   {
@@ -240,7 +246,7 @@
     "tag": [
       "文学阅读"
     ],
-    "summary": "春天是一个多情的季节，春天是一段浪漫的时光，春天是一种情怀，也是一片希冀。春天一直是文人的宠儿，是他们笔下的骄子。古往今来，歌春咏春的诗句便如雨后新芽，不胜枚举。",
+    "summary": "选读描写春天的古诗，体会不同诗人笔下的景色与情绪，也为自己的春日阅读与写作积累意象。",
     "filename": "在古诗中感受春天.md"
   },
   {
@@ -251,7 +257,7 @@
     "tag": [
       "项目分析"
     ],
-    "summary": "对博客项目的功能分析",
+    "summary": "在 Vue 博客里渲染 Markdown，该选哪套方案？对比 markdown-it、vite-plugin-md 等实现的功能与取舍，并给出项目采用的方案。",
     "filename": "项目分析.md"
   },
   {
@@ -260,9 +266,11 @@
     "date": "2026-02-22",
     "column": "教程",
     "tag": [
-      "响应式布局"
+      "CSS",
+      "响应式布局",
+      "布局"
     ],
-    "summary": "在 \"Mobile First\" 喊了这么多年的今天，响应式布局（Responsive Web Design, RWD）早已不是一个新概念，而是前端开发的**基建技能**。",
+    "summary": "页面在手机和桌面上都要好用，该如何组织响应式布局？从 viewport、Flex/Grid、流体字体到容器查询，整理现代实现方法与示例。",
     "filename": "CSS Responsive Web Design.md"
   },
   {
@@ -273,7 +281,7 @@
     "tag": [
       "OpenClaw"
     ],
-    "summary": "OpenClaw, aka Moltbot, is an open-source autonomous AI assistant",
+    "summary": "想了解 OpenClaw 是什么、为什么流行及风险在哪里？文章梳理它的名称变迁、Moltbook、安全与隐私问题及使用判断。",
     "filename": "What Is OpenClaw, Formerly Moltbot Everything You Need To Know.md"
   },
   {
@@ -284,7 +292,7 @@
     "tag": [
       "OpenClaw"
     ],
-    "summary": "OpenClaw went from obscure open-source project to the most talked-about AI agent of 2026. But between the hype and the security warnings, a practical question remains: What are people actually using it for?",
+    "summary": "OpenClaw 究竟适合处理哪些日常任务？按邮件、简报、日历等 10 类场景介绍实际用法与投入价值，帮助你判断是否值得接入。",
     "filename": "Top 10 OpenClaw Use Cases in 2026 What People Actually Do With It.md"
   },
   {
@@ -293,10 +301,11 @@
     "date": "2025-02-18",
     "column": "教程",
     "tag": [
-      "Web Layout",
+      "Tailwind CSS",
+      "布局",
       "设计规范"
     ],
-    "summary": "这份文档基于对提供代码片段的分析，旨在揭示该网站采用的现代响应式布局策略、模块构成及视觉规范。",
+    "summary": "想复刻文档站的三栏布局？拆解 Tailwind 文档页的容器宽度、导航与正文结构、响应式断点，供设计和实现时参考。",
     "filename": "Tailwind Docs Layout.md"
   },
   {
@@ -305,10 +314,11 @@
     "date": "2025-02-16",
     "column": "教程",
     "tag": [
+      "CSS",
       "color-scheme",
       "暗色模式适配"
     ],
-    "summary": "`prefers-color-scheme` 是一个 CSS 媒体特性，用于检测用户是否在操作系统或浏览器层面设置了偏好的主题色（亮色或暗色）。它可以帮助你为用户提供符合其系统偏好的网页显示模式。",
+    "summary": "想让网页主题跟随系统明暗偏好？结合 prefers-color-scheme 的取值、CSS 示例和切换逻辑，说明暗色模式的实现方式。",
     "filename": "CSS light and dark theme.md"
   },
   {
@@ -317,10 +327,12 @@
     "date": "2025-02-12",
     "column": "教程",
     "tag": [
+      "CSS",
+      "文字样式",
       "文本效果",
       "立体徽章效果"
     ],
-    "summary": "该实现通过结构化拆解与CSS精密控制打造“100 DAYS CSS CHALLENGE”立体徽章效果",
+    "summary": "想用 CSS 做出有层次的 100 DAYS 徽章？拆解数字叠放、遮挡、字体和背景样式，便于照着示例实现。",
     "filename": "CSS 文本效果.md"
   },
   {
@@ -329,9 +341,10 @@
     "date": "2025-02-12",
     "column": "技术研究",
     "tag": [
-      "UI 设计"
+      "UI 设计",
+      "字体"
     ],
-    "summary": "首先是，要搞明白，不同的英文字体都有什么应用场景！我们不能单纯的直接挑选搭配，那样太慢了，我们需要先了解一些有关的基础知识。",
+    "summary": "英文网站的字体怎样选才易读且协调？介绍衬线、无衬线与等宽字体的特点和使用场景，帮助你确定网页字体搭配。",
     "filename": "关于网页上英文字体的基础知识和选择.md"
   },
   {
@@ -343,7 +356,7 @@
       "CSS",
       "前端"
     ],
-    "summary": "开发中保证你用得到的 CSS 小技巧：filter 滤镜家族（置灰 / 阴影 / 模糊 / 亮度）、单行与多行文本省略、linear-gradient 与 radial-gradient 渐变、mask 遮罩玩法、文字发光与毛玻璃效果，以及图片循环轮播、容器 / 文字扫光、元素倒影、元素交融展开等实战小案例，每个技巧都附带可直接运行的示例代码。",
+    "summary": "遇到文字省略、滤镜、渐变、遮罩等视觉需求时怎么快速实现？汇总可直接复用的 CSS 片段与演示效果。",
     "filename": "开发中保证你用得到的css小技巧.md"
   },
   {
@@ -354,7 +367,7 @@
     "tag": [
       "英语学习"
     ],
-    "summary": "常用的英语句子",
+    "summary": "想积累英语表达素材？收录英语例句、词汇说明和双语摘录，方便查阅、阅读与复习。",
     "filename": "常用的英语句子.md"
   },
   {
@@ -366,7 +379,7 @@
       "代码设计",
       "编程思想"
     ],
-    "summary": "程序员身上有一种很常见的错觉。他以为代码难，是因为不够多。他以为变，是因为不熟。但真正难的东西，从来不是代码本身，而是分辨哪些代码值得写。",
+    "summary": "抽象代码时哪些该复用？通过重复的会话管理例子，辨别稳定的数据流与真正变化的业务部分。",
     "filename": "代码抽象-变与不变.md"
   },
   {
@@ -378,7 +391,7 @@
       "影评",
       "动画电影"
     ],
-    "summary": "小小关去外婆家以后，独留我一人留在上海继续上班，我也因此获得了最大限度的时间自由，也终于得空，可以把前段时间上映的还没有看的电影来看一下。",
+    "summary": "《浪浪山小妖怪》为何让人笑着却难过？从小妖怪的求职、取经和结局，读出普通人面对规则与命运的处境。",
     "filename": "看电影  浪浪山小妖怪到底是喜剧还是悲剧.md"
   },
   {
@@ -391,7 +404,7 @@
       "产品",
       "写作规范"
     ],
-    "summary": "需求说明软件必须做什么才能够满足客户的需求，具体来说，包括：",
+    "summary": "需求文档不知道从哪里写起？整理功能、非功能需求与约束的写法，并用会话列表示例展示可参考的结构。",
     "filename": "如何编写需求文档.md"
   },
   {
@@ -404,7 +417,7 @@
       "设计规范",
       "文档规范"
     ],
-    "summary": "1.  [什么是中后台系统](https://tdesign.tencent.com/design/offices#%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%AD%E5%90%8E%E5%8F%B0%E7%B3%B…",
+    "summary": "中后台页面框架该如何选？借 TDesign 的页面导航、布局和常见页面类型，整理搭建整体框架时可查的设计要点。",
     "filename": "如何搭建整体框架 - TDesign.md"
   },
   {
@@ -417,7 +430,7 @@
       "沟通",
       "方法论"
     ],
-    "summary": "Opinions expressed by Entrepreneur contributors are their own.",
+    "summary": "截止日期明显不现实，如何与团队沟通？提供澄清假设、说明资源与范围取舍、建立可信承诺的沟通框架。",
     "filename": "如何利用这个简单的框架来应对不可能完成的截止日期 .md"
   },
   {
@@ -429,7 +442,7 @@
       "写作",
       "段落结构"
     ],
-    "summary": "> 有些黑暗，只能自己穿越；有些痛苦，只能自己体验；有些孤独，也只能自己品尝。 但是，穿过黑暗，我们一定能感受到阳光的温度； 走出痛苦，我们一定能企及成长的高度；告别孤独，我们也一定能收获灵魂的深度。",
+    "summary": "写段落时思路散、结构松？归纳中心、层次安排和表达力度等要点，帮助你把单段写清楚并组织成文。",
     "filename": "写好段落，不仅是技巧，更是结构和思维 - 知乎.md"
   },
   {
@@ -441,19 +454,19 @@
       "英语学习",
       "素材"
     ],
-    "summary": "# 新东方英语背诵美文30篇",
+    "summary": "想练习英语阅读与背诵？汇集 30 篇英语美文及目录，便于按篇查找、跟读和积累表达。",
     "filename": "新东方美文背诵30篇 (Born to win).md"
   },
   {
     "id": 36,
     "title": "AI语音处理爆发：3个值得了解的GitHub开源项目",
     "date": "",
-    "column": "教程",
+    "column": "技术研究",
     "tag": [
       "AI",
       "语音处理"
     ],
-    "summary": "AI 语音处理爆发：3 个值得了解的 GitHub 开源项目",
+    "summary": "面对语音 AI 项目，不知选创作工具还是语音助手框架？比较 Voice-Pro、speech-to-speech 和 Qwen Audio Agent 的能力与适用人群。",
     "filename": "AI语音处理爆发：3个值得了解的GitHub开源项目.md"
   },
   {
@@ -467,7 +480,7 @@
       "工程化",
       "架构"
     ],
-    "summary": "Monorepo 组件库架构的改造",
+    "summary": "组件库如何从单体 Vue 2 项目迁到 Monorepo？记录工作区、构建、示例环境与组件拆分中的实际改造及问题处理，供类似迁移参考。",
     "filename": "Monorepo 组件库架构的改造.md"
   },
   {
@@ -479,7 +492,7 @@
       "OpenClaw",
       "AI Agent"
     ],
-    "summary": "157,000 GitHub stars in three weeks.",
+    "summary": "OpenClaw 为何迅速流行，实际风险在哪里？文章梳理产品机制、传播原因、Moltbook 与安全问题，帮助你判断适用场景。",
     "filename": "What is OpenClaw The Viral AI Agent Explained (February 2026).md"
   }
 ]

@@ -1,6 +1,7 @@
 ---
 tag: ['AI', '语音处理']
-column: 教程
+column: 技术研究
+detail: 面对语音 AI 项目，不知选创作工具还是语音助手框架？比较 Voice-Pro、speech-to-speech 和 Qwen Audio Agent 的能力与适用人群。
 ---
 
 # AI 语音处理爆发：3 个值得了解的 GitHub 开源项目

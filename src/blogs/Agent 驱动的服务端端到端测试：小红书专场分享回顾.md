@@ -1,8 +1,8 @@
 ---
-tag: ['AI Agent', '端到端测试', '自动化测试', 'AI Testing', '技术分享']
+tag: ['AI Agent', 'E2E', '自动化测试', 'AI Testing', '技术分享']
 date: 2026-06-24
 column: 技术研究
-detail: 整理自 QECon 小红书专场分享（转自小红书技术 REDtech 公众号）：用 Agent 驱动服务端端到端测试。针对跨域、长链路、组合爆炸三大痛点，放弃"面向人"的流程编排，改走"面向意图"的自主调用——Coding Agent + 知识库渐进式加载 + 逆向链式推导做规划，Debug-first + 双层经验沉淀写脚本，跨域造数从小时级压到分钟级、常见场景秒级完成，用例生成实现脚本直接复用与结果自动校验。
+detail: 服务端端到端测试跨域、链路长、造数慢？梳理小红书分享的 Agent 规划、脚本生成与知识库做法，供测试体系设计参考。
 ---
 
 > 本文转自[小红书技术 REDtech 公众号](https://mp.weixin.qq.com/s/4yafPdTmDWWVDoYcEECTAg)（QECon 小红书专场分享回顾），图片版权归原公众号所有。

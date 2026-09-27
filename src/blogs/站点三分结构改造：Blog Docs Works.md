@@ -2,7 +2,7 @@
 tag: ["Vue3", "路由重构", "架构", "Vite"]
 date: "2026-08-10"
 column: 项目复盘
-detail: "将站点拆分为 Blog / Docs / Works 三块的改造记录"
+detail: 博客的 Blog、Docs、Works 入口混杂时该怎么拆？记录导航、路由、目录与旧链接兼容的改造决策，供类似站点调整信息架构时参考。
 ---
 
 # 站点三分结构改造：Blog / Docs / Works

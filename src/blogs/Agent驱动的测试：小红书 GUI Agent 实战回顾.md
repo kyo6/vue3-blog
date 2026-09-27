@@ -1,8 +1,8 @@
 ---
-tag: ['GUI Agent', '自动化测试', 'AI Coding', '测试提效', '技术分享']
+tag: ['AI Agent', 'GUI Agent', '自动化测试', 'UI 自动化测试', 'AI 编程', '测试提效', '技术分享']
 date: 2026-05-12
 column: 技术研究
-detail: 整理自小红书质效研发部 QCon 北京 2026 分享：把 UI 自动化当 AI Coding 来做——人定义意图，Agent 探索、执行、演进。春节大促 106 种设备 × 128 场景全自动跑出 4.3w+ 次执行、自动化率 58%、AI 用例采纳率 82%、单用例成本 $1。核心架构为业务意图层 / Agent 探索层 / 可执行代码层三层分离，Coding Agent + Skill 负责沉淀资产，自研视觉子 Agent（Gemini 3 Flash）+ ToolCall 负责原子感知，配合操作图谱与三层知识库压制幻觉，回归固化后逼近零 Token。
+detail: 大量设备与场景下，UI 自动化怎样落地？梳理小红书 GUI Agent 的意图分层、探索执行和脚本固化方案，以及实际运行结果。
 ---
 
 # 把自动化测试当 AI Coding 来做：小红书 GUI Agent 实战回顾

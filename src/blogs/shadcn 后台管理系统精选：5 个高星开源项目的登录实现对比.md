@@ -1,8 +1,8 @@
 ---
 tag: ['shadcn/ui', '后台管理', '开源项目', '登录界面', '前端']
 date: 2026-08-28
-column: 项目复盘
-detail: 从 GitHub 星标、活跃维护、文档完善、登录功能完整四个维度，筛选 5 个基于 shadcn/ui 的高星开源后台管理模板（satnaing/shadcn-admin、Kiranism/next-shadcn-dashboard-starter、arhamkhnz/next-shadcn-admin-dashboard、Qualiora/shadboard、Whbbit1999/shadcn-vue-admin），逐一说明技术栈、登录路由、支持的登录方式与登录页设计特点，并附 Playwright 实际截图与横向对比。
+column: 技术研究
+detail: 选 shadcn 后台模板时，登录页是演示还是真能接入认证？对比 5 个项目的登录路由、认证能力和页面布局，帮助你按技术栈与需求选型。
 ---
 
 # shadcn 后台管理系统精选：5 个高星开源项目的登录实现对比

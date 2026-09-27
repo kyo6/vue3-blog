@@ -2,6 +2,7 @@ import { readdirSync, readFileSync, writeFileSync, existsSync } from 'fs'
 import { resolve, basename, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { COLUMNS, COLUMN_NAMES } from '../config/columns.js'
+import { TAG_ALIASES } from '../config/tagAliases.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const DOCS_DIR = resolve(__dirname, '../blogs')
@@ -217,6 +218,19 @@ function run() {
   }
 
   warnings.forEach((w) => console.warn(`⚠️ ${w}`))
+
+  // 标签同义词应在 Markdown 源文件里统一，不能只在列表页兼容旧查询参数。
+  const legacyTags = result.flatMap((p) =>
+    p.tag
+      .filter((tag) => Object.hasOwn(TAG_ALIASES, tag))
+      .map((tag) => ({ filename: p.filename, tag }))
+  )
+  if (legacyTags.length > 0) {
+    console.warn(`⚠️ ${legacyTags.length} 处使用了已停用的同义标签：`)
+    legacyTags.forEach(({ filename, tag }) =>
+      console.warn(`   「${tag}」应改为「${TAG_ALIASES[tag]}」← ${filename}`)
+    )
+  }
 
   // column 校验：写错字必须报警，否则会静默产生一个没有导航入口的孤儿栏目
   const unknown = result.filter((p) => p.column && !COLUMN_NAMES.includes(p.column))

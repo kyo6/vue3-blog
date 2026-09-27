@@ -30,6 +30,7 @@ This is a single-context repository: use a root `CONTEXT.md` when one is added a
 - Keep route definitions in `src/router/index.js`; add pages in the matching `src/views/` area.
 - Keep site navigation and content metadata in `src/config/`. Do not hard-code blog lists in view components.
 - Blog source files are Markdown in `src/blogs/`. Preserve their front matter (`tag`, `date`, `column`, and optional `detail`) when editing articles.
+- Keep tag spellings and topic relationships consistent with `docs/agents/tag-taxonomy.md`.
 - If blog metadata or article files change, run `pnpm gen:content` and review the generated `src/config/content.json` diff. **The `id` of every existing article must not change** — see "Article IDs" below.
 - To unpublish an article without deleting it, move the file into `src/blogs/_archive/`. That directory is outside both the generation scan and the runtime glob, so it is excluded from the list and from the bundle. Never reuse its `id`.
 - Prefer Tailwind utilities for local styling and the existing SCSS files for global/theme styles. Preserve the class-based dark-mode behavior.

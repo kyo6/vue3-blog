@@ -3,19 +3,19 @@
     "slug": "tech",
     "name": "技术研究",
     "desc": "理解机制——读完「懂了」",
-    "count": 7
+    "count": 9
   },
   {
     "slug": "howto",
     "name": "教程",
     "desc": "照步骤做出来——读完「跑通了」",
-    "count": 12
+    "count": 11
   },
   {
     "slug": "retro",
     "name": "项目复盘",
     "desc": "看我做过的事的过程与结论",
-    "count": 4
+    "count": 3
   },
   {
     "slug": "notes",

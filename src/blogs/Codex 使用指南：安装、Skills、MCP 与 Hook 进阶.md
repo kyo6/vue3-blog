@@ -2,7 +2,7 @@
 tag: ["Codex", "AI 编程", "Skills", "MCP", "Hook", "自动化", "Projects"]
 date: "2026-08-21"
 column: 教程
-detail: "一篇走通 Codex App 的实操指南：从安装登录、三栏界面、沙盒权限、上下文与模型选择，到 Git / worktree 并行开发、云端运行、AGENTS.md 记忆、插件与自动化，再到 Skills 与 MCP 扩展能力，并重点拆解进阶玩法——用 Hook 在关键生命周期节点做隐私检查、命令审查与收尾校验，以及用 Projects 组织相关工作。含 hooks.json / config.toml 配置示例。"
+detail: 初次使用 Codex App，怎样配置并组织实际开发？覆盖安装、权限、项目、Skills、MCP 与 Hook，帮助你建立可重复的工作流程。
 ---
 
 Codex App 可以理解成一个**面向 AI 编程的任务工作台**：它既不是传统 IDE，也不是单纯的聊天窗口，而是把多任务、项目管理、沙盒权限、Git、云端运行、插件、Skills、MCP 和自动化集中到一个界面里。如果你已经在用 Codex CLI、Claude Code、Cursor 或其他 coding agent，Codex App 最值得关注的地方，是它把「多个 agent 并行干活」做成了一个更清晰的桌面工作流。
