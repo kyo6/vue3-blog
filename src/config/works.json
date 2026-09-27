@@ -44,6 +44,28 @@
     "external": false
   },
   {
+    "id": "ui-layout-components-guide",
+    "title": "UI 组件布局指南",
+    "stack": "HTML / Tailwind",
+    "summary": "通过示例梳理弹性布局、栅格、间距与分割线的用法和布局规范。",
+    "category": "设计系统",
+    "type": "iframe",
+    "src": "/works/ui_layout_components_guide.html",
+    "linkLabel": "查看页面",
+    "external": false
+  },
+  {
+    "id": "css-gradient-button",
+    "title": "CSS 渐变背景按钮",
+    "stack": "HTML / CSS",
+    "summary": "渐变按钮的效果预览与代码解析，展示背景渐变、悬停过渡和阴影层次。",
+    "category": "设计系统",
+    "type": "iframe",
+    "src": "/works/CSS技术文档详情页 (1).html",
+    "linkLabel": "查看页面",
+    "external": false
+  },
+  {
     "id": "gradient-color-theory",
     "title": "渐变色彩理论 Demo",
     "stack": "HTML / CSS",
@@ -84,6 +106,17 @@
     "category": "色彩设计",
     "type": "iframe",
     "src": "/works/color_harmony_explorer_ui.html",
+    "linkLabel": "查看页面",
+    "external": false
+  },
+  {
+    "id": "color-lightness-ui-guide",
+    "title": "色彩明度理论与 UI 落地映射",
+    "stack": "HTML / Tailwind",
+    "summary": "从明度独立性与九级色阶出发，说明产品情绪、对比关系与 UI 组件层级的映射。",
+    "category": "色彩设计",
+    "type": "iframe",
+    "src": "/works/色彩明度理论与 UI 落地映射.html",
     "linkLabel": "查看页面",
     "external": false
   },
@@ -173,6 +206,28 @@
     "type": "vue",
     "component": "slides-api-management-intro",
     "linkLabel": "查看项目",
+    "external": false
+  },
+  {
+    "id": "mizi-sheet-generator",
+    "title": "米字格字帖生成器",
+    "stack": "HTML / CSS / SVG",
+    "summary": "输入练习文字并调整每行列数，按段落生成米字格字帖，支持打印。",
+    "category": "书写练习",
+    "type": "iframe",
+    "src": "/works/mizi-sheet-generator.html",
+    "linkLabel": "查看页面",
+    "external": false
+  },
+  {
+    "id": "stroke-practice-mizi",
+    "title": "汉字笔画米字格练习",
+    "stack": "HTML / CSS / SVG",
+    "summary": "包含基础与进阶共 40 个笔画条目，搭配例字与米字格，便于打印练习。",
+    "category": "书写练习",
+    "type": "iframe",
+    "src": "/works/stroke-practice-mizi.html",
+    "linkLabel": "查看页面",
     "external": false
   }
 ]
