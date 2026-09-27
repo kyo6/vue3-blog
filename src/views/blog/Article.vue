@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import content from '@/config/content.json'
 import MarkdownViewer from '@/components/MarkdownViewer.vue'
 import ArticleToc from '@/components/ArticleToc.vue'
+import { columnSlug } from '@/config/columns.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -15,6 +16,12 @@ const loading = ref(true)
 const error = ref(null)
 
 const showToc = computed(() => headings.value.length >= 2)
+
+/** 栏目徽章的目标链接；column 缺失或 slug 非法时返回 null，不渲染徽章 */
+const columnLink = computed(() => {
+  const slug = blogPost.value?.column ? columnSlug(blogPost.value.column) : ''
+  return slug ? { name: 'blog', query: { column: slug } } : null
+})
 
 // Vite 构建时批量导入 docs 目录下所有 md 文件的原始内容
 const docModules = import.meta.glob('../../blogs/*.md', { query: '?raw', import: 'default' })
@@ -111,7 +118,14 @@ onMounted(() => loadArticle(route.params.id))
 
       <template v-else-if="blogPost">
         <header class="mb-8 pb-6 border-b border-gray-200 dark:border-gray-700">
-          <div class="flex flex-wrap gap-2 mb-3">
+          <div class="flex flex-wrap items-center gap-2 mb-3">
+            <router-link
+              v-if="columnLink"
+              :to="columnLink"
+              class="px-2 py-0.5 text-xs font-semibold rounded bg-violet-100 text-violet-700 hover:bg-violet-200 dark:bg-violet-500/15 dark:text-violet-300 dark:hover:bg-violet-500/25 transition-colors"
+            >
+              {{ blogPost.column }}
+            </router-link>
             <span
               v-for="tag in blogPost.tag"
               :key="tag"

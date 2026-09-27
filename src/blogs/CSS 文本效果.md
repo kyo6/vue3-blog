@@ -1,6 +1,7 @@
 ---
 tag: ["文本效果","立体徽章效果"],
 date: 2025-02-12
+column: 教程
 detail: 该实现通过结构化拆解与CSS精密控制打造“100 DAYS CSS CHALLENGE”立体徽章效果
 ---
 

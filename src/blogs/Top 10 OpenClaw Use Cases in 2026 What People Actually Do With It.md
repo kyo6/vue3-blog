@@ -1,6 +1,7 @@
 ---
 tag: ["OpenClaw"]
 date: "2026-01-01"
+column: 译文精选
 detail: "OpenClaw went from obscure open-source project to the most talked-about AI agent of 2026. But between the hype and the security warnings, a practical question remains: What are people actually using it for?"
 ---
 

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>汉字笔画米字格练习</title>
+<style>
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "KaiTi", "STKaiti", "楷体", "BiauKai", serif;
+    background: #fff;
+    color: #333;
+    padding: 20px 30px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  h1 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: normal;
+    margin-bottom: 24px;
+    letter-spacing: 4px;
+    color: #2e7d32;
+  }
+  h2 {
+    font-size: 18px;
+    font-weight: normal;
+    color: #666;
+    margin: 28px 0 14px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #c8e6c9;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px 14px;
+    margin-bottom: 10px;
+  }
+  .cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  /* 米字格 */
+  .mizi {
+    width: 100%;
+    aspect-ratio: 1;
+    max-width: 140px;
+    position: relative;
+    border: 2.5px solid #2e7d32;
+    background: #fff;
+    overflow: hidden;
+  }
+  /* 横虚线 */
+  .mizi::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    top: 50%;
+    border-top: 1.2px dashed #81c784;
+    z-index: 0;
+  }
+  /* 竖虚线 */
+  .mizi::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 50%;
+    border-left: 1.2px dashed #81c784;
+    z-index: 0;
+  }
+  /* 对角线用 SVG 背景 */
+  .mizi .diag {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .mizi .diag line {
+    stroke: #a5d6a7;
+    stroke-width: 1;
+    stroke-dasharray: 5 4;
+  }
+  .char {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 72px;
+    color: #212121;
+    line-height: 1;
+  }
+  /* 笔画名（非汉字）用小字 */
+  .char.stroke-name {
+    font-size: 22px;
+    color: #555;
+    letter-spacing: 2px;
+  }
+  .label {
+    margin-top: 5px;
+    font-size: 13px;
+    color: #666;
+    text-align: center;
+    line-height: 1.4;
+  }
+  .label .num {
+    display: inline-block;
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-radius: 3px;
+    padding: 0 5px;
+    font-size: 11px;
+    margin-right: 4px;
+    font-family: "Helvetica Neue", sans-serif;
+  }
+  .section-note {
+    font-size: 13px;
+    color: #999;
+    margin-top: 6px;
+    text-align: right;
+  }
+  @media print {
+    body { padding: 0; }
+    h1 { page-break-after: avoid; }
+    h2 { page-break-after: avoid; }
+    .grid { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<h1>汉字笔画米字格练习</h1>
+
+<!-- ========== 基础笔画 ========== -->
+<h2>一、基础笔画（附例字）</h2>
+<div class="grid" id="basic"></div>
+
+<!-- ========== 进阶笔画 ========== -->
+<h2>二、进阶笔画（附例字）</h2>
+<div class="grid" id="advanced"></div>
+
+<p class="section-note">共 40 个笔画条目 · 米字格练习用纸</p>
+
+<script>
+// 米字格 SVG 对角线
+function diagSVG() {
+  return `<svg class="diag" viewBox="0 0 100 100" preserveAspectRatio="none">
+    <line x1="0" y1="0" x2="100" y2="100"/>
+    <line x1="100" y1="0" x2="0" y2="100"/>
+  </svg>`;
+}
+
+// 基础笔画 (1-20)：笔画名 + 例字
+const basic = [
+  { n:1,  stroke:"横",     char:"王" },
+  { n:2,  stroke:"竖",     char:"下" },
+  { n:3,  stroke:"撇",     char:"人" },
+  { n:4,  stroke:"捺",     char:"大" },
+  { n:5,  stroke:"点",     char:"小" },
+  { n:6,  stroke:"提",     char:"打" },
+  { n:7,  stroke:"横折",   char:"口" },
+  { n:8,  stroke:"竖折",   char:"区" },
+  { n:9,  stroke:"撇折",   char:"么" },
+  { n:10, stroke:"横撇",   char:"又" },
+  { n:11, stroke:"竖弯",   char:"四" },
+  { n:12, stroke:"横折弯", char:"朵" },
+  { n:13, stroke:"竖折折", char:"与" },
+  { n:14, stroke:"横折提", char:"认" },
+  { n:15, stroke:"弯钩",   char:"子" },
+  { n:16, stroke:"竖钩",   char:"水" },
+  { n:17, stroke:"斜钩",   char:"我" },
+  { n:18, stroke:"卧钩",   char:"心" },
+  { n:19, stroke:"竖提",   char:"长" },
+  { n:20, stroke:"横折折撇", char:"及" },
+];
+
+// 进阶笔画 (21-40)：笔画名 + 例字
+const advanced = [
+  { n:21, stroke:"横折弯钩",   char:"九" },
+  { n:22, stroke:"竖折折钩",   char:"弓" },
+  { n:23, stroke:"横撇弯钩",   char:"那" },
+  { n:24, stroke:"竖折撇",     char:"专" },
+  { n:25, stroke:"横折折折钩", char:"乃" },
+  { n:26, stroke:"斜钩",       char:"戈" },
+  { n:27, stroke:"弯钩",       char:"家" },
+  { n:28, stroke:"横折钩",     char:"月" },
+  { n:29, stroke:"竖弯钩",     char:"儿" },
+  { n:30, stroke:"横斜钩",     char:"飞" },
+  { n:31, stroke:"横折弯钩（窄）", char:"风" },
+  { n:32, stroke:"横折弯钩（宽）", char:"几" },
+  { n:33, stroke:"竖折折钩（窄）", char:"弓" },
+  { n:34, stroke:"竖折折钩（宽）", char:"弱" },
+  { n:35, stroke:"衣字旁",     char:"衣" },
+  { n:36, stroke:"瓜字旁",     char:"瓜" },
+  { n:37, stroke:"横折折撇",   char:"建" },
+  { n:38, stroke:"横撇弯钩",   char:"队" },
+  { n:39, stroke:"竖折撇",     char:"传" },
+  { n:40, stroke:"民字旁",     char:"民" },
+];
+
+function renderCell(item) {
+  return `
+    <div class="cell">
+      <div class="mizi">
+        ${diagSVG()}
+        <div class="char">${item.char}</div>
+      </div>
+      <div class="label">
+        <span class="num">${item.n}</span>${item.stroke}
+      </div>
+    </div>`;
+}
+
+document.getElementById('basic').innerHTML    = basic.map(renderCell).join('');
+document.getElementById('advanced').innerHTML  = advanced.map(renderCell).join('');
+</script>
+</body>
+</html>

@@ -1,3 +1,8 @@
+---
+tag: ['OpenClaw', 'AI Agent']
+column: 译文精选
+---
+
 157,000 GitHub stars in three weeks.
 
 That’s not a typo. OpenClaw, the open-source AI agent formerly known as Clawbot and Moltbot, just became the fastest-growing AI project in open-source history.

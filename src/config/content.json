@@ -3,6 +3,7 @@
     "id": 1,
     "title": "Playwright CLI 为组件库 NormalUpload 生成回归用例实战",
     "date": "2026-08-28",
+    "column": "教程",
     "tag": [
       "Playwright",
       "UI 自动化测试",
@@ -17,6 +18,7 @@
     "id": 2,
     "title": "shadcn 后台管理系统精选：5 个高星开源项目的登录实现对比",
     "date": "2026-08-28",
+    "column": "项目复盘",
     "tag": [
       "shadcn/ui",
       "后台管理",
@@ -31,6 +33,7 @@
     "id": 3,
     "title": "shadcn-admin设计规范分析",
     "date": "2026-08-28",
+    "column": "技术研究",
     "tag": [
       "shadcn/ui",
       "设计规范",
@@ -45,6 +48,7 @@
     "id": 4,
     "title": "生成 SVG 图标应该注意什么",
     "date": "2026-08-22",
+    "column": "技术研究",
     "tag": [
       "SVG",
       "图标设计",
@@ -59,6 +63,7 @@
     "id": 5,
     "title": "Codex 使用指南：安装、Skills、MCP 与 Hook 进阶",
     "date": "2026-08-21",
+    "column": "教程",
     "tag": [
       "Codex",
       "AI 编程",
@@ -75,6 +80,7 @@
     "id": 6,
     "title": "Playwright CLI + Skills 实现 UI 自动化测试实战",
     "date": "2026-08-20",
+    "column": "教程",
     "tag": [
       "Playwright",
       "UI 自动化测试",
@@ -89,6 +95,7 @@
     "id": 7,
     "title": "Playwright CLI + Skills 跑通电商下单链路-实战案例",
     "date": "2026-08-20",
+    "column": "教程",
     "tag": [
       "Playwright",
       "UI 自动化测试",
@@ -103,6 +110,7 @@
     "id": 8,
     "title": "网页插画素材资源整理",
     "date": "2026-08-16",
+    "column": "学习笔记",
     "tag": [
       "设计",
       "插画",
@@ -117,6 +125,7 @@
     "id": 9,
     "title": "站点三分结构改造：Blog Docs Works",
     "date": "2026-08-10",
+    "column": "项目复盘",
     "tag": [
       "Vue3",
       "路由重构",
@@ -130,11 +139,9 @@
     "id": 10,
     "title": "给前端开发者的颜色理论",
     "date": "2026-08-10",
+    "column": "技术研究",
     "tag": [
       "颜色理论",
-      "CSS",
-      "HSL",
-      "配色",
       "前端"
     ],
     "summary": "给前端开发者的颜色理论速通。从色相、饱和度、明度三要素讲起，用 SVG 色相环和可交互的 HSL 调色器把颜色变成可以计算的数字；再沿着色环的 0°、30°、60°、90°、120°、180° 逐一拆解同类色到互补色六种配色关系；最后落到 CSS 颜色表示法、设计 tokens 与对比度可访问性的工程实践，每个知识点都配有可运行的示例。",
@@ -144,6 +151,7 @@
     "id": 11,
     "title": "CSS Grid 布局完全指南 知识点与难点概览",
     "date": "2026-08-08",
+    "column": "教程",
     "tag": [
       "CSS",
       "Grid",
@@ -157,6 +165,7 @@
     "id": 12,
     "title": "CSS文字样式大赏",
     "date": "2026-08-01",
+    "column": "教程",
     "tag": [
       "CSS",
       "文字样式",
@@ -172,6 +181,7 @@
     "id": 13,
     "title": "SVG 坐标系统",
     "date": "2026-07-31",
+    "column": "技术研究",
     "tag": [
       "SVG",
       "坐标系统",
@@ -184,6 +194,7 @@
     "id": 14,
     "title": "设计译文｜渐进式披露",
     "date": "2026-07-31",
+    "column": "译文精选",
     "tag": [
       "设计译文",
       "交互设计"
@@ -195,6 +206,7 @@
     "id": 15,
     "title": "Agent 驱动的服务端端到端测试：小红书专场分享回顾",
     "date": "2026-06-24",
+    "column": "技术研究",
     "tag": [
       "AI Agent",
       "端到端测试",
@@ -209,6 +221,7 @@
     "id": 16,
     "title": "Agent驱动的测试：小红书 GUI Agent 实战回顾",
     "date": "2026-05-12",
+    "column": "技术研究",
     "tag": [
       "GUI Agent",
       "自动化测试",
@@ -223,6 +236,7 @@
     "id": 17,
     "title": "在古诗中感受春天",
     "date": "2026-03-22",
+    "column": "随笔",
     "tag": [
       "文学阅读"
     ],
@@ -230,19 +244,10 @@
     "filename": "在古诗中感受春天.md"
   },
   {
-    "id": 18,
-    "title": "Free.Solo.2018",
-    "date": "2026-03-15",
-    "tag": [
-      "英语学习"
-    ],
-    "summary": "Free Solo 2018 英文字幕",
-    "filename": "Free.Solo.2018.md"
-  },
-  {
     "id": 19,
     "title": "项目分析",
     "date": "2026-03-15",
+    "column": "项目复盘",
     "tag": [
       "项目分析"
     ],
@@ -253,6 +258,7 @@
     "id": 20,
     "title": "CSS Responsive Web Design",
     "date": "2026-02-22",
+    "column": "教程",
     "tag": [
       "响应式布局"
     ],
@@ -263,6 +269,7 @@
     "id": 21,
     "title": "What Is OpenClaw, Formerly Moltbot Everything You Need To Know",
     "date": "2026-02-03",
+    "column": "译文精选",
     "tag": [
       "OpenClaw"
     ],
@@ -273,6 +280,7 @@
     "id": 22,
     "title": "Top 10 OpenClaw Use Cases in 2026 What People Actually Do With It",
     "date": "2026-01-01",
+    "column": "译文精选",
     "tag": [
       "OpenClaw"
     ],
@@ -283,6 +291,7 @@
     "id": 23,
     "title": "Tailwind Docs Layout",
     "date": "2025-02-18",
+    "column": "教程",
     "tag": [
       "Web Layout",
       "设计规范"
@@ -294,6 +303,7 @@
     "id": 24,
     "title": "CSS light and dark theme",
     "date": "2025-02-16",
+    "column": "教程",
     "tag": [
       "color-scheme",
       "暗色模式适配"
@@ -305,6 +315,7 @@
     "id": 25,
     "title": "CSS 文本效果",
     "date": "2025-02-12",
+    "column": "教程",
     "tag": [
       "文本效果",
       "立体徽章效果"
@@ -316,6 +327,7 @@
     "id": 26,
     "title": "关于网页上英文字体的基础知识和选择",
     "date": "2025-02-12",
+    "column": "技术研究",
     "tag": [
       "UI 设计"
     ],
@@ -326,12 +338,10 @@
     "id": 27,
     "title": "开发中保证你用得到的css小技巧",
     "date": "2024-07-31",
+    "column": "教程",
     "tag": [
       "CSS",
-      "前端",
-      "小技巧",
-      "滤镜",
-      "渐变"
+      "前端"
     ],
     "summary": "开发中保证你用得到的 CSS 小技巧：filter 滤镜家族（置灰 / 阴影 / 模糊 / 亮度）、单行与多行文本省略、linear-gradient 与 radial-gradient 渐变、mask 遮罩玩法、文字发光与毛玻璃效果，以及图片循环轮播、容器 / 文字扫光、元素倒影、元素交融展开等实战小案例，每个技巧都附带可直接运行的示例代码。",
     "filename": "开发中保证你用得到的css小技巧.md"
@@ -340,6 +350,7 @@
     "id": 28,
     "title": "常用的英语句子",
     "date": "2022-01-17",
+    "column": "学习笔记",
     "tag": [
       "英语学习"
     ],
@@ -350,7 +361,11 @@
     "id": 29,
     "title": "代码抽象-变与不变",
     "date": "",
-    "tag": [],
+    "column": "随笔",
+    "tag": [
+      "代码设计",
+      "编程思想"
+    ],
     "summary": "程序员身上有一种很常见的错觉。他以为代码难，是因为不够多。他以为变，是因为不熟。但真正难的东西，从来不是代码本身，而是分辨哪些代码值得写。",
     "filename": "代码抽象-变与不变.md"
   },
@@ -358,7 +373,11 @@
     "id": 30,
     "title": "看电影  浪浪山小妖怪到底是喜剧还是悲剧",
     "date": "",
-    "tag": [],
+    "column": "随笔",
+    "tag": [
+      "影评",
+      "动画电影"
+    ],
     "summary": "小小关去外婆家以后，独留我一人留在上海继续上班，我也因此获得了最大限度的时间自由，也终于得空，可以把前段时间上映的还没有看的电影来看一下。",
     "filename": "看电影  浪浪山小妖怪到底是喜剧还是悲剧.md"
   },
@@ -366,7 +385,12 @@
     "id": 31,
     "title": "如何编写需求文档",
     "date": "",
-    "tag": [],
+    "column": "学习笔记",
+    "tag": [
+      "需求文档",
+      "产品",
+      "写作规范"
+    ],
     "summary": "需求说明软件必须做什么才能够满足客户的需求，具体来说，包括：",
     "filename": "如何编写需求文档.md"
   },
@@ -374,23 +398,37 @@
     "id": 32,
     "title": "如何搭建整体框架 - TDesign",
     "date": "",
-    "tag": [],
+    "column": "学习笔记",
+    "tag": [
+      "TDesign",
+      "设计规范",
+      "文档规范"
+    ],
     "summary": "1.  [什么是中后台系统](https://tdesign.tencent.com/design/offices#%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%AD%E5%90%8E%E5%8F%B0%E7%B3%B…",
     "filename": "如何搭建整体框架 - TDesign.md"
   },
   {
-    "id": 33,
-    "title": "如何利用这个简单的框架来应对不可能完成的截止日期 --- How to Push Back on Impossible Deadlines Using This Simple Framework",
+    "id": 39,
+    "title": "如何利用这个简单的框架来应对不可能完成的截止日期 ",
     "date": "",
-    "tag": [],
+    "column": "学习笔记",
+    "tag": [
+      "时间管理",
+      "沟通",
+      "方法论"
+    ],
     "summary": "Opinions expressed by Entrepreneur contributors are their own.",
-    "filename": "如何利用这个简单的框架来应对不可能完成的截止日期 --- How to Push Back on Impossible Deadlines Using This Simple Framework.md"
+    "filename": "如何利用这个简单的框架来应对不可能完成的截止日期 .md"
   },
   {
     "id": 34,
     "title": "写好段落，不仅是技巧，更是结构和思维 - 知乎",
     "date": "",
-    "tag": [],
+    "column": "学习笔记",
+    "tag": [
+      "写作",
+      "段落结构"
+    ],
     "summary": "> 有些黑暗，只能自己穿越；有些痛苦，只能自己体验；有些孤独，也只能自己品尝。 但是，穿过黑暗，我们一定能感受到阳光的温度； 走出痛苦，我们一定能企及成长的高度；告别孤独，我们也一定能收获灵魂的深度。",
     "filename": "写好段落，不仅是技巧，更是结构和思维 - 知乎.md"
   },
@@ -398,7 +436,11 @@
     "id": 35,
     "title": "新东方美文背诵30篇 (Born to win)",
     "date": "",
-    "tag": [],
+    "column": "学习笔记",
+    "tag": [
+      "英语学习",
+      "素材"
+    ],
     "summary": "# 新东方英语背诵美文30篇",
     "filename": "新东方美文背诵30篇 (Born to win).md"
   },
@@ -406,7 +448,11 @@
     "id": 36,
     "title": "AI语音处理爆发：3个值得了解的GitHub开源项目",
     "date": "",
-    "tag": [],
+    "column": "教程",
+    "tag": [
+      "AI",
+      "语音处理"
+    ],
     "summary": "AI 语音处理爆发：3 个值得了解的 GitHub 开源项目",
     "filename": "AI语音处理爆发：3个值得了解的GitHub开源项目.md"
   },
@@ -414,7 +460,13 @@
     "id": 37,
     "title": "Monorepo 组件库架构的改造",
     "date": "",
-    "tag": [],
+    "column": "项目复盘",
+    "tag": [
+      "Monorepo",
+      "组件库",
+      "工程化",
+      "架构"
+    ],
     "summary": "Monorepo 组件库架构的改造",
     "filename": "Monorepo 组件库架构的改造.md"
   },
@@ -422,7 +474,11 @@
     "id": 38,
     "title": "What is OpenClaw The Viral AI Agent Explained (February 2026)",
     "date": "",
-    "tag": [],
+    "column": "译文精选",
+    "tag": [
+      "OpenClaw",
+      "AI Agent"
+    ],
     "summary": "157,000 GitHub stars in three weeks.",
     "filename": "What is OpenClaw The Viral AI Agent Explained (February 2026).md"
   }

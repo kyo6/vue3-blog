@@ -1,6 +1,7 @@
 ---
 tag: ["Playwright", "UI 自动化测试", "E2E", "AI", "Skill"]
 date: "2026-08-20"
+column: 教程
 detail: "从 midscene.js 的视觉识别切到 Playwright CLI + 无障碍树：用 @playwright/cli 的 ref 快照稳定定位元素，配合可安装 Skill 把「页面探索 → 用例生成 → 执行 → 自愈」整条 UI 自动化链路交给 AI Agent，token 成本仅为 MCP 的约 1/5，且快、稳、可复用。含登录实战与 Skill 设计。"
 ---
 

@@ -1,6 +1,7 @@
 ---
 tag: ["Playwright", "UI 自动化测试", "E2E", "组件库", "视觉回归"]
 date: "2026-08-28"
+column: 教程
 detail: "承接 Playwright CLI + Skills 系列，记录为 NormalUpload 落地回归用例的全过程。重点澄清：plan 不会自动编译成 TS——Agent 用 plan 定规格、用 CLI 探真页面拿 TS 草稿、手写 expect 后落盘；并覆盖 fixtures/seed、分 group 生成、布局契约与截图基线、何时更新基线。"
 ---
 

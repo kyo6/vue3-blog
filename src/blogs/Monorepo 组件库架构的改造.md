@@ -1,3 +1,8 @@
+---
+tag: ['Monorepo', '组件库', '工程化', '架构']
+column: 项目复盘
+---
+
 ## Monorepo 组件库架构的改造
 
 我已经完成了 Vue 2 项目向 Monorepo 组件库架构的改造。

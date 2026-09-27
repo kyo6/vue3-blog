@@ -1,6 +1,7 @@
 ---
 tag: ["CSS", "文字样式", "font-face", "text-shadow", "writing-mode", "background-clip"],
 date: 2026-08-01
+column: 教程
 detail: 从自定义字体、字重、文字投影、竖排排版到渐变文字和图片蒙版文字，6个让文字变好看的CSS实用技巧
 ---
 

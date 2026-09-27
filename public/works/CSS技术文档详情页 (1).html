@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS 渐变背景按钮 - 技术文档详情</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'AlibabaPuHuiTi';
+            src: url('https://assets-persist.lovart.ai/agent-static-assets/Alibaba-PuHuiTi-Regular.otf');
+            font-weight: normal;
+        }
+        @font-face {
+            font-family: 'AlibabaPuHuiTi';
+            src: url('https://assets-persist.lovart.ai/agent-static-assets/Alibaba-PuHuiTi-Medium.otf');
+            font-weight: 500;
+        }
+        @font-face {
+            font-family: 'AlibabaPuHuiTi';
+            src: url('https://assets-persist.lovart.ai/agent-static-assets/Alibaba-PuHuiTi-Bold.otf');
+            font-weight: bold;
+        }
+        @font-face {
+            font-family: 'NotoSansHans';
+            src: url('https://assets-persist.lovart.ai/agent-static-assets/NotoSansHans-Regular.otf');
+            font-weight: normal;
+        }
+        @font-face {
+            font-family: 'MiSans';
+            src: url('https://assets-persist.lovart.ai/agent-static-assets/MiSans-Medium.ttf');
+            font-weight: 500;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            --header-gradient: linear-gradient(120deg, #845ec2 0%, #d65db1 100%);
+            --card-bg: #ffffff;
+            --code-bg: #1e1e1e;
+            --text-main: #333333;
+            --text-secondary: #666666;
+            --section-title: #4b6cb7;
+            --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.08);
+            --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.05);
+            --border-radius-lg: 16px;
+            --border-radius-md: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'AlibabaPuHuiTi', 'NotoSansHans', sans-serif;
+            background-color: #f5f7fa;
+            color: var(--text-main);
+            width: 1920px;
+            margin: 0 auto;
+            overflow-x: hidden;
+        }
+
+        /* Header Area */
+        .header-hero {
+            height: 300px;
+            background: var(--header-gradient);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            top: -200px;
+            left: -100px;
+            filter: blur(80px);
+        }
+
+        .header-hero::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            bottom: -100px;
+            right: 10%;
+            filter: blur(60px);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .header-title {
+            font-size: 56px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            letter-spacing: 1px;
+        }
+
+        .header-subtitle {
+            font-size: 20px;
+            opacity: 0.9;
+            font-weight: 300;
+            max-width: 800px;
+        }
+
+        /* Main Container */
+        .main-container {
+            width: 1400px;
+            margin: -60px auto 60px;
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        /* Effect Showcase Card */
+        .effect-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-soft);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .effect-header {
+            padding: 24px 40px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .effect-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .effect-title i {
+            color: #845ec2;
+        }
+
+        .effect-body {
+            display: flex;
+            min-height: 400px;
+        }
+
+        .preview-area {
+            flex: 1;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-right: 1px solid #f0f0f0;
+            padding: 40px;
+            position: relative;
+            background-image: radial-gradient(#e0e0e0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .preview-label {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 14px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* The Button Effect itself */
+        .gradient-btn {
+            padding: 18px 48px;
+            font-size: 20px;
+            color: white;
+            background-image: linear-gradient(to right, #845ec2 0%, #d65db1 51%, #845ec2 100%);
+            background-size: 200% auto;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: 0.5s;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            outline: none;
+        }
+
+        .gradient-btn:hover {
+            background-position: right center;
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .code-area {
+            flex: 1;
+            background: var(--code-bg);
+            padding: 40px;
+            color: #e0e0e0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            overflow: auto;
+            position: relative;
+        }
+
+        .code-label {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.1);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .code-block {
+            white-space: pre;
+        }
+
+        .token-selector { color: #d7ba7d; }
+        .token-property { color: #9cdcfe; }
+        .token-value { color: #ce9178; }
+        .token-comment { color: #6a9955; }
+        .token-punctuation { color: #d4d4d4; }
+
+        /* Analysis Section */
+        .analysis-section {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .section-header {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 6px solid var(--section-title);
+            color: #333;
+        }
+
+        .chapters-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .chapter-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius-md);
+            padding: 40px;
+            box-shadow: var(--shadow-card);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border-top: 4px solid transparent;
+        }
+
+        .chapter-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            border-top-color: var(--section-title);
+        }
+
+        .chapter-number {
+            font-size: 80px;
+            font-weight: 900;
+            color: rgba(75, 108, 183, 0.05);
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            line-height: 1;
+            user-select: none;
+        }
+
+        .chapter-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--section-title);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chapter-content {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .chapter-list {
+            margin-top: 15px;
+            list-style: none;
+        }
+
+        .chapter-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 10px;
+        }
+
+        .chapter-list li::before {
+            content: '\eb7b';
+            font-family: 'remixicon';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            color: var(--section-title);
+        }
+
+        .inline-code {
+            background: #f0f2f5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #d63384;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        
+        /* Full width card for Advanced & Browser Support */
+        .chapter-card.full-width {
+            grid-column: span 2;
+        }
+
+        /* Footer */
+        .page-footer {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 60px 0;
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        
+        .footer-links span {
+            margin: 0 15px;
+            opacity: 0.7;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links span:hover {
+            opacity: 1;
+        }
+
+        .version-tag {
+            background: rgba(255,255,255,0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Area -->
+    <header class="header-hero">
+        <div class="header-content">
+            <h1 class="header-title">CSS 渐变背景按钮</h1>
+            <p class="header-subtitle">探索现代 Web 设计中渐变按钮的实现艺术，通过 CSS3 属性打造富有动感和视觉吸引力的交互组件。</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+
+        <!-- Effect Showcase Area -->
+        <section class="effect-card">
+            <div class="effect-header">
+                <div class="effect-title">
+                    <i class="ri-palette-line"></i>
+                    视觉效果预览 & 代码实现
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button style="padding: 8px 16px; border: 1px solid #ddd; background: white; border-radius: 6px; cursor: pointer;">
+                        <i class="ri-file-copy-line"></i> 复制
+                    </button>
+                    <button style="padding: 8px 16px; border: 1px solid #ddd; background: white; border-radius: 6px; cursor: pointer;">
+                        <i class="ri-refresh-line"></i> 重置
+                    </button>
+                </div>
+            </div>
+            <div class="effect-body">
+                <div class="preview-area">
+                    <span class="preview-label">Live Preview</span>
+                    <button class="gradient-btn">Hover Me Now</button>
+                </div>
+                <div class="code-area">
+                    <span class="code-label">CSS</span>
+                    <div class="code-block">
+<span class="token-selector">.gradient-btn</span> <span class="token-punctuation">{</span>
+    <span class="token-property">background-image</span><span class="token-punctuation">:</span> <span class="token-value">linear-gradient(to right, #845ec2 0%, #d65db1 51%, #845ec2 100%)</span><span class="token-punctuation">;</span>
+    <span class="token-property">background-size</span><span class="token-punctuation">:</span> <span class="token-value">200% auto</span><span class="token-punctuation">;</span>
+    <span class="token-property">border-radius</span><span class="token-punctuation">:</span> <span class="token-value">50px</span><span class="token-punctuation">;</span>
+    <span class="token-property">color</span><span class="token-punctuation">:</span> <span class="token-value">white</span><span class="token-punctuation">;</span>
+    <span class="token-property">transition</span><span class="token-punctuation">:</span> <span class="token-value">0.5s</span><span class="token-punctuation">;</span>
+    <span class="token-comment">/* 其他基础样式略 */</span>
+<span class="token-punctuation">}</span>
+
+<span class="token-selector">.gradient-btn:hover</span> <span class="token-punctuation">{</span>
+    <span class="token-property">background-position</span><span class="token-punctuation">:</span> <span class="token-value">right center</span><span class="token-punctuation">;</span>
+    <span class="token-property">box-shadow</span><span class="token-punctuation">:</span> <span class="token-value">0 15px 30px rgba(0,0,0,0.15)</span><span class="token-punctuation">;</span>
+    <span class="token-property">transform</span><span class="token-punctuation">:</span> <span class="token-value">translateY(-2px)</span><span class="token-punctuation">;</span>
+<span class="token-punctuation">}</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analysis Section -->
+        <section class="analysis-section">
+            <h2 class="section-header">技术原理解析</h2>
+            
+            <div class="chapters-grid">
+                <!-- Chapter 1 -->
+                <div class="chapter-card">
+                    <span class="chapter-number">01</span>
+                    <h3 class="chapter-title"><i class="ri-book-open-line"></i> 基础概念</h3>
+                    <div class="chapter-content">
+                        <p>CSS 渐变（Gradients）允许您在两个或多个指定颜色之间显示平滑的过渡。这种效果曾经需要图像来实现，但现在可以通过纯 CSS 高效完成，不仅减少了下载时间和带宽使用，还具有更好的缩放效果。</p>
+                        <ul class="chapter-list">
+                            <li><strong>Linear Gradients</strong>: 向下/向上/向左/向右/对角方向</li>
+                            <li><strong>Radial Gradients</strong>: 由它们的中心定义</li>
+                            <li><strong>Conic Gradients</strong>: 围绕中心点旋转</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 2 -->
+                <div class="chapter-card">
+                    <span class="chapter-number">02</span>
+                    <h3 class="chapter-title"><i class="ri-code-s-slash-line"></i> 实现原理</h3>
+                    <div class="chapter-content">
+                        <p>此效果的核心在于 <span class="inline-code">background-size</span> 和 <span class="inline-code">background-position</span> 的配合。我们定义了一个比元素本身宽两倍（200%）的渐变背景。</p>
+                        <ul class="chapter-list">
+                            <li>设置 <span class="inline-code">background-size: 200% auto</span> 使背景图变宽。</li>
+                            <li>初始状态显示渐变的左半部分。</li>
+                            <li><span class="inline-code">:hover</span> 状态下，改变 <span class="inline-code">background-position</span> 到右侧，利用 <span class="inline-code">transition</span> 产生平滑的滑动效果。</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 3 -->
+                <div class="chapter-card full-width">
+                    <span class="chapter-number">03</span>
+                    <h3 class="chapter-title"><i class="ri-magic-line"></i> 高级技巧与最佳实践</h3>
+                    <div class="chapter-content" style="display: flex; gap: 40px;">
+                        <div style="flex: 1;">
+                            <p style="margin-bottom: 15px;">为了提升用户体验，我们可以结合其他 CSS 属性增强按钮的反馈感。例如，添加阴影的变化可以增加点击时的立体感，轻微的位移可以模拟按压效果。</p>
+                            <p><strong>色彩心理学应用：</strong>选择渐变色时，应考虑色彩的邻近色或对比色搭配。例如，紫色到蓝色的过渡传达科技与信任，而橙色到红色的过渡则更具活力和紧迫感。</p>
+                        </div>
+                        <div style="flex: 1; background: #f9f9fb; padding: 20px; border-radius: 8px;">
+                            <h4 style="margin-bottom: 10px; color: #555;">性能优化提示</h4>
+                            <p style="font-size: 14px; color: #666;">
+                                虽然 CSS 渐变性能很好，但在移动端过度使用复杂的阴影和过渡可能会引起重绘（Repaint）。建议使用 <span class="inline-code">transform</span> 和 <span class="inline-code">opacity</span> 属性进行动画，因为它们可以触发 GPU 加速。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chapter 4 -->
+                <div class="chapter-card full-width" style="border-top-color: #28a745;">
+                    <span class="chapter-number">04</span>
+                    <h3 class="chapter-title" style="color: #28a745;"><i class="ri-browser-line"></i> 浏览器兼容性</h3>
+                    <div class="chapter-content">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <p>CSS 渐变属性在现代浏览器中得到了广泛支持。对于需要支持旧版浏览器的项目，建议添加浏览器前缀或提供纯色回退方案。</p>
+                            <div style="display: flex; gap: 15px;">
+                                <i class="ri-chrome-fill" style="font-size: 24px; color: #666;"></i>
+                                <i class="ri-firefox-fill" style="font-size: 24px; color: #666;"></i>
+                                <i class="ri-safari-fill" style="font-size: 24px; color: #666;"></i>
+                                <i class="ri-edge-fill" style="font-size: 24px; color: #666;"></i>
+                            </div>
+                        </div>
+                        <div style="background: #fff; border: 1px solid #e1e4e8; border-radius: 6px; padding: 15px;">
+                            <code style="color: #d63384; font-family: monospace;">
+                                background: #845ec2; /* Fallback for older browsers */<br>
+                                background: -webkit-linear-gradient(...);<br>
+                                background: -moz-linear-gradient(...);<br>
+                                background: linear-gradient(...);
+                            </code>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                CSS MASTER <span class="version-tag">v2.4.0</span>
+            </div>
+            <div class="footer-links">
+                <span>关于我们</span>
+                <span>使用文档</span>
+                <span>GitHub</span>
+                <span>联系支持</span>
+            </div>
+            <div style="opacity: 0.5; font-size: 14px;">
+                &copy; 2024 DesignCode Generator. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

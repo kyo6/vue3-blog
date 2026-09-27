@@ -1,6 +1,7 @@
 ---
 tag: ["Codex", "AI 编程", "Skills", "MCP", "Hook", "自动化", "Projects"]
 date: "2026-08-21"
+column: 教程
 detail: "一篇走通 Codex App 的实操指南：从安装登录、三栏界面、沙盒权限、上下文与模型选择，到 Git / worktree 并行开发、云端运行、AGENTS.md 记忆、插件与自动化，再到 Skills 与 MCP 扩展能力，并重点拆解进阶玩法——用 Hook 在关键生命周期节点做隐私检查、命令审查与收尾校验，以及用 Projects 组织相关工作。含 hooks.json / config.toml 配置示例。"
 ---
 

@@ -1,6 +1,7 @@
 ---
 tag: ["OpenClaw"]
 date: "2026-02-03"
+column: 译文精选
 detail: "OpenClaw, aka Moltbot, is an open-source autonomous AI assistant"
 ---
 

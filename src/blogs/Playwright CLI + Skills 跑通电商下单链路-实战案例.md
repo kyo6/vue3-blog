@@ -1,6 +1,7 @@
 ---
 tag: ["Playwright", "UI 自动化测试", "E2E", "实战案例", "Skill"]
 date: "2026-08-20"
+column: 教程
 detail: "承接《基于 Playwright CLI + Skills 实现 UI 自动化测试实战》，本文是第二个实战案例：在登录态复用的基础上，用 @playwright/cli 的 ref 快照 + 可安装 Skill 跑通电商「搜索 → 加购 → 结算 → 下单」端到端链路，重点拆解跨页面 ref 失效重快照、金额/数量动态断言、auth 状态复用与脚本自愈。"
 ---
 
