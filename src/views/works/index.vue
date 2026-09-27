@@ -1,6 +1,25 @@
 <script setup>
+import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import works from '@/config/works.json'
+
+const categoryOrder = ['登录认证', '设计系统', '色彩设计', '交互演示', 'AI 科普', '测试与质量']
+
+const groupedWorks = computed(() => {
+  const map = new Map()
+  for (const item of works) {
+    const key = item.category || '其他'
+    if (!map.has(key)) map.set(key, [])
+    map.get(key).push(item)
+  }
+  const ordered = categoryOrder
+    .filter((name) => map.has(name))
+    .map((name) => ({ name, items: map.get(name) }))
+  for (const [name, items] of map) {
+    if (!categoryOrder.includes(name)) ordered.push({ name, items })
+  }
+  return ordered
+})
 </script>
 
 <template>
@@ -14,33 +33,42 @@ import works from '@/config/works.json'
         </p>
       </header>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
-        <article
-          v-for="item in works"
-          :key="item.id"
-          class="works-card group flex flex-col p-6 md:p-7 rounded-2xl transition-transform duration-300 hover:-translate-y-0.5"
-        >
-          <div class="flex items-center gap-2 mb-5">
-            <span class="works-dot w-1.5 h-1.5 rounded-full shrink-0" />
-            <span class="works-stack text-xs tracking-wide">{{ item.stack }}</span>
-          </div>
-
-          <h2 class="works-card-title text-2xl md:text-[1.75rem] font-normal mb-3">
-            {{ item.title }}
-          </h2>
-          <p class="works-card-desc text-sm leading-relaxed flex-1 mb-8">
-            {{ item.summary }}
-          </p>
-
-          <RouterLink
-            :to="{ name: 'works-detail', params: { id: item.id } }"
-            class="works-link inline-flex items-center gap-1.5 text-sm transition-colors"
+      <section
+        v-for="group in groupedWorks"
+        :key="group.name"
+        class="mb-12 md:mb-14 last:mb-0"
+      >
+        <h2 class="works-section-title text-sm tracking-[0.18em] uppercase mb-5 md:mb-6">
+          {{ group.name }}
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+          <article
+            v-for="item in group.items"
+            :key="item.id"
+            class="works-card group flex flex-col p-6 md:p-7 rounded-2xl transition-transform duration-300 hover:-translate-y-0.5"
           >
-            {{ item.linkLabel || '查看项目' }}
-            <span aria-hidden="true">→</span>
-          </RouterLink>
-        </article>
-      </div>
+            <div class="flex items-center gap-2 mb-5">
+              <span class="works-dot w-1.5 h-1.5 rounded-full shrink-0" />
+              <span class="works-stack text-xs tracking-wide">{{ item.stack }}</span>
+            </div>
+
+            <h3 class="works-card-title text-2xl md:text-[1.75rem] font-normal mb-3">
+              {{ item.title }}
+            </h3>
+            <p class="works-card-desc text-sm leading-relaxed flex-1 mb-8">
+              {{ item.summary }}
+            </p>
+
+            <RouterLink
+              :to="{ name: 'works-detail', params: { id: item.id } }"
+              class="works-link inline-flex items-center gap-1.5 text-sm transition-colors"
+            >
+              {{ item.linkLabel || '查看项目' }}
+              <span aria-hidden="true">→</span>
+            </RouterLink>
+          </article>
+        </div>
+      </section>
     </div>
   </div>
 </template>
@@ -71,6 +99,11 @@ import works from '@/config/works.json'
 .works-card-title {
   font-family: 'Instrument Serif', Georgia, serif;
   color: var(--works-text);
+}
+
+.works-section-title {
+  color: var(--works-accent);
+  font-family: 'DM Sans', system-ui, sans-serif;
 }
 
 .works-desc,

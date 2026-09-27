@@ -1,0 +1,38 @@
+[
+  {
+    "slug": "tech",
+    "name": "技术研究",
+    "desc": "理解机制——读完「懂了」",
+    "count": 9
+  },
+  {
+    "slug": "howto",
+    "name": "教程",
+    "desc": "照步骤做出来——读完「跑通了」",
+    "count": 11
+  },
+  {
+    "slug": "retro",
+    "name": "项目复盘",
+    "desc": "看我做过的事的过程与结论",
+    "count": 3
+  },
+  {
+    "slug": "notes",
+    "name": "学习笔记",
+    "desc": "备查 / 套用——不必通读",
+    "count": 7
+  },
+  {
+    "slug": "translate",
+    "name": "译文精选",
+    "desc": "读译作",
+    "count": 4
+  },
+  {
+    "slug": "essay",
+    "name": "随笔",
+    "desc": "读个人观点",
+    "count": 3
+  }
+]

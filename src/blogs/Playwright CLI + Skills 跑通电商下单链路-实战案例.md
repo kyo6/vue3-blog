@@ -1,7 +1,8 @@
 ---
-tag: ["Playwright", "UI 自动化测试", "E2E", "实战案例", "Skill"]
+tag: ["Playwright", "自动化测试", "UI 自动化测试", "E2E", "实战案例", "Skills"]
 date: "2026-08-20"
-detail: "承接《基于 Playwright CLI + Skills 实现 UI 自动化测试实战》，本文是第二个实战案例：在登录态复用的基础上，用 @playwright/cli 的 ref 快照 + 可安装 Skill 跑通电商「搜索 → 加购 → 结算 → 下单」端到端链路，重点拆解跨页面 ref 失效重快照、金额/数量动态断言、auth 状态复用与脚本自愈。"
+column: 教程
+detail: 电商下单测试跨页面易失效、金额难断言？用 Playwright CLI 与 Skills 跑通搜索到下单的链路，处理登录态、动态断言和脚本修复。
 ---
 
 在[上一篇](./Playwright%20CLI%20+%20Skills%20实现%20UI%20自动化测试实战.md)里，我们用登录流程讲清了整套方法：**Playwright CLI + 无障碍树 + 可安装 Skill**，把「页面探索 → 用例生成 → 执行 → 自愈」交给 AI Agent。

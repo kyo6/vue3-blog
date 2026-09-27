@@ -1,7 +1,8 @@
 ---
-tag: ["Playwright", "UI 自动化测试", "E2E", "组件库", "视觉回归"]
+tag: ["Playwright", "自动化测试", "UI 自动化测试", "E2E", "组件库", "视觉回归"]
 date: "2026-08-28"
-detail: "承接 Playwright CLI + Skills 系列，记录为 NormalUpload 落地回归用例的全过程。重点澄清：plan 不会自动编译成 TS——Agent 用 plan 定规格、用 CLI 探真页面拿 TS 草稿、手写 expect 后落盘；并覆盖 fixtures/seed、分 group 生成、布局契约与截图基线、何时更新基线。"
+column: 教程
+detail: 想给上传组件建立可维护的回归测试？从场景清单、测试素材和 Playwright 用例，到布局断言与截图基线，梳理一套可复用的落地流程。
 ---
 
 在[《Playwright CLI + Skills 实现 UI 自动化测试实战》](./Playwright%20CLI%20+%20Skills%20实现%20UI%20自动化测试实战.md)和[电商下单案例](./Playwright%20CLI%20+%20Skills%20跑通电商下单链路-实战案例.md)里，讲的是「如何用 CLI + Skill 跑通业务链路」。本文换一个更贴近组件库日常的场景：**给 `@fone/dg-components` 的 NormalUpload 写一套可维护的回归用例**。

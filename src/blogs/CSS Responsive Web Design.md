@@ -1,7 +1,8 @@
 ---
-tag: ['响应式布局']
+tag: ['CSS', '响应式布局', '布局']
 date: 2026-02-22
-detail: 在 "Mobile First" 喊了这么多年的今天，响应式布局（Responsive Web Design, RWD）早已不是一个新概念，而是前端开发的**基建技能**。
+column: 教程
+detail: 页面在手机和桌面上都要好用，该如何组织响应式布局？从 viewport、Flex/Grid、流体字体到容器查询，整理现代实现方法与示例。
 ---
 
 在 "Mobile First" 喊了这么多年的今天，响应式布局（Responsive Web Design, RWD）早已不是一个新概念，而是前端开发的**基建技能**。

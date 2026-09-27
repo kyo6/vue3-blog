@@ -1,7 +1,8 @@
 ---
-tag: ["Playwright", "UI 自动化测试", "E2E", "AI", "Skill"]
+tag: ["Playwright", "自动化测试", "UI 自动化测试", "E2E", "AI", "Skills"]
 date: "2026-08-20"
-detail: "从 midscene.js 的视觉识别切到 Playwright CLI + 无障碍树：用 @playwright/cli 的 ref 快照稳定定位元素，配合可安装 Skill 把「页面探索 → 用例生成 → 执行 → 自愈」整条 UI 自动化链路交给 AI Agent，token 成本仅为 MCP 的约 1/5，且快、稳、可复用。含登录实战与 Skill 设计。"
+column: 教程
+detail: 想让 AI 协助编写可靠的 UI 自动化用例？用 Playwright CLI 与 Skills 跑通页面探索、用例生成、断言和修复，并结合登录场景说明做法。
 ---
 
 UI 自动化测试一直有个老大难：要么脚本脆弱、维护成本高，要么 AI 方案慢到没法用。本文分享一套我自己落地验证过的组合拳——**Playwright CLI + 无障碍树 + 可安装 Skill**，把「页面探索 → 用例生成 → 执行 → 自愈」整条链路交给 AI Agent 自动跑，而且快、稳、可复用。

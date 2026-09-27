@@ -1,3 +1,9 @@
+---
+tag: ['OpenClaw', 'AI Agent']
+column: 译文精选
+detail: OpenClaw 为何迅速流行，实际风险在哪里？文章梳理产品机制、传播原因、Moltbook 与安全问题，帮助你判断适用场景。
+---
+
 157,000 GitHub stars in three weeks.
 
 That’s not a typo. OpenClaw, the open-source AI agent formerly known as Clawbot and Moltbot, just became the fastest-growing AI project in open-source history.

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>色彩明度理论与 UI 落地映射指南</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: #FAFAFA; /* 更柔和的背景底色 */
+            color: #1F2937; 
+            line-height: 1.7;
+        }
+        
+        .section-title {
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 3rem;
+            height: 3px;
+            background-color: #3B82F6;
+            border-radius: 2px;
+        }
+
+        .theory-block {
+            background-color: #F8FAFC;
+            border-left: 4px solid #94A3B8;
+            padding: 1.25rem 1.5rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .mockup-wrapper {
+            background: #FFFFFF;
+            border: 1px solid #E5E7EB;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .mockup-header {
+            background-color: #F3F4F6;
+            padding: 0.75rem 1.25rem;
+            border-bottom: 1px solid #E5E7EB;
+            font-size: 0.875rem;
+            color: #374151;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .mockup-body {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .mockup-footer {
+            background-color: #F9FAFB;
+            padding: 1rem 1.25rem;
+            border-top: 1px solid #E5E7EB;
+            font-size: 0.875rem;
+            color: #4B5563;
+        }
+
+        /* 标注线样式 */
+        .annotation-line {
+            position: absolute;
+            border: 1px dashed #EF4444;
+            pointer-events: none;
+        }
+        .annotation-badge {
+            position: absolute;
+            background: #FEF2F2;
+            color: #DC2626;
+            border: 1px solid #FCA5A5;
+            padding: 0.125rem 0.375rem;
+            border-radius: 0.25rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            white-space: nowrap;
+            z-index: 20;
+        }
+    </style>
+</head>
+<body class="antialiased p-6 md:p-12 max-w-7xl mx-auto">
+
+    <header class="mb-16 text-center max-w-3xl mx-auto">
+        <div class="inline-block bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-sm font-semibold mb-4 border border-blue-100">Design System Architecture</div>
+        <h1 class="text-4xl md:text-5xl font-bold mb-6 tracking-tight text-gray-900">色彩明度理论与 UI 落地映射</h1>
+        <p class="text-lg text-gray-500 font-medium">从纯粹的美学规律，到现代界面工程的实战应用。探讨明暗层级如何决定界面的清晰度。</p>
+    </header>
+
+    <main>
+        <section class="mb-20">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800 section-title inline-block">核心公理：明度的独立性</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mt-6">
+                <div>
+                    <div class="theory-block mb-6">
+                        <p class="text-gray-700 leading-relaxed"><strong>理论回溯：</strong> 色彩的明度，即色彩的明亮程度。<strong>明度具有相对的独立性</strong>，可以离开色相、纯度而独立存在。而色相、纯度则必须依赖明度而存在。</p>
+                    </div>
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-5">
+                        <h4 class="font-semibold text-yellow-800 mb-2 flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            UI 工程映射：去色测试 (Grayscale Test)
+                        </h4>
+                        <p class="text-sm text-yellow-700">在设计验收时，剥离所有色彩（色相）后，仅凭黑白灰的明暗对比，界面的信息层级依然需要清晰可读。明度是界面的“骨架”，色相只是“皮肤”。</p>
+                    </div>
+                </div>
+                
+                <!-- Grayscale Demo -->
+                <div class="mockup-wrapper h-auto">
+                     <div class="mockup-header">
+                        <span>👀 视觉测试：去色前 vs 去色后</span>
+                    </div>
+                    <div class="mockup-body bg-gray-50 p-6 flex flex-col gap-6">
+                        <!-- Before (Color) -->
+                        <div class="flex items-center justify-between bg-white p-4 rounded-lg shadow-sm border border-gray-100 w-full">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">JD</div>
+                                <div>
+                                    <div class="text-sm font-bold text-gray-900">Jane Doe</div>
+                                    <div class="text-xs text-blue-500 font-medium">UX Designer</div>
+                                </div>
+                            </div>
+                            <button class="bg-blue-600 text-white text-xs px-3 py-1.5 rounded hover:bg-blue-700 transition">Follow</button>
+                        </div>
+                        
+                        <!-- Arrow -->
+                        <div class="flex justify-center">
+                            <svg class="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                        </div>
+
+                        <!-- After (Grayscale) -->
+                        <div class="flex items-center justify-between bg-white p-4 rounded-lg shadow-sm border border-gray-100 w-full filter grayscale">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">JD</div>
+                                <div>
+                                    <div class="text-sm font-bold text-gray-900">Jane Doe</div>
+                                    <div class="text-xs text-blue-500 font-medium">UX Designer</div>
+                                </div>
+                            </div>
+                            <button class="bg-blue-600 text-white text-xs px-3 py-1.5 rounded hover:bg-blue-700 transition">Follow</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-24">
+            <h2 class="text-3xl font-bold mb-12 text-center text-gray-900">一、 明度的基调与产品情绪 (9 级色阶体系)</h2>
+            
+            <p class="text-gray-600 mb-10 text-center max-w-4xl mx-auto">通常将亮度空间映射为 9 个相对等级（1 级最暗，9 级最亮）。不同的明度基调直接决定了产品的“性格”、情绪传递以及适用的业务场景。</p>
+
+            <div class="space-y-16">
+                <!-- 1. 低明度基调 -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div class="lg:col-span-5 flex flex-col justify-center pr-4">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-8 h-8 rounded-md bg-[#171717] flex items-center justify-center text-white font-bold shadow-md text-sm border border-gray-600">1-3</div>
+                            <h3 class="text-xl font-bold text-gray-900">低明度基调</h3>
+                        </div>
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-gray-400 mr-2 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                <span class="text-gray-600 text-sm"><strong class="text-gray-800">理论特征：</strong>厚重、沉着古朴；引发阴暗、神秘、忧郁、压抑的感觉，有时带来阴险、悲哀的想象。</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-gray-400 mr-2 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                <span class="text-gray-600 text-sm"><strong class="text-gray-800">UI 场景：</strong>暗色模式、流媒体平台、硬核游戏界面、专业工具（如视频剪辑软件）。</span>
+                            </li>
+                        </ul>
+                        <div class="bg-gray-50 rounded p-4 text-sm text-gray-500 border border-gray-100">
+                            <strong>设计目标：</strong>最大化内容沉浸感，让界面本身退隐，让发光的媒体内容（图片/视频）成为唯一焦点。
+                        </div>
+                    </div>
+                    
+                    <div class="lg:col-span-7">
+                        <div class="mockup-wrapper">
+                            <div class="mockup-header bg-[#1A1A1A] border-[#2A2A2A] text-gray-400">
+                                <span>📱 Mockup: 流媒体 App 沉浸式首页</span>
+                            </div>
+                            <div class="mockup-body bg-[#0A0A0A] text-white">
+                                <!-- Mobile Frame -->
+                                <div class="w-[300px] h-[400px] bg-[#121212] border border-[#2A2A2A] rounded-[2rem] overflow-hidden shadow-2xl relative">
+                                    <!-- Hero Image Area (Base 1) -->
+                                    <div class="h-1/2 bg-gradient-to-t from-[#121212] to-[#2A2A2A] relative flex flex-col justify-end p-5">
+                                        <div class="absolute top-4 right-4 flex gap-1">
+                                            <div class="w-1.5 h-1.5 rounded-full bg-gray-500"></div><div class="w-1.5 h-1.5 rounded-full bg-gray-500"></div><div class="w-1.5 h-1.5 rounded-full bg-gray-500"></div>
+                                        </div>
+                                        <div class="h-8 w-3/4 bg-[#3A3A3A] rounded mb-3"></div>
+                                        <div class="h-3 w-1/2 bg-[#2A2A2A] rounded mb-4"></div>
+                                        <button class="bg-white text-black text-xs font-bold py-2 px-4 rounded w-1/2">立即播放</button>
+                                    </div>
+                                    
+                                    <div class="p-4">
+                                        <div class="text-xs font-bold text-gray-400 mb-3">为你推荐</div>
+                                        <div class="flex gap-3 overflow-hidden">
+                                            <!-- Cards (Base 2) -->
+                                            <div class="min-w-[90px] h-[120px] bg-[#1E1E1E] rounded-md border border-[#333] flex items-center justify-center relative">
+                                                <div class="absolute inset-x-2 bottom-2 h-2 bg-[#333] rounded"></div>
+                                            </div>
+                                            <div class="min-w-[90px] h-[120px] bg-[#1E1E1E] rounded-md border border-[#333] flex items-center justify-center relative">
+                                                <div class="absolute inset-x-2 bottom-2 h-2 bg-[#333] rounded"></div>
+                                            </div>
+                                            <div class="min-w-[90px] h-[120px] bg-[#1E1E1E] rounded-md border border-[#333] flex items-center justify-center relative">
+                                                <div class="absolute inset-x-2 bottom-2 h-2 bg-[#333] rounded"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Annotations -->
+                                    <div class="annotation-badge text-[#9CA3AF] bg-[#1F2937] border-[#374151]" style="top: 15%; left: 10%;">色阶 1 (#121212) 底噪</div>
+                                    <div class="annotation-badge text-[#9CA3AF] bg-[#1F2937] border-[#374151]" style="bottom: 12%; left: 10%;">色阶 2 (#1E1E1E) 卡片</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. 中明度基调 -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:flex-row-reverse">
+                    <!-- Text Content (Reversed visually on large screens) -->
+                    <div class="lg:col-span-5 lg:col-start-8 flex flex-col justify-center pl-4">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-8 h-8 rounded-md bg-[#9CA3AF] flex items-center justify-center text-white font-bold shadow-md text-sm border border-gray-300">4-6</div>
+                            <h3 class="text-xl font-bold text-gray-900">中明度基调</h3>
+                        </div>
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-gray-400 mr-2 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                <span class="text-gray-600 text-sm"><strong class="text-gray-800">理论特征：</strong>朴素、平静；引发稳重、朴实的感觉，有时也可带来中庸、平安的想象。</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-gray-400 mr-2 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                <span class="text-gray-600 text-sm"><strong class="text-gray-800">UI 场景：</strong>B2B 企服后台、复杂表单填写、非关键信息的降噪层。</span>
+                            </li>
+                        </ul>
+                        <div class="bg-gray-50 rounded p-4 text-sm text-gray-500 border border-gray-100">
+                            <strong>设计目标：</strong>降低视觉刺激，极致克制。适合用户需要长时间注视、处理复杂逻辑的任务型界面，防视觉疲劳。
+                        </div>
+                    </div>
+                    
+                    <!-- Mockup (Reversed visually) -->
+                    <div class="lg:col-span-7 lg:row-start-1 lg:col-start-1">
+                        <div class="mockup-wrapper">
+                            <div class="mockup-header">
+                                <span>💻 Mockup: B2B 后台设置面板</span>
+                            </div>
+                            <div class="mockup-body bg-[#F3F4F6]">
+                                <!-- Desktop Frame -->
+                                <div class="w-full max-w-[450px] bg-[#E5E7EB] rounded-lg shadow border border-gray-300 flex overflow-hidden h-[300px]">
+                                    <!-- Sidebar (Base 5) -->
+                                    <div class="w-1/3 bg-[#9CA3AF] p-4 flex flex-col gap-3">
+                                        <div class="w-full h-6 bg-[#6B7280] rounded opacity-60 mb-2"></div>
+                                        <div class="w-3/4 h-4 bg-[#D1D5DB] rounded opacity-70"></div>
+                                        <div class="w-full h-4 bg-[#D1D5DB] rounded opacity-70"></div>
+                                        <div class="w-5/6 h-4 bg-[#D1D5DB] rounded opacity-70"></div>
+                                    </div>
+                                    <!-- Content (Base 6/7) -->
+                                    <div class="w-2/3 p-6 flex flex-col">
+                                        <div class="h-5 w-1/3 bg-[#6B7280] rounded mb-6"></div>
+                                        <div class="space-y-4">
+                                            <div>
+                                                <div class="h-3 w-1/4 bg-[#9CA3AF] rounded mb-1"></div>
+                                                <div class="h-8 w-full bg-[#D1D5DB] border border-[#9CA3AF] rounded flex items-center px-2">
+                                                    <div class="h-2 w-1/2 bg-[#6B7280] rounded opacity-50"></div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="h-3 w-1/5 bg-[#9CA3AF] rounded mb-1"></div>
+                                                <div class="h-8 w-full bg-[#D1D5DB] border border-[#9CA3AF] rounded flex items-center justify-between px-2">
+                                                    <div class="h-2 w-1/3 bg-[#6B7280] rounded opacity-50"></div>
+                                                    <svg class="w-4 h-4 text-[#6B7280]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Annotations -->
+                                    <div class="annotation-badge text-gray-700 bg-gray-200 border-gray-400" style="top: 10%; left: 8%;">色阶 5 侧边栏</div>
+                                    <div class="annotation-badge text-gray-700 bg-gray-200 border-gray-400" style="top: 50%; left: 45%;">色阶 6 输入框</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. 高明度基调 -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div class="lg:col-span-5 flex flex-col justify-center pr-4">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-8 h-8 rounded-md bg-[#F9FAFB] flex items-center justify-center text-gray-800 font-bold shadow-sm text-sm border border-gray-200">7-9</div>
+                            <h3 class="text-xl font-bold text-gray-900">高明度基调</h3>
+                        </div>
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-gray-400 mr-2 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                <span class="text-gray-600 text-sm"><strong class="text-gray-800">理论特征：</strong>清爽，明亮、阳光感强；引发欢快、轻松、健康的感觉，有时也可带来软弱，苍白的想象。</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-gray-400 mr-2 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                <span class="text-gray-600 text-sm"><strong class="text-gray-800">UI 场景：</strong>现代 SaaS、极简效率工具、医疗健康应用、重排版的阅读类 App。</span>
+                            </li>
+                        </ul>
+                        <div class="bg-gray-50 rounded p-4 text-sm text-gray-500 border border-gray-100">
+                            <strong>设计目标：</strong>创造强烈的空间感和呼吸感。减轻用户的认知负担，传递“简单易用、现代、干净”的品牌印象。需依赖高明度的深色文字压阵，防止漂浮。
+                        </div>
+                    </div>
+                    
+                    <div class="lg:col-span-7">
+                        <div class="mockup-wrapper">
+                            <div class="mockup-header bg-white border-b-gray-100">
+                                <span>📝 Mockup: 极简效率笔记 App</span>
+                            </div>
+                            <div class="mockup-body bg-gray-100">
+                                <!-- App Frame -->
+                                <div class="w-full max-w-[350px] bg-white rounded-xl shadow-[0_20px_25px_-5px_rgba(0,0,0,0.1)] border border-gray-100 h-[320px] p-6 relative">
+                                    <div class="flex justify-between items-center mb-6 border-b border-gray-100 pb-3">
+                                        <div class="h-6 w-1/2 bg-gray-800 rounded"></div>
+                                        <div class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+                                            <div class="w-4 h-4 bg-gray-300 rounded-full"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="space-y-3">
+                                        <!-- Task Item (Base 8.5) -->
+                                        <div class="bg-[#F9FAFB] border border-[#F3F4F6] p-4 rounded-lg flex items-center gap-3">
+                                            <div class="w-5 h-5 border-2 border-gray-300 rounded-sm"></div>
+                                            <div class="h-3 w-3/4 bg-gray-400 rounded"></div>
+                                        </div>
+                                        <!-- Task Item (Base 8.5) -->
+                                        <div class="bg-[#F9FAFB] border border-[#F3F4F6] p-4 rounded-lg flex items-center gap-3">
+                                            <div class="w-5 h-5 border-2 border-blue-500 bg-blue-50 rounded-sm flex items-center justify-center">
+                                                <svg class="w-3 h-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                            </div>
+                                            <div class="h-3 w-1/2 bg-gray-300 rounded"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Annotations -->
+                                    <div class="annotation-badge text-blue-600 bg-blue-50 border-blue-200" style="bottom: 8%; right: 10%;">色阶 9 (#FFFFFF) 纯白底色营造空间感</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold mb-12 text-center text-gray-900 border-t border-gray-200 pt-12">二、 色彩明度的对比与组件层级</h2>
+            <p class="text-gray-600 mb-10 text-center max-w-4xl mx-auto">明度差决定了元素之间的“视觉张力”。在 UI 组件设计中，长调、中调、短调分别对应着界面的不同状态和交互暗示。</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- 1. 短调 -->
+                <div class="mockup-wrapper bg-white">
+                    <div class="p-6 border-b border-gray-100 flex-grow-0">
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">短调（弱对比）</h3>
+                        <p class="text-sm text-gray-500 mb-2"><strong>明度差 ≤ 3级</strong></p>
+                        <p class="text-xs text-gray-600">柔和、模糊、光感弱；显示高雅、平稳。常用于 Disabled 禁用状态、水印或斑马线表格。</p>
+                    </div>
+                    <div class="mockup-body bg-[#F9FAFB] p-8 flex flex-col items-center">
+                        <div class="w-full relative py-6">
+                            <!-- Disabled Button -->
+                            <button class="w-full bg-[#E5E7EB] text-[#9CA3AF] font-medium py-3 px-4 rounded cursor-not-allowed text-sm shadow-inner flex justify-center items-center">
+                                提交表单
+                            </button>
+                            
+                            <!-- Contrast line -->
+                            <div class="absolute left-1/2 transform -translate-x-1/2 top-0 h-full w-px border-l border-dashed border-gray-400 opacity-50"></div>
+                            <div class="absolute top-0 right-0 bg-white border border-gray-200 text-gray-500 text-[10px] px-1 rounded shadow-sm">差值 ~2</div>
+                        </div>
+                        <p class="text-[11px] text-gray-400 text-center mt-4">极其微弱的对比暗示“不可用”</p>
+                    </div>
+                </div>
+
+                <!-- 2. 中调 -->
+                <div class="mockup-wrapper bg-white">
+                    <div class="p-6 border-b border-gray-100 flex-grow-0">
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">中调（中对比）</h3>
+                        <p class="text-sm text-gray-500 mb-2"><strong>明度差 ≤ 5级</strong></p>
+                        <p class="text-xs text-gray-600">稳重、适中，也会显得平均、中庸。常用于次要文本 (Secondary Text)、边框分割线、说明文字。</p>
+                    </div>
+                    <div class="mockup-body bg-white p-8 flex flex-col items-center border border-gray-100">
+                        <div class="w-full max-w-[200px]">
+                            <div class="h-4 w-full bg-gray-800 rounded mb-2"></div>
+                            <div class="flex items-center gap-2">
+                                <div class="h-3 w-4/5 bg-[#6B7280] rounded"></div>
+                                <span class="bg-gray-100 border border-gray-200 text-gray-600 text-[10px] px-1 rounded">差值 ~5</span>
+                            </div>
+                            <div class="h-px w-full bg-[#E5E7EB] mt-4 mb-2"></div>
+                            <div class="h-2 w-2/3 bg-[#9CA3AF] rounded"></div>
+                        </div>
+                        <p class="text-[11px] text-gray-400 text-center mt-6">清晰可读，但不抢夺核心视觉焦点</p>
+                    </div>
+                </div>
+
+                <!-- 3. 长调 -->
+                <div class="mockup-wrapper bg-white border-blue-200">
+                    <div class="p-6 border-b border-gray-100 flex-grow-0">
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">长调（强对比）</h3>
+                        <p class="text-sm text-gray-500 mb-2"><strong>明度差 > 5级</strong></p>
+                        <p class="text-xs text-gray-600">形象鲜明，富有体感与力量。用于全局主要文本、核心转化按钮(CTA)或危急告警。</p>
+                    </div>
+                    <div class="mockup-body bg-gray-50 p-8 flex flex-col gap-6 items-center">
+                        
+                        <!-- CTA -->
+                        <div class="w-full relative">
+                            <button class="w-full bg-[#111827] text-white font-bold py-3 px-4 rounded-lg text-sm shadow-[0_4px_14px_0_rgba(0,0,0,0.39)] hover:scale-105 transition-transform flex justify-between items-center">
+                                <span>立即购买</span>
+                                <span class="bg-white/20 text-white text-[10px] px-1.5 py-0.5 rounded">差值 8+</span>
+                            </button>
+                        </div>
+
+                        <!-- Alert -->
+                        <div class="w-full bg-[#FEF2F2] border border-[#F87171] p-3 rounded text-sm text-[#991B1B] font-medium shadow-sm relative">
+                            🚨 支付彻底失败！
+                            <span class="absolute -top-2 -right-2 bg-red-600 text-white text-[9px] px-1 rounded-full shadow">强制关注</span>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="mt-16 border-t border-gray-200 pt-8 pb-12 text-center">
+        <p class="text-sm text-gray-400">理论映射指南 &copy; Design System Architecture</p>
+    </footer>
+
+</body>
+</html>

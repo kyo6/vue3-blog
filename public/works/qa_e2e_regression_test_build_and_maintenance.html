@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>用 AI 推进 QA 自动化的现状 —— 中文翻译</title>
+<style>
+  :root {
+    --bg: #f7f8fa;
+    --card: #ffffff;
+    --ink: #1f2933;
+    --muted: #6b7280;
+    --accent: #2563eb;
+    --accent-soft: #eff6ff;
+    --border: #e5e7eb;
+    --jp: #9ca3af;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.75;
+    padding: 40px 16px 80px;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; }
+  header.hero {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #3b82f6 100%);
+    color: #fff; border-radius: 16px; padding: 36px 32px; margin-bottom: 28px;
+  }
+  header.hero h1 { font-size: 26px; font-weight: 700; margin-bottom: 10px; }
+  header.hero .jp { color: #bfdbfe; font-size: 14px; margin-bottom: 18px; }
+  header.hero .meta { font-size: 13.5px; color: #dbeafe; }
+  header.hero .meta div { margin-top: 4px; }
+  .src { font-size: 12px; color: var(--muted); margin-bottom: 24px; word-break: break-all; }
+  .slide {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 22px 26px; margin-bottom: 18px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.04);
+  }
+  .slide .tag {
+    display: inline-block; font-size: 12px; font-weight: 600; color: var(--accent);
+    background: var(--accent-soft); border-radius: 999px; padding: 2px 12px; margin-bottom: 10px;
+  }
+  .slide h2 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+  .slide h2 .orig { display: block; font-size: 12.5px; font-weight: 400; color: var(--jp); margin-top: 3px; }
+  .slide ul, .slide ol { padding-left: 22px; }
+  .slide li { margin: 4px 0; }
+  .slide p { margin: 6px 0; }
+  .slide strong { color: #1d4ed8; }
+  .chapter {
+    text-align: center; background: #111827; color: #f9fafb;
+    border-radius: 14px; padding: 26px; margin: 30px 0 18px;
+  }
+  .chapter .tag { color: #93c5fd; font-size: 12px; letter-spacing: 2px; }
+  .chapter h2 { font-size: 20px; margin-top: 6px; }
+  .chapter .orig { font-size: 12.5px; color: #9ca3af; margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 14px; }
+  th, td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; vertical-align: top; }
+  th { background: #f3f4f6; font-weight: 600; }
+  .note { font-size: 12.5px; color: var(--muted); margin-top: 8px; }
+  .flow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 12px 0; }
+  .flow .step {
+    background: var(--accent-soft); border: 1px solid #bfdbfe; color: #1e40af;
+    border-radius: 10px; padding: 8px 14px; font-size: 13.5px; font-weight: 600;
+  }
+  .flow .arrow { color: var(--muted); font-size: 16px; }
+  .footer-note { text-align: center; font-size: 12px; color: var(--muted); margin-top: 36px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>用 AI 推进 QA 自动化的现状<br>—— E2E 回归测试的构建与维护</h1>
+  <div class="jp">原文：AIで進めるQA自動化の現在地 ― E2Eリグレッションテストの整備と維持 ―</div>
+  <div class="meta">
+    <div>演讲者：shibutani（@s_k_526）｜株式会社 LayerX 平台工程部 Enabling 团队｜2025 年应届入职</div>
+    <div>活动：2026/7/28「QA×AI 的下一步：‘组织推广’与‘任务委托’的实践知识」｜共 29 页</div>
+  </div>
+</header>
+
+<p class="src">原文出处：https://speakerdeck.com/shibukazu/aidejin-meruqazi-dong-hua-noxian-zai-di-e2eriguretusiyontesutonozheng-bei-towei-chi</p>
+
+<div class="slide">
+  <span class="tag">第 1 页 · 标题页</span>
+  <h2>用 AI 推进 QA 自动化的现状 —— E2E 回归测试的构建与维护<span class="orig">AIで進めるQA自動化の現在地 E2Eリグレッションテストの整備と維持</span></h2>
+  <p>2026-07-28 ｜ QA×AI 的下一步：‘组织推广’与‘任务委托’的实践知识 ｜ shibutani / @s_k_526</p>
+</div>
+
+<div class="slide">
+  <span class="tag">第 2 页</span>
+  <h2>自我介绍<span class="orig">自己紹介</span></h2>
+  <ul>
+    <li>shibutani / @s_k_526</li>
+    <li>株式会社 LayerX 平台工程部（Platform Engineering）Enabling 团队</li>
+    <li>2025 年应届入职</li>
+  </ul>
+</div>
+
+<div class="slide">
+  <span class="tag">第 3 页</span>
+  <h2>今天要讲的内容<span class="orig">今日話すこと</span></h2>
+  <ul>
+    <li><strong>01 ｜ 要解决的课题</strong></li>
+    <li><strong>02 ｜ 自研 QA Harness（测试治具）</strong></li>
+    <li><strong>03 ｜ 维护测试的循环</strong> —— 对失败原因进行分类，偏差（脱节）自动修复</li>
+    <li><strong>04 ｜ 改善精度与成本的循环</strong> —— 引入人工评分与 Agent 的自主学习</li>
+    <li><strong>05 ｜ 目标的未来</strong></li>
+  </ul>
+</div>
+
+<div class="chapter">
+  <div class="tag">CHAPTER 01</div>
+  <h2>要解决的课题</h2>
+  <div class="orig">01 ｜ 解きたい課題（第 4 页）</div>
+</div>
+
+<div class="slide">
+  <span class="tag">第 5 页</span>
+  <h2>要解决的课题：从需求确定到发布的周期最短化<span class="orig">解きたい課題：仕様が決まってからリリースまでを最短に</span></h2>
+  <ul>
+    <li>随着 AI 编程（AI Coding）的普及，实现工作已经可以交给 AI</li>
+    <li>但发布前的验证仍有很大部分依赖手动操作，速度并没有提上来</li>
+    <li><strong>瓶颈已经从「实现」转移到了「验证」</strong></li>
+  </ul>
+</div>
+
+<div class="slide">
+  <span class="tag">第 6 页</span>
+  <h2>一味依赖手动动作确认，迟早会成为瓶颈<span class="orig">手動での動作確認に頼ったままではいずれボトルネックになる</span></h2>
+  <ul>
+    <li>自动测试的建设在推进，但还不够充分，手动动作确认仍占很大比重</li>
+    <li>手动动作确认所需的时间，与功能数量和产品数量成正比地增长</li>
+    <li>LayerX 这几年产品和功能都在飞跃式增加</li>
+    <li>照这样下去，动作确认所需的时间会不断膨胀，最终成为瓶颈</li>
+  </ul>
+</div>
+
+<div class="slide">
+  <span class="tag">第 7 页</span>
+  <h2>从手动动作确认，转向以自动测试为前提的 QA<span class="orig">手動での動作確認から、自動テスト前提の QA へ</span></h2>
+  <p>为防止形成瓶颈，目标是向以自动测试为前提的 QA 流程迁移。这次迁移有两个条件：</p>
+  <ul>
+    <li><strong>条件 1：必要且充分的测试用例已被自动测试覆盖</strong><br>把 QA 工程师的经验知识转化为人人可用的形式，让非 QA 工程师也能轻松添加自动测试</li>
+    <li><strong>条件 2：新增自动测试的「新鲜度」能够被自动维护</strong><br>始终保持测试代码与产品规格、源代码的一致</li>
+  </ul>
+  <p>为了支撑这两点，以 <strong>Claude Code</strong> 为基础<strong>自研了 QA Harness（测试治具）</strong></p>
+</div>
+
+<div class="chapter">
+  <div class="tag">CHAPTER 02</div>
+  <h2>自研 QA Harness</h2>
+  <div class="orig">02 ｜ 内製QAハーネス（第 8 页）</div>
+</div>
+
+<div class="slide">
+  <span class="tag">第 9 页</span>
+  <h2>用自研 QA Harness 构建测试（四步流程）<span class="orig">内製QAハーネスによるテストの整備</span></h2>
+  <div class="flow">
+    <span class="step">① 编写测试规格（draft）</span><span class="arrow">→</span>
+    <span class="step">② 运行一次（record）</span><span class="arrow">→</span>
+    <span class="step">③ 转换为代码（generate）</span><span class="arrow">→</span>
+    <span class="step">④ 在 CI 中执行（run）</span>
+  </div>
+  <ul>
+    <li><strong>编写测试规格</strong>：用日语写出操作步骤与预期结果</li>
+    <li><strong>运行一次</strong>：Claude Code 操作真实浏览器，确认并记录步骤</li>
+    <li><strong>转换为代码</strong>：生成与日常 E2E 测试相同形式的代码</li>
+    <li><strong>在 CI 中执行</strong>：<strong>之后无需 LLM 即可运行</strong></li>
+  </ul>
+</div>
+
+<div class="slide">
+  <span class="tag">第 10 页</span>
+  <h2>通过对话来组装测试规格<span class="orig">テスト仕様を対話で組み立てる</span></h2>
+  <ul>
+    <li>只要告诉 Harness「想测试 ○○」，它就会一边阅读源代码一边组装测试规格</li>
+    <li>测试规格是并列列出<strong>操作步骤</strong>与<strong>预期结果</strong>的 <strong>YAML</strong> 文件</li>
+    <li>人工审查的核心对象<strong>不是测试代码，而是这份规格</strong></li>
+  </ul>
+  <p class="note">（附图：测试规格示例）</p>
+</div>
+
+<div class="slide">
+  <span class="tag">第 11 页</span>
+  <h2>只运行一次并记录，然后转换为代码<span class="orig">一度だけ動かして記録し、コードに変換する</span></h2>
+  <ul>
+    <li>Agent 只操作真实浏览器<strong>一次</strong>，边确认步骤是否走得通边记录</li>
+    <li>从记录中<strong>生成测试代码</strong></li>
+    <ul>
+    <li>输出是 Playwright 等与日常 E2E 测试<strong>相同形式的代码</strong></li>
+    <li>会自动反复修正，直到测试通过</li>
+    </ul>
+  </ul>
+</div>
+
+<div class="slide">
+  <span class="tag">第 12 页</span>
+  <h2>CI 中只需执行已生成的测试代码<span class="orig">CI では、生成済みテストコードを実行するだけ</span></h2>
+  <ul>
+    <li>与 PR 差分（变更）相关的测试会被<strong>自动挑选并执行</strong></li>
+    <li>生成包含<strong>截图证据（操作凭证）</strong>的执行报告</li>
+    <li><strong>人要做的只有确认规格</strong></li>
+  </ul>
+  <p class="note">（附图：每一步的执行报告）</p>
+</div>
+
+<div class="chapter">
+  <div class="tag">CHAPTER 03</div>
+  <h2>维护测试的循环</h2>
+  <div class="orig">03 ｜ テストを維持するループ（第 13 页）</div>
+</div>
+
+<div class="slide">
+  <span class="tag">第 14 页</span>
+  <h2>测试不是创建完就结束了<span class="orig">テストは作って終わりではない</span></h2>
+  <ul>
+    <li>产品在持续变化——界面、文案、选择器都在变</li>
+    <li>昨天还能通过的测试，每一次变更都会「腐化」（失效）</li>
+    <li>比起创建，<strong>维护才是真正的主战场</strong></li>
+  </ul>
+</div>
+
+<div class="slide">
+  <span class="tag">第 15 页</span>
+  <h2>腐化的测试，正在吞噬人的时间<span class="orig">腐ったテストが、人間の時間を溶かす</span></h2>
+  <ul>
+    <li>面对挂掉的测试，首先要做的是<strong>排查区分</strong></li>
+    <li>是产品的 bug？还是只是测试腐化了？</li>
+    <li>当排查区分跟不上时，红色的（失败的）测试会被忽视，最终被删除</li>
+    <li><strong>把这种排查区分工作交给 Harness</strong></li>
+  </ul>
+</div>
+
+<div class="slide">
+  <span class="tag">第 16 页</span>
+  <h2>基于源代码差分对失败原因进行分类<span class="orig">失敗の原因をソースコードの差分から分類</span></h2>
+  <p>针对每个失败的测试，以「过去成功时点以来的源代码差分」、浏览器操作记录、截图为依据，对原因进行分类：</p>
+  <table>
+    <tr><th>分类</th><th>含义</th><th>示例</th></tr>
+    <tr><td><strong>测试代码的偏差（脱节）</strong></td><td>验证内容没变，只是测试代码过时了</td><td>选择器或文案变更后，测试没有跟上</td></tr>
+    <tr><td><strong>产品规格的变更</strong></td><td>需要验证的事情本身变了</td><td>界面重构、功能删除、Feature Flag 切换</td></tr>
+    <tr><td><strong>产品的 bug</strong></td><td>两者都不是，是产品坏了</td><td>变更的影响导致其他功能意外损坏</td></tr>
+  </table>
+  <p class="note">（附图：将「选择器偏差」判定为「测试代码偏差」的示例）</p>
+</div>
+
+<div class="slide">
+  <span class="tag">第 17 页</span>
+  <h2>按分类进入下一步动作<span class="orig">分類ごとに次のアクションへ</span></h2>
+  <p>测试失败 → 分类原因，然后：</p>
+  <ul>
+    <li><strong>测试代码的偏差</strong> → 自动修复，并创建修正 PR</li>
+    <li><strong>产品规格的变更</strong> → 提示（负责人）重新审视测试规格</li>
+    <li><strong>产品的 bug</strong> → 通知开发团队</li>
+    <li><strong>无法判定时</strong>，由人工确认</li>
+  </ul>
+</div>
+
+<div class="slide">
+  <span class="tag">第 18 页</span>
+  <h2>人的时间从「维护测试」转向「产品」<span class="orig">人間の時間はテストの維持からプロダクトへ</span></h2>
+  <ul>
+    <li>每当测试失败时的原因排查、测试代码的修改，都由这个循环来承担</li>
+    <li>人需要面对的，是产品规格变更和 bug 等</li>
+    <li>目标是让人能够<strong>专注于产品最重要的部分</strong></li>
+  </ul>
+</div>
+
+<div class="chapter">
+  <div class="tag">CHAPTER 04</div>
+  <h2>改善精度与成本的循环</h2>
+  <div class="orig">04 ｜ 精度とコストを改善するループ（第 19 页）</div>
+</div>
+
+<div class="slide">
+  <span class="tag">第 20 页</span>
+  <h2>维护循环中仍然存在的两个课题<span class="orig">維持のループに残る、二つの課題</span></h2>
+  <ul>
+    <li>如果 Agent 分类出错，就会<strong>漏掉 bug</strong></li>
+    <li>测试自动修复中 Agent 的操作，<strong>一次有时要花掉数美元</strong></li>
+    <li>两者都内置了「<strong>越运行越好</strong>」的循环</li>
+  </ul>
+</div>
+
+<div class="slide">
+  <span class="tag">第 21 页</span>
+  <h2>提升分类精度的循环<span class="orig">分類精度向上のループ</span></h2>
+  <ul>
+    <li>对失败原因的准确分类，还需要领域知识（Domain Knowledge）</li>
+    <li>由<strong>人工</strong>对 Harness 的失败原因分类结果标注正误</li>
+    <li>从人工评分结果中<strong>提取自定义 Prompt</strong>，并反映到之后的分类中</li>
+    <li>通过 <strong>Human in the Loop</strong> 逐步提升精度</li>
+  </ul>
+</div>
+
+<div class="slide">
+  <span class="tag">第 22 页</span>
+  <h2>降低成本的循环<span class="orig">コスト改善のループ</span></h2>
+  <ul>
+    <li>高成本的原因集中在选择器探索等 <strong>Agent 的反复试错</strong></li>
+    <li>以「如何不再重复同样的失败」为视角学习<strong>自定义 Prompt</strong>，并反映到之后的操作中</li>
+    <li>让 Agent 能够更少迷失地完成浏览器操作</li>
+    <li>实际案例：曾经一次要花 <strong>$5</strong> 的操作，第二次之后能降到 <strong>$1</strong> 左右</li>
+  </ul>
+</div>
+
+<div class="slide">
+  <span class="tag">第 23 页</span>
+  <h2>实现越用越好的 Harness<span class="orig">ループを回すほどよくなるハーネスの実現へ</span></h2>
+  <ul>
+    <li>把「从人工评价中学习」和「Agent 的自主学习」都纳入循环</li>
+    <li>Harness 运行得越多，分类精度越高，操作成本越低</li>
+    <li><strong>循环转得越多，QA 流程就改善得越多</strong></li>
+  </ul>
+</div>
+
+<div class="chapter">
+  <div class="tag">CHAPTER 05</div>
+  <h2>目标的未来</h2>
+  <div class="orig">05 ｜ 目指す未来（第 24 页）</div>
+</div>
+
+<div class="slide">
+  <span class="tag">第 25 页</span>
+  <h2>未来 1：深入「测试视角」的提案<span class="orig">未来 1：観点の提案に踏み込む</span></h2>
+  <ul>
+    <li>「应该测试什么」目前仍由人来决定</li>
+    <li>AI 无秩序地量产测试，对质量保证反而适得其反</li>
+    <li>但在开发新产品或新功能时，测试视角的设计非常费劲</li>
+    <li>目标：对包括既有 E2E、集成、单元测试在内的<strong>整个产品的测试覆盖率进行量化</strong></li>
+    <li>以覆盖率为依据，让 Agent 深入参与<strong>真正有价值的测试视角提案</strong></li>
+  </ul>
+</div>
+
+<div class="slide">
+  <span class="tag">第 26 页</span>
+  <h2>未来 2：仅凭测试规格即可运转 QA<span class="orig">未来 2：テスト仕様だけで QA が回る</span></h2>
+  <ul>
+    <li>现状：先把测试规格<strong>转换为代码</strong>再执行
+      <ul>
+        <li>优点：执行变得确定性（Deterministic）、成本稳定</li>
+        <li>代价：测试代码本身仍需要维护</li>
+      </ul>
+    </li>
+    <li>将来：<strong>不经过转换</strong>，Agent 直接依据规格操作浏览器来执行 QA
+      <ul>
+        <li>不再需要考虑测试代码的维护，可以专注于规格本身的验证</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div class="slide">
+  <span class="tag">第 27 页</span>
+  <h2>未来 2：仅凭测试规格即可运转 QA（现状与课题）<span class="orig">未来 2：テスト仕様だけで QA が回る（続き）</span></h2>
+  <ul>
+    <li>作为自研 QA Harness 的功能，<strong>已经提供</strong></li>
+    <li>连 Slack 这类复杂 UI 相关功能的 QA，也已经能以<strong>高精度</strong>实现</li>
+    <li>仍存在<strong>成本与稳定性</strong>的课题</li>
+    <li>将逐步纳入改善循环</li>
+  </ul>
+  <p class="note">（附图：Agent 验证 Slack 上 Bot 应答的报告）</p>
+</div>
+
+<div class="chapter">
+  <div class="tag">SUMMARY</div>
+  <h2>总结</h2>
+  <div class="orig">まとめ（第 28 页）</div>
+</div>
+
+<div class="slide">
+  <span class="tag">第 29 页</span>
+  <h2>总结<span class="orig">まとめ</span></h2>
+  <ul>
+    <li>以实现<strong>以自动测试为前提的 QA 流程</strong>为目标
+      <ul>
+        <li>用自研 QA Harness 自动化 E2E 回归测试的<strong>构建与维护</strong></li>
+        <li><strong>人需要动手的，只有测试规格</strong></li>
+      </ul>
+    </li>
+    <li>测试代码的创建、修改、失败原因的分类，全部由 <strong>Agent 循环</strong>承担</li>
+    <li>通过<strong>学习循环</strong>，做到越用越聪明</li>
+    <li>迈向「必要且充分的测试视角提案」和「仅凭测试规格即可运转的 QA 流程」的未来</li>
+  </ul>
+</div>
+
+<p class="footer-note">翻译自 SpeakerDeck 演讲《AIで進めるQA自動化の現在地》（shibutani / LayerX），共 29 页 · 生成于 2026-09-02</p>
+
+</div>
+</body>
+</html>

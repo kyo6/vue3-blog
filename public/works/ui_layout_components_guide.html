@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI组件·布局 - 弹性布局、栅格、间距、分割线</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #FAF8F5; /* Light warm background inspired by images */
+            color: #333;
+        }
+        
+        /* Custom Colors based on images */
+        .bg-brand-purple { background-color: #CBB9FA; }
+        .bg-brand-orange { background-color: #F8D1AA; }
+        .bg-brand-green { background-color: #A6E1CE; }
+        .bg-brand-pink { background-color: #F2C1D2; }
+        .text-brand-pink-dark { color: #F04B8C; }
+        .bg-card-bg { background-color: #F6F3ED; } /* Inner card background */
+        
+        /* Box shadows for cards */
+        .shadow-soft {
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 4px 10px -3px rgba(0, 0, 0, 0.02);
+        }
+
+        /* Generic block shapes */
+        .shape-block {
+            border-radius: 8px;
+            height: 24px;
+        }
+        
+        /* Base card styles */
+        .layout-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+        
+        .inner-box {
+            background-color: #F6F3ED;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            position: relative;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen pb-20">
+
+<div class="max-w-4xl mx-auto px-6 pt-16 pb-8">
+    <div class="mb-12">
+        <h1 class="text-5xl font-extrabold tracking-tight mb-4 text-gray-900">
+            UI组件<span class="text-brand-pink-dark mx-2">·</span><span class="text-brand-pink-dark">布局</span>
+        </h1>
+        <p class="text-lg text-gray-600 mb-8">
+            布局类组件负责在版面上划分区域、排布元素、控制间隔,让信息各归其位。
+        </p>
+        <p class="text-gray-500 font-medium mb-2">本篇收录:</p>
+        <p class="text-gray-600">弹性布局 Flex，栅格 Grid，间距 Space，分割线 Divider。</p>
+    </div>
+</div>
+
+<div class="max-w-4xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8 relative">
+    
+    <!-- Hero Image Style Floating Cards (Abstract representation from first image) -->
+    <div class="col-span-1 md:col-span-2 relative h-96 hidden md:block mb-12">
+         <!-- Floating Card 1: Divider -->
+         <div class="absolute top-0 left-[10%] bg-white rounded-[20px] p-6 shadow-soft w-80 transform -rotate-3 z-10">
+             <h3 class="font-bold text-gray-800 mb-6 text-lg">分割线 <span class="font-normal text-gray-500 text-sm ml-1">Divider</span></h3>
+             <div class="flex items-center gap-4 text-gray-400 text-sm">
+                 <div class="h-px bg-gray-200 flex-grow"></div>
+                 或
+                 <div class="h-px bg-gray-200 flex-grow"></div>
+             </div>
+         </div>
+
+         <!-- Floating Card 2: Flex -->
+         <div class="absolute top-12 right-[10%] bg-white rounded-[20px] p-6 shadow-soft w-96 transform rotate-2 z-20">
+            <h3 class="font-bold text-gray-800 mb-4 text-lg">弹性布局 <span class="font-normal text-gray-500 text-sm ml-1">Flex</span></h3>
+            <div class="bg-card-bg rounded-xl p-3 flex gap-3 items-center">
+                <div class="w-16 h-8 bg-brand-purple rounded-lg"></div>
+                <div class="w-16 h-8 bg-brand-orange rounded-lg"></div>
+                <div class="w-16 h-8 bg-brand-green rounded-lg"></div>
+            </div>
+         </div>
+
+         <!-- Floating Card 3: Grid -->
+         <div class="absolute bottom-4 left-[15%] bg-white rounded-[20px] p-6 shadow-soft w-[400px] transform rotate-1 z-30">
+            <h3 class="font-bold text-gray-800 mb-4 text-lg">栅格 <span class="font-normal text-gray-500 text-sm ml-1">Grid</span></h3>
+            <div class="flex gap-2 mb-2">
+                <div class="flex-1 h-8 bg-brand-purple rounded-lg flex items-center justify-center text-xs font-medium text-purple-900">6</div>
+                <div class="flex-1 h-8 bg-brand-orange rounded-lg flex items-center justify-center text-xs font-medium text-orange-900">6</div>
+            </div>
+            <div class="flex gap-2">
+                <div class="w-2/5 h-8 bg-brand-purple rounded-lg flex items-center justify-center text-xs font-medium text-purple-900 opacity-80">4</div>
+                <div class="w-2/5 h-8 bg-brand-orange rounded-lg flex items-center justify-center text-xs font-medium text-orange-900 opacity-80">4</div>
+                <div class="w-1/5 h-8 bg-brand-green rounded-lg"></div>
+            </div>
+         </div>
+
+         <!-- Floating Card 4: Space -->
+         <div class="absolute bottom-0 right-[5%] bg-white rounded-[20px] p-6 shadow-soft w-80 transform -rotate-2 z-40">
+            <h3 class="font-bold text-gray-800 mb-4 text-lg">间距 <span class="font-normal text-gray-500 text-sm ml-1">Space</span></h3>
+            <div class="flex flex-col gap-4">
+                <div class="flex items-center gap-4">
+                    <span class="text-gray-500 text-sm w-4">8</span>
+                    <div class="w-12 h-6 bg-brand-orange rounded-md opacity-80"></div>
+                    <div class="w-12 h-6 bg-brand-orange rounded-md opacity-80"></div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span class="text-gray-500 text-sm w-4">24</span>
+                    <div class="w-full h-6 bg-brand-orange rounded-md opacity-80"></div>
+                </div>
+            </div>
+         </div>
+    </div>
+
+    <div class="col-span-1 md:col-span-2 my-8 border-t border-gray-200"></div>
+
+    <div class="col-span-1 md:col-span-2">
+        <div class="mb-10">
+            <h2 class="text-4xl font-extrabold mb-2 flex items-baseline gap-2 text-gray-900">弹性布局 <span class="text-xl font-semibold text-gray-500 tracking-wider">FLEX</span></h2>
+            <p class="text-gray-600 text-lg">一维排列——控制主轴对齐、方向、换行与伸缩。</p>
+        </div>
+
+        <!-- Flex Align Card -->
+        <div class="layout-card">
+            <div class="card-title">主轴对齐 <span class="font-normal text-gray-500 text-sm">justify-content</span></div>
+            
+            <!-- flex-start -->
+            <div class="flex items-center gap-4 mb-4">
+                <div class="inner-box flex-grow flex justify-start gap-3 items-center !mb-0">
+                    <div class="w-16 h-8 bg-brand-purple rounded-lg"></div>
+                    <div class="w-16 h-8 bg-brand-orange rounded-lg"></div>
+                    <div class="w-16 h-8 bg-brand-green rounded-lg"></div>
+                </div>
+                <div class="w-24 text-sm text-gray-600">flex-start</div>
+            </div>
+
+            <!-- center -->
+            <div class="flex items-center gap-4 mb-4">
+                <div class="inner-box flex-grow flex justify-center gap-3 items-center !mb-0">
+                    <div class="w-16 h-8 bg-brand-purple rounded-lg"></div>
+                    <div class="w-16 h-8 bg-brand-orange rounded-lg"></div>
+                    <div class="w-16 h-8 bg-brand-green rounded-lg"></div>
+                </div>
+                <div class="w-24 text-sm text-gray-600">center</div>
+            </div>
+
+            <!-- space-between -->
+            <div class="flex items-center gap-4">
+                <div class="inner-box flex-grow flex justify-between gap-3 items-center !mb-0">
+                    <div class="w-16 h-8 bg-brand-purple rounded-lg"></div>
+                    <div class="w-16 h-8 bg-brand-orange rounded-lg"></div>
+                    <div class="w-16 h-8 bg-brand-green rounded-lg"></div>
+                </div>
+                <div class="w-24 text-sm text-gray-600">space-between</div>
+            </div>
+        </div>
+
+        <!-- Flex Direction Card -->
+        <div class="layout-card">
+            <div class="card-title">方向 <span class="font-normal text-gray-500 text-sm">flex-direction</span></div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- row -->
+                <div class="inner-box flex flex-col items-center justify-center min-h-[160px]">
+                    <div class="flex flex-row gap-3 mb-4">
+                        <div class="w-12 h-8 bg-brand-purple rounded-lg"></div>
+                        <div class="w-12 h-8 bg-brand-orange rounded-lg"></div>
+                        <div class="w-12 h-8 bg-brand-green rounded-lg"></div>
+                    </div>
+                    <div class="text-sm text-gray-600">row</div>
+                </div>
+
+                <!-- column -->
+                <div class="inner-box flex flex-col items-center justify-center min-h-[160px]">
+                    <div class="flex flex-col gap-3 mb-4">
+                        <div class="w-16 h-6 bg-brand-purple rounded-md"></div>
+                        <div class="w-16 h-6 bg-brand-orange rounded-md"></div>
+                        <div class="w-16 h-6 bg-brand-green rounded-md"></div>
+                    </div>
+                    <div class="text-sm text-gray-600">column</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flex Grow Card -->
+        <div class="layout-card">
+            <div class="card-title">伸缩 <span class="font-normal text-gray-500 text-sm">flex: 1 · 占满剩余空间</span></div>
+            <div class="inner-box flex gap-3 items-center">
+                <div class="w-16 h-8 bg-brand-purple rounded-lg shrink-0"></div>
+                <div class="flex-1 h-8 bg-brand-orange rounded-lg flex items-center justify-center text-orange-900 font-medium text-sm">flex: 1</div>
+                <div class="w-16 h-8 bg-brand-green rounded-lg shrink-0"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-span-1 md:col-span-2 mt-8">
+        <div class="mb-10">
+            <h2 class="text-4xl font-extrabold mb-2 flex items-baseline gap-2 text-gray-900">栅格 <span class="text-xl font-semibold text-gray-500 tracking-wider">GRID</span></h2>
+            <p class="text-gray-600 text-lg">二维网格——把横向空间按列(常 12 列)分配。</p>
+        </div>
+
+        <!-- Grid Columns Card -->
+        <div class="layout-card">
+            <div class="card-title">列分配 <span class="font-normal text-gray-500 text-sm">12 栅格</span></div>
+            
+            <div class="flex flex-col gap-3">
+                <!-- 6 + 6 -->
+                <div class="flex gap-3">
+                    <div class="flex-1 h-10 bg-brand-purple rounded-lg flex items-center justify-center font-medium text-purple-900">6</div>
+                    <div class="flex-1 h-10 bg-brand-orange rounded-lg flex items-center justify-center font-medium text-orange-900">6</div>
+                </div>
+                <!-- 4 + 4 + 4 -->
+                <div class="flex gap-3">
+                    <div class="w-1/3 h-10 bg-brand-purple opacity-70 rounded-lg flex items-center justify-center font-medium text-purple-900">4</div>
+                    <div class="w-1/3 h-10 bg-brand-orange opacity-70 rounded-lg flex items-center justify-center font-medium text-orange-900">4</div>
+                    <div class="w-1/3 h-10 bg-brand-green rounded-lg flex items-center justify-center font-medium text-teal-900">4</div>
+                </div>
+                <!-- 8 + 4 -->
+                <div class="flex gap-3">
+                    <div class="w-2/3 h-10 bg-brand-purple opacity-50 rounded-lg flex items-center justify-center font-medium text-purple-900">8</div>
+                    <div class="w-1/3 h-10 bg-brand-orange opacity-50 rounded-lg flex items-center justify-center font-medium text-orange-900">4</div>
+                </div>
+                <!-- 3 + 3 + 3 + 3 -->
+                <div class="flex gap-3">
+                    <div class="w-1/4 h-10 bg-brand-purple opacity-40 rounded-lg flex items-center justify-center font-medium text-purple-900">3</div>
+                    <div class="w-1/4 h-10 bg-brand-orange opacity-40 rounded-lg flex items-center justify-center font-medium text-orange-900">3</div>
+                    <div class="w-1/4 h-10 bg-brand-green opacity-70 rounded-lg flex items-center justify-center font-medium text-teal-900">3</div>
+                    <div class="w-1/4 h-10 bg-brand-pink rounded-lg flex items-center justify-center font-medium text-pink-900">3</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grid Gutter Card -->
+        <div class="layout-card">
+            <div class="card-title">间距 <span class="font-normal text-gray-500 text-sm">gutter</span></div>
+            <div class="flex items-center gap-4">
+                <div class="flex-grow flex gap-4"> <!-- Represents gap 16 -->
+                    <div class="flex-1 h-10 bg-brand-purple opacity-70 rounded-lg flex items-center justify-center text-purple-900 text-sm">列</div>
+                    <div class="flex-1 h-10 bg-brand-orange opacity-70 rounded-lg flex items-center justify-center text-orange-900 text-sm">列</div>
+                    <div class="flex-1 h-10 bg-brand-green opacity-80 rounded-lg flex items-center justify-center text-teal-900 text-sm">列</div>
+                </div>
+                <div class="w-20 text-sm text-gray-600 text-right">gap 16</div>
+            </div>
+        </div>
+
+        <!-- Responsive Card -->
+        <div class="layout-card">
+            <div class="card-title">响应式 <span class="font-normal text-gray-500 text-sm">responsive · 按断点改列数</span></div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Desktop -->
+                <div class="inner-box flex flex-col items-center justify-center h-28">
+                    <div class="flex gap-1.5 mb-3 w-full px-4">
+                        <div class="flex-1 h-6 bg-brand-purple rounded"></div>
+                        <div class="flex-1 h-6 bg-brand-purple rounded"></div>
+                        <div class="flex-1 h-6 bg-brand-purple rounded"></div>
+                        <div class="flex-1 h-6 bg-brand-purple rounded"></div>
+                    </div>
+                    <div class="text-xs text-gray-500">桌面 · 4 列</div>
+                </div>
+                <!-- Tablet -->
+                <div class="inner-box flex flex-col items-center justify-center h-28">
+                    <div class="flex gap-2 mb-3 w-full px-6">
+                        <div class="flex-1 h-6 bg-brand-purple opacity-80 rounded"></div>
+                        <div class="flex-1 h-6 bg-brand-purple opacity-80 rounded"></div>
+                    </div>
+                    <div class="text-xs text-gray-500">平板 · 2 列</div>
+                </div>
+                <!-- Mobile -->
+                <div class="inner-box flex flex-col items-center justify-center h-28">
+                    <div class="w-full px-8 mb-3">
+                        <div class="w-full h-6 bg-brand-purple opacity-60 rounded"></div>
+                    </div>
+                    <div class="text-xs text-gray-500">手机 · 1 列</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-span-1 md:col-span-2 mt-8">
+        <div class="mb-10">
+            <h2 class="text-4xl font-extrabold mb-2 flex items-baseline gap-2 text-gray-900">间距 <span class="text-xl font-semibold text-gray-500 tracking-wider">SPACE</span></h2>
+            <p class="text-gray-600 text-lg">在元素之间留出一致、成档位的间隔。</p>
+        </div>
+
+        <!-- Spacing Scale Card -->
+        <div class="layout-card">
+            <div class="card-title">间距档位 <span class="font-normal text-gray-500 text-sm">spacing scale</span></div>
+            
+            <div class="flex flex-col gap-6 pl-4">
+                <!-- xs -->
+                <div class="flex items-center">
+                    <div class="w-16 text-sm text-gray-600 font-mono">xs · 4</div>
+                    <div class="flex gap-1">
+                        <div class="w-10 h-6 bg-brand-orange opacity-80 rounded"></div>
+                        <div class="w-10 h-6 bg-brand-orange opacity-80 rounded"></div>
+                    </div>
+                </div>
+                <!-- sm -->
+                <div class="flex items-center">
+                    <div class="w-16 text-sm text-gray-600 font-mono">sm · 8</div>
+                    <div class="flex gap-2">
+                        <div class="w-10 h-6 bg-brand-orange opacity-80 rounded"></div>
+                        <div class="w-10 h-6 bg-brand-orange opacity-80 rounded"></div>
+                    </div>
+                </div>
+                <!-- md -->
+                <div class="flex items-center">
+                    <div class="w-16 text-sm text-gray-600 font-mono">md · 12</div>
+                    <div class="flex gap-3">
+                        <div class="w-10 h-6 bg-brand-orange opacity-80 rounded"></div>
+                        <div class="w-10 h-6 bg-brand-orange opacity-80 rounded"></div>
+                    </div>
+                </div>
+                <!-- lg -->
+                <div class="flex items-center">
+                    <div class="w-16 text-sm text-gray-600 font-mono">lg · 16</div>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-6 bg-brand-orange opacity-80 rounded"></div>
+                        <div class="w-10 h-6 bg-brand-orange opacity-80 rounded"></div>
+                    </div>
+                </div>
+                <!-- xl -->
+                <div class="flex items-center">
+                    <div class="w-16 text-sm text-gray-600 font-mono">xl · 24</div>
+                    <div class="flex gap-6">
+                        <div class="w-10 h-6 bg-brand-orange opacity-80 rounded"></div>
+                        <div class="w-10 h-6 bg-brand-orange opacity-80 rounded"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Horizontal Space Card -->
+        <div class="layout-card">
+            <div class="card-title">横向间距 <span class="font-normal text-gray-500 text-sm">horizontal</span></div>
+            <div class="flex gap-4">
+                <div class="px-6 py-2 bg-gray-100 rounded-full text-sm text-gray-700">选项一</div>
+                <div class="px-6 py-2 bg-gray-100 rounded-full text-sm text-gray-700">选项二</div>
+                <div class="px-6 py-2 bg-gray-100 rounded-full text-sm text-gray-700">选项三</div>
+            </div>
+        </div>
+
+        <!-- Vertical & Wrap Space Card -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="layout-card !mb-0">
+                <div class="card-title">纵向间距 <span class="font-normal text-gray-500 text-sm">vertical</span></div>
+                <div class="inner-box flex flex-col gap-4 items-center !mb-0 min-h-[160px] justify-center">
+                    <div class="w-full max-w-[200px] h-6 bg-brand-purple opacity-80 rounded"></div>
+                    <div class="w-full max-w-[200px] h-6 bg-brand-purple opacity-80 rounded"></div>
+                    <div class="w-full max-w-[200px] h-6 bg-brand-purple opacity-80 rounded"></div>
+                    <div class="text-xs text-gray-500 mt-2">vertical</div>
+                </div>
+            </div>
+            
+            <div class="layout-card !mb-0">
+                <div class="card-title">自动换行 <span class="font-normal text-gray-500 text-sm">wrap</span></div>
+                <div class="inner-box flex flex-col items-center !mb-0 min-h-[160px] justify-center">
+                    <div class="flex flex-wrap gap-3 justify-center max-w-[250px]">
+                        <div class="px-4 py-1.5 bg-brand-green opacity-90 rounded text-teal-900 text-sm">标签</div>
+                        <div class="px-4 py-1.5 bg-brand-green opacity-90 rounded text-teal-900 text-sm">较长的标签</div>
+                        <div class="px-4 py-1.5 bg-brand-green opacity-90 rounded text-teal-900 text-sm">标签</div>
+                        <div class="px-4 py-1.5 bg-brand-green opacity-90 rounded text-teal-900 text-sm">标签</div>
+                        <div class="px-4 py-1.5 bg-brand-green opacity-90 rounded text-teal-900 text-sm">更长一些</div>
+                    </div>
+                    <div class="text-xs text-gray-500 mt-6">wrap</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-span-1 md:col-span-2 mt-8">
+        <div class="mb-10">
+            <h2 class="text-4xl font-extrabold mb-2 flex items-baseline gap-2 text-gray-900">分割线 <span class="text-xl font-semibold text-gray-500 tracking-wider">DIVIDER</span></h2>
+            <p class="text-gray-600 text-lg">在留白不足时补一道轻分隔。</p>
+        </div>
+
+        <!-- Horizontal Dividers Card -->
+        <div class="layout-card">
+            
+            <div class="flex flex-col gap-10">
+                <!-- Hairline Divider -->
+                <div>
+                    <div class="card-title !mb-4">横向 · 发丝线</div>
+                    <div class="h-px bg-gray-200 w-full"></div>
+                </div>
+
+                <!-- Text Centered Divider -->
+                <div>
+                    <div class="card-title !mb-4">带文字(居中)</div>
+                    <div class="flex items-center gap-4">
+                        <div class="h-px bg-gray-200 flex-grow"></div>
+                        <span class="text-gray-500 text-sm">或使用以下方式</span>
+                        <div class="h-px bg-gray-200 flex-grow"></div>
+                    </div>
+                </div>
+
+                <!-- Text Left Divider -->
+                <div>
+                    <div class="card-title !mb-4">带标题(靠左)</div>
+                    <div class="flex items-center gap-4">
+                        <span class="font-bold text-gray-900">基本信息</span>
+                        <div class="h-px bg-gray-200 flex-grow"></div>
+                    </div>
+                </div>
+
+                <!-- Dashed Divider -->
+                <div>
+                    <div class="card-title !mb-4">虚线</div>
+                    <div class="border-t border-dashed border-gray-300 w-full"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vertical Divider Card -->
+        <div class="layout-card">
+            <div class="card-title mb-6">竖向 · 行内分隔</div>
+            
+            <div class="flex items-center text-gray-700 text-lg mb-8">
+                <div class="flex items-baseline gap-1">
+                    <span class="font-bold text-gray-900">128</span>
+                    <span class="text-gray-500 text-sm">笔记</span>
+                </div>
+                <div class="w-px h-4 bg-gray-300 mx-4"></div>
+                <div class="flex items-baseline gap-1">
+                    <span class="font-bold text-gray-900">3.2k</span>
+                    <span class="text-gray-500 text-sm">关注</span>
+                </div>
+                <div class="w-px h-4 bg-gray-300 mx-4"></div>
+                <div class="flex items-baseline gap-1">
+                    <span class="font-bold text-gray-900">906</span>
+                    <span class="text-gray-500 text-sm">获赞</span>
+                </div>
+            </div>
+
+            <p class="text-gray-500 text-sm leading-relaxed">
+                分割线只在「留白不足以分组」时收尾出现;用<span class="font-bold text-gray-700">发丝细线</span>、克制颜色,别用粗线或重色切割版面。
+            </p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

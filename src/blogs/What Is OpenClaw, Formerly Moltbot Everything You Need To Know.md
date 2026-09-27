@@ -1,7 +1,8 @@
 ---
 tag: ["OpenClaw"]
 date: "2026-02-03"
-detail: "OpenClaw, aka Moltbot, is an open-source autonomous AI assistant"
+column: 译文精选
+detail: 想了解 OpenClaw 是什么、为什么流行及风险在哪里？文章梳理它的名称变迁、Moltbook、安全与隐私问题及使用判断。
 ---
 
 Here’s everything you need to know about the viral agent now known as OpenClaw.

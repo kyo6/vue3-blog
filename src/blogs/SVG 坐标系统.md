@@ -1,7 +1,8 @@
 ---
 tag: ['SVG', '坐标系统', '前端绘图']
 date: 2026-07-31
-detail: SVG 之所以能精准绘图，靠的是一套清晰的坐标系统。本文系统梳理坐标系的基本概念、视口（viewport）与视图框（viewBox）的区别与用法，以及坐标变换（transform）的核心机制，帮你彻底搞懂 SVG 的"画图逻辑"。
+column: 技术研究
+detail: SVG 的 viewport、viewBox 和 transform 总分不清？通过坐标示意与示例理解它们如何决定图形的尺寸、位置和缩放。
 ---
 
 SVG 是用于绘图的矢量格式，它和 Canvas、PostScript 等绘图技术一样，背后都依赖一套**网格坐标系统**。理解这套坐标系统，是掌握 SVG 定位、缩放、旋转等一切操作的前提。

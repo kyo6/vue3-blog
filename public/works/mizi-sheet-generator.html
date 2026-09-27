@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>米字格字帖生成器</title>
+<style>
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "KaiTi", "STKaiti", "楷体", "BiauKai", serif;
+    background: #f5f5f5;
+    color: #333;
+  }
+
+  /* 控制面板 */
+  .controls {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 16px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .control-group label {
+    font-size: 13px;
+    color: #666;
+  }
+  .control-group input,
+  .control-group textarea {
+    font-size: 14px;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+  }
+  .control-group textarea {
+    width: 300px;
+    height: 60px;
+    resize: vertical;
+    font-family: inherit;
+  }
+  .control-group input {
+    width: 80px;
+  }
+  .control-group input:focus,
+  .control-group textarea:focus {
+    border-color: #2e7d32;
+  }
+  button {
+    padding: 8px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #fff;
+    background: #2e7d32;
+    transition: background 0.2s;
+  }
+  button:hover { background: #1b5e20; }
+  button.print-btn {
+    background: #1565c0;
+  }
+  button.print-btn:hover { background: #0d47a1; }
+
+  /* 字帖预览区 */
+  .preview {
+    max-width: 900px;
+    margin: 24px auto;
+    padding: 0 20px;
+  }
+  .sheet {
+    background: #fff;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .sheet-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #2e7d32;
+    letter-spacing: 4px;
+  }
+
+  /* 米字格网格 */
+  .grid {
+    display: grid;
+    gap: 12px 10px;
+    justify-content: center;
+  }
+  .grid-row {
+    display: contents;
+  }
+  .cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .mizi {
+    width: 100%;
+    aspect-ratio: 1;
+    position: relative;
+    border: 2.5px solid #2e7d32;
+    background: #fff;
+    overflow: hidden;
+  }
+  .mizi::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    top: 50%;
+    border-top: 1.2px dashed #81c784;
+    z-index: 0;
+  }
+  .mizi::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 50%;
+    border-left: 1.2px dashed #81c784;
+    z-index: 0;
+  }
+  .mizi .diag {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .mizi .diag line {
+    stroke: #a5d6a7;
+    stroke-width: 1;
+    stroke-dasharray: 5 4;
+  }
+  .char {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 72px;
+    color: #212121;
+    line-height: 1;
+  }
+  .empty-hint {
+    text-align: center;
+    color: #999;
+    padding: 80px 0;
+    font-size: 16px;
+  }
+
+  @media print {
+    body { background: #fff; }
+    .controls { display: none; }
+    .preview { max-width: none; margin: 0; padding: 0; }
+    .sheet { box-shadow: none; padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <div class="control-group">
+    <label for="textInput">字帖文字</label>
+    <textarea id="textInput" placeholder="输入要练习的文字，回车换行分段...">永和九年岁在癸丑暮春之初
+会于会稽山阴之兰亭
+修禊事也</textarea>
+  </div>
+  <div class="control-group">
+    <label for="colInput">每行列数</label>
+    <input id="colInput" type="number" value="5" min="1" max="12">
+  </div>
+  <button id="generateBtn">生成字帖</button>
+  <button class="print-btn" id="printBtn">打印</button>
+</div>
+
+<div class="preview" id="preview"></div>
+
+<script>
+// ========== 纯函数：米字格对角线 SVG ==========
+function createDiagSVG() {
+  return '<svg class="diag" viewBox="0 0 100 100" preserveAspectRatio="none">' +
+    '<line x1="0" y1="0" x2="100" y2="100"/>' +
+    '<line x1="100" y1="0" x2="0" y2="100"/>' +
+  '</svg>';
+}
+
+// ========== 纯函数：按换行分割段落，过滤空段落 ==========
+function splitParagraphs(text) {
+  return text.split('\n').filter(function(line) {
+    return line.trim() !== '';
+  });
+}
+
+// ========== 纯函数：将单个段落拆分为非空字符数组 ==========
+function splitParagraphChars(paragraph) {
+  return [...paragraph].filter(function(ch) {
+    return ch.trim() !== '';
+  });
+}
+
+// ========== 纯函数：渲染单个含文字的米字格 ==========
+function renderCell(character) {
+  return '<div class="cell">' +
+    '<div class="mizi">' +
+      createDiagSVG() +
+      '<div class="char">' + character + '</div>' +
+    '</div>' +
+  '</div>';
+}
+
+// ========== 纯函数：渲染一个空白米字格（用于补齐行尾或段间分隔） ==========
+function renderEmptyCell() {
+  return '<div class="cell">' +
+    '<div class="mizi">' +
+      createDiagSVG() +
+      '<div class="char"></div>' +
+    '</div>' +
+  '</div>';
+}
+
+// ========== 纯函数：将一个段落渲染为多行网格 HTML（末行补齐空列） ==========
+function buildParagraphGrid(paragraphChars, columns) {
+  var rows = [];
+  for (var i = 0; i < paragraphChars.length; i += columns) {
+    var rowChars = paragraphChars.slice(i, i + columns);
+    var cells = rowChars.map(renderCell).join('');
+    // 末行不足列数时，用空白格补齐
+    var padding = columns - rowChars.length;
+    for (var j = 0; j < padding; j++) {
+      cells += renderEmptyCell();
+    }
+    rows.push('<div class="grid-row">' + cells + '</div>');
+  }
+  return rows.join('');
+}
+
+// ========== 纯函数：构建完整网格 HTML（含所有段落） ==========
+function buildGridHTML(paragraphs, columns) {
+  var style = 'grid-template-columns: repeat(' + columns + ', 1fr);';
+  var parts = [];
+  for (var p = 0; p < paragraphs.length; p++) {
+    var chars = splitParagraphChars(paragraphs[p]);
+    if (chars.length > 0) {
+      parts.push(buildParagraphGrid(chars, columns));
+    }
+  }
+  return '<div class="grid" style="' + style + '">' + parts.join('') + '</div>';
+}
+
+// ========== 纯函数：构建完整字帖 HTML ==========
+function buildSheetHTML(paragraphs, columns) {
+  if (paragraphs.length === 0) {
+    return '<div class="sheet"><div class="empty-hint">请输入文字后点击「生成字帖」</div></div>';
+  }
+  return '<div class="sheet">' +
+    '<div class="sheet-title">米字格字帖</div>' +
+    buildGridHTML(paragraphs, columns) +
+  '</div>';
+}
+
+// ========== DOM 操作：获取用户输入 ==========
+function getTextInput() {
+  return document.getElementById('textInput').value;
+}
+
+// ========== DOM 操作：获取列数输入 ==========
+function getColumnInput() {
+  var val = parseInt(document.getElementById('colInput').value, 10);
+  return isNaN(val) || val < 1 ? 5 : val;
+}
+
+// ========== DOM 操作：更新预览区 ==========
+function updatePreview(html) {
+  document.getElementById('preview').innerHTML = html;
+}
+
+// ========== 组合函数：生成并渲染字帖 ==========
+function generateSheet() {
+  var text = getTextInput();
+  var columns = getColumnInput();
+  var paragraphs = splitParagraphs(text);
+  var html = buildSheetHTML(paragraphs, columns);
+  updatePreview(html);
+}
+
+// ========== 事件绑定 ==========
+function setupEventListeners() {
+  document.getElementById('generateBtn').addEventListener('click', generateSheet);
+  document.getElementById('printBtn').addEventListener('click', function() {
+    window.print();
+  });
+}
+
+// ========== 初始化 ==========
+function init() {
+  setupEventListeners();
+  generateSheet();
+}
+
+init();
+</script>
+</body>
+</html>
