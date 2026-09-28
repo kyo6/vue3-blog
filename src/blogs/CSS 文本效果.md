@@ -1,4 +1,5 @@
 ---
+slug: css-text-effects
 tag: ["CSS", "文字样式", "文本效果", "立体徽章效果"]
 date: 2025-02-12
 column: 教程

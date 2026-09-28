@@ -1,4 +1,5 @@
 ---
+slug: css-responsive-web-design
 tag: ['CSS', '响应式布局', '布局']
 date: 2026-02-22
 column: 教程

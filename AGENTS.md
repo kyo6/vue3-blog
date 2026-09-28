@@ -29,10 +29,10 @@ This is a single-context repository: use a root `CONTEXT.md` when one is added a
 - Use Vue 3 Composition API and `<script setup>` for new or substantially edited components.
 - Keep route definitions in `src/router/index.js`; add pages in the matching `src/views/` area.
 - Keep site navigation and content metadata in `src/config/`. Do not hard-code blog lists in view components.
-- Blog source files are Markdown in `src/blogs/`. Preserve their front matter (`tag`, `date`, `column`, and optional `detail`) when editing articles.
+- Blog source files are Markdown in `src/blogs/`. Preserve their front matter (`slug`, `tag`, `date`, `column`, and optional `detail`) when editing articles.
 - Keep tag spellings and topic relationships consistent with `docs/agents/tag-taxonomy.md`.
-- If blog metadata or article files change, run `pnpm gen:content` and review the generated `src/config/content.json` diff. **The `id` of every existing article must not change** — see "Article IDs" below.
-- To unpublish an article without deleting it, move the file into `src/blogs/_archive/`. That directory is outside both the generation scan and the runtime glob, so it is excluded from the list and from the bundle. Never reuse its `id`.
+- If blog metadata or article files change, run `pnpm gen:content` and review the generated `src/config/content.json` diff. **Never change an existing article's `slug`** — see "Article URLs" below.
+- To unpublish an article without deleting it, move the file into `src/blogs/_archive/`. That directory is outside both the generation scan and the runtime glob, so it is excluded from the list and from the bundle. Never reuse its `slug`.
 - Prefer Tailwind utilities for local styling and the existing SCSS files for global/theme styles. Preserve the class-based dark-mode behavior.
 - Use the `@` alias for imports from `src/`.
 - Reuse existing shared components such as `MarkdownViewer`, `ArticleToc`, theme controls, and layout components before creating duplicates.
@@ -47,6 +47,7 @@ Each article may begin with YAML-like front matter between two `---` lines:
 
 ```markdown
 ---
+slug: vue3-example
 tag: ['Vue3', '前端']
 date: 2026-08-26
 column: 技术研究
@@ -61,27 +62,23 @@ detail: '可选的列表摘要'
 - `tag` — subject axis, multi-valued, free-form.
 - `column` — genre axis, single-valued, must be one of the six names defined in `src/config/columns.js`. Values are validated at generation time; an unknown value produces a warning and drops the article out of every column tab.
 
-Run `pnpm gen:content` to execute `src/cli/genDocContent.js`. The script scans `src/blogs/*.md`, parses `tag`, `date`, `column`, and optional `detail`, generates a summary from the first meaningful Markdown line when `detail` is absent, sorts entries by date descending (articles without a date go last), resolves IDs from the frozen map described below, and writes `src/config/content.json`.
+Run `pnpm gen:content` to execute `src/cli/genDocContent.js`. The script scans `src/blogs/*.md`, parses the front matter, generates a summary from the first meaningful Markdown line when `detail` is absent, validates unique slugs, sorts entries by date descending (articles without a date go last), and writes `src/config/content.json`.
 
-### Article IDs
+### Article URLs
 
-IDs are **stable identities, not positions**. `src/config/id-map.json` holds the permanent `filename → id` mapping and must be committed:
+Every article must declare a unique, stable `slug` in its Markdown front matter. New links use `/blog/:slug`. Slugs must start with a lowercase English letter and may contain lowercase English letters, numbers, and hyphens between words. The generator aborts if a slug is missing, malformed, or duplicated. Renaming the Markdown file does not change its URL when the slug stays the same.
 
-- An article that already has an ID keeps it forever, no matter how the sort order changes.
-- A new article gets `max(existing id) + 1`.
-- A removed article keeps its entry, and **its ID is never recycled** — recycling would silently point old links at an unrelated article, which is worse than a 404.
+Never change or reuse a published slug, including after an article is archived; old links should become unavailable rather than point to unrelated content. Old numeric `/blog/:id` links are not supported.
 
-Because IDs no longer track the sort order, `content.json` may contain gaps. This is expected: `Article.vue` computes prev/next from the array index rather than by adding or subtracting 1 from the ID.
+`Article.vue` computes previous and next articles from the sorted array index. No ID mapping file is needed.
 
-Two things must never be done: renumbering IDs to make them contiguous, and regenerating `id-map.json` from scratch. Both break every previously shared `/blog/:id` link. If `id-map.json` fails to parse, the generator aborts by design rather than silently rebuilding it.
+At runtime, `src/views/blog/List.vue` reads `src/config/content.json` and `src/config/columns.json` (column metadata plus live counts, also generated) to render the list and the column tabs. Filtering is client-side via query parameters: `/?column=howto` and `/?tag=CSS` compose, and both are applied to the already-loaded list. `src/views/blog/Article.vue` uses the generated slug and filename, then Vite's `import.meta.glob('../../blogs/*.md', { query: '?raw', import: 'default' })` to load the matching Markdown source. The front matter is removed before rendering through `MarkdownViewer`.
 
-At runtime, `src/views/blog/List.vue` reads `src/config/content.json` and `src/config/columns.json` (column metadata plus live counts, also generated) to render the list and the column tabs. Filtering is client-side via query parameters: `/?column=howto` and `/?tag=CSS` compose, and both are applied to the already-loaded list. `src/views/blog/Article.vue` uses the generated numeric ID and filename, then Vite's `import.meta.glob('../../blogs/*.md', { query: '?raw', import: 'default' })` to load the matching Markdown source. The front matter is removed before rendering through `MarkdownViewer`.
-
-When adding an article, use a unique `.md` filename, add front matter where possible, run `pnpm gen:content`, and verify both `/` and `/blog/:id`. Do not hand-edit the generated JSON files unless correcting a diff is explicitly intended; regenerate them from the Markdown source instead.
+When adding an article, use a unique `.md` filename, set a permanent slug in front matter, run `pnpm gen:content`, and verify both `/` and `/blog/:slug`. Do not hand-edit the generated JSON files unless correcting a diff is explicitly intended; regenerate them from the Markdown source instead.
 
 ### Adding or renaming a column
 
-Editing article front matter is a one-step operation: change the file, then run `pnpm gen:content`. That regenerates `content.json`, `columns.json`, and any newly assigned IDs together.
+Editing article front matter is a one-step operation: change the file, then run `pnpm gen:content`. That regenerates `content.json` and `columns.json` together.
 
 Renaming or removing a column is a **two-step** operation, because article files store the column name as a literal string while `columns.js` owns the list of valid names. The generator compares them exactly, so renaming `技术研究` to `技术` in `columns.js` alone makes every article still carrying the old name fail validation:
 
@@ -117,6 +114,6 @@ pnpm gen:content
 
 1. Identify whether the change belongs to blog content, docs/examples, works demos, shared UI, routing, or configuration.
 2. Preserve existing URL compatibility redirects in `src/router/index.js`.
-3. For Markdown/content changes, regenerate `src/config/content.json` and verify article loading, tags, dates, columns, and summaries. Check that no existing `id` moved.
+3. For Markdown/content changes, regenerate `src/config/content.json` and verify article loading, tags, dates, columns, summaries, and stable slugs.
 4. Run the narrowest useful checks, then `pnpm build` for production-facing changes. If the sandbox blocks vite from emptying `dist/`, add `--emptyOutDir=false` rather than treating it as a code failure.
 5. Summarize generated-file changes and any manual browser checks in the handoff.

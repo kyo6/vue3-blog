@@ -8,13 +8,12 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const DOCS_DIR = resolve(__dirname, '../blogs')
 const OUTPUT_FILE = resolve(__dirname, '../config/content.json')
 const COLUMNS_FILE = resolve(__dirname, '../config/columns.json')
-const ID_MAP_FILE = resolve(__dirname, '../config/id-map.json')
 
 /**
  * 解析文件顶部的 YAML front matter（--- 包裹的块）
- * 返回 { tag, date, detail, column } 及 front matter 之后的正文
+ * 返回 front matter 元数据及正文
  *
- * 注意：column 等新增字段走 catch-all 分支，无需在此登记。
+ * slug、column 等字段走 catch-all 分支。
  */
 function parseFrontMatter(content) {
   const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/)
@@ -70,86 +69,6 @@ function extractSummary(body) {
   return ''
 }
 
-/**
- * 读取 id 冻结表。
- * 解析失败时必须中止而不是静默重建——否则会重新分配全部 id，让已发布链接集体错位。
- */
-function loadIdMap() {
-  if (!existsSync(ID_MAP_FILE)) {
-    console.warn('⚠️ 未找到 id-map.json，将首次建立冻结表（此步不可逆，请确认已有提交快照）')
-    return {}
-  }
-  try {
-    const parsed = JSON.parse(readFileSync(ID_MAP_FILE, 'utf-8'))
-    if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
-      throw new Error('顶层结构应为对象')
-    }
-    return parsed
-  } catch (e) {
-    console.error(`❌ id-map.json 解析失败：${e.message}`)
-    console.error('   已中止生成，避免重新分配 id 导致已发布链接失效。请先修复该文件。')
-    process.exit(1)
-  }
-}
-
-/**
- * 计算本次的文件 → id 映射。
- *
- * 规则（顺序即优先级）：
- *   1. 文件已有映射 → 沿用原 id
- *   2. 映射表中已从目录消失的条目 → 保留，id 永不回收（回收会让旧链接指向无关新文）
- *   3. 新文件 → 分配 max(全部已分配 id) + 1
- *
- * 本函数只决定 id，不决定顺序。日期排序在后续单独进行，二者解耦。
- */
-function buildIdMap(filenames, prevMap) {
-  const next = {}
-  const used = new Set()
-  const warnings = []
-  const assigned = []
-
-  for (const f of filenames) {
-    const id = prevMap[f]
-    if (!Number.isInteger(id)) continue
-    if (used.has(id)) {
-      warnings.push(`id 冲突：${f} 争用已被占用的 id ${id}`)
-      continue
-    }
-    next[f] = id
-    used.add(id)
-  }
-
-  let maxId = 0
-  for (const [f, id] of Object.entries(prevMap)) {
-    if (!Number.isInteger(id)) continue
-    if (id > maxId) maxId = id
-    if (!(f in next)) next[f] = id
-  }
-  for (const id of Object.values(next)) used.add(id)
-
-  for (const f of filenames) {
-    if (f in next) continue
-    maxId += 1
-    while (used.has(maxId)) maxId += 1
-    next[f] = maxId
-    used.add(maxId)
-    assigned.push({ filename: f, id: maxId })
-  }
-
-  return { next, assigned, warnings }
-}
-
-/** 按 id 升序重排映射表，保证文件内容稳定、diff 可读 */
-function sortIdMap(map) {
-  const out = {}
-  Object.entries(map)
-    .sort((a, b) => a[1] - b[1])
-    .forEach(([k, v]) => {
-      out[k] = v
-    })
-  return out
-}
-
 /** 仅在内容变化时写盘，避免无意义的时间戳变更与空 diff */
 function writeIfChanged(file, data) {
   const next = JSON.stringify(data, null, 2) + '\n'
@@ -166,9 +85,6 @@ function run() {
     process.exit(0)
   }
 
-  const prevMap = loadIdMap()
-  const { next: idMap, assigned, warnings } = buildIdMap(files, prevMap)
-
   const result = files.map((filename) => {
     const filePath = resolve(DOCS_DIR, filename)
     const raw = readFileSync(filePath, 'utf-8')
@@ -178,7 +94,7 @@ function run() {
     const summary = meta.detail || extractSummary(body)
 
     return {
-      id: idMap[filename],
+      slug: meta.slug || '',
       title,
       date: meta.date || '',
       column: meta.column || '',
@@ -188,8 +104,25 @@ function run() {
     }
   })
 
+  const seenSlugs = new Map()
+  const errors = []
+  for (const post of result) {
+    const slugKey = post.slug.toLowerCase()
+    if (!/^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/.test(post.slug)) {
+      errors.push(`${post.filename}: slug 缺失或格式非法（须以英文字母开头，仅允许小写英文字母、数字和中划线）`)
+    } else if (seenSlugs.has(slugKey)) {
+      errors.push(`${post.filename}: slug「${post.slug}」与 ${seenSlugs.get(slugKey)} 重复`)
+    }
+    seenSlugs.set(slugKey, post.filename)
+
+  }
+  if (errors.length) {
+    errors.forEach((error) => console.error(`❌ ${error}`))
+    process.exit(1)
+  }
+
   // 按日期降序（新→旧）；无日期排在最后。
-  // 注意：这里只重排数组顺序，绝不重写 id。
+  // 这里只重排数组顺序，不改变文章的 slug。
   result.sort((a, b) => {
     if (!a.date && !b.date) return a.title.localeCompare(b.title, 'zh-CN')
     if (!a.date) return 1
@@ -198,7 +131,6 @@ function run() {
   })
 
   writeIfChanged(OUTPUT_FILE, result)
-  writeIfChanged(ID_MAP_FILE, sortIdMap(idMap))
 
   const columnsMeta = COLUMNS.map((c) => ({
     slug: c.slug,
@@ -210,14 +142,7 @@ function run() {
 
   console.log(`✅ 已生成 ${result.length} 条记录 → ${OUTPUT_FILE}`)
 
-  if (assigned.length > 0) {
-    console.log(`🆕 本次新分配 id ${assigned.length} 个（其余 id 均未变动）：`)
-    assigned.forEach((a) => console.log(`   [${a.id}] ${a.filename}`))
-  } else {
-    console.log('🔒 id 全部沿用冻结表，无变动')
-  }
-
-  warnings.forEach((w) => console.warn(`⚠️ ${w}`))
+  console.log('🔒 slug 来自文章 front matter')
 
   // 标签同义词应在 Markdown 源文件里统一，不能只在列表页兼容旧查询参数。
   const legacyTags = result.flatMap((p) =>

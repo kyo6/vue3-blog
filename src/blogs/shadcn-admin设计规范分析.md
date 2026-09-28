@@ -1,4 +1,5 @@
 ---
+slug: shadcn-admin-design-system
 tag: ['shadcn/ui', '设计规范', 'Design Token', '后台管理', '前端']
 date: 2026-08-28
 column: 技术研究

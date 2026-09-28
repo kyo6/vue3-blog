@@ -1,4 +1,5 @@
 ---
+slug: open-source-ai-voice-projects
 tag: ['AI', '语音处理']
 column: 技术研究
 detail: 面对语音 AI 项目，不知选创作工具还是语音助手框架？比较 Voice-Pro、speech-to-speech 和 Qwen Audio Agent 的能力与适用人群。

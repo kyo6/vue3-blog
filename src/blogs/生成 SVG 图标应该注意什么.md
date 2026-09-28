@@ -1,4 +1,5 @@
 ---
+slug: svg-icon-generation-guide
 tag: ['SVG', '图标设计', '前端', '设计规范', '图标字体']
 date: 2026-08-22
 column: 技术研究

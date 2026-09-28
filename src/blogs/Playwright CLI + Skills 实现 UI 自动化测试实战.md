@@ -1,4 +1,5 @@
 ---
+slug: playwright-cli-skills-ui-testing
 tag: ["Playwright", "自动化测试", "UI 自动化测试", "E2E", "AI", "Skills"]
 date: "2026-08-20"
 column: 教程
@@ -550,7 +551,9 @@ playwright-cli close
 ## 五、参考
 
 - 思路来源：Raina《基于 playwright-cli +Skills 实现 UI 自动化测试实战案例》
-  https://kyo6.github.io/vue3-blog/blog/29
+  https://mp.weixin.qq.com/s/CCLV_CU1AgSNOjCHkyafAA
 - 官方文档：Playwright CLI Introduction https://playwright.dev/agent-cli/introduction
 - 快照机制：Playwright CLI Snapshots https://playwright.dev/agent-cli/snapshots
 - 会话管理：Playwright CLI 会话管理（多浏览器会话、隔离、持久化与清理）https://knightli.com/2026/04/15/playwright-cli-session-management/
+- 后续案例：[Playwright CLI + Skills 跑通电商下单链路-实战案例](/blog/playwright-cli-skills-ecommerce-checkout)
+- 组件库案例：[Playwright CLI 为组件库 NormalUpload 生成回归用例实战](/blog/playwright-cli-normalupload-regression-tests)

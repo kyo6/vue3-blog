@@ -1,4 +1,5 @@
 ---
+slug: monorepo-component-library-refactor
 tag: ['Monorepo', '组件库', '工程化', '架构']
 column: 项目复盘
 detail: 组件库如何从单体 Vue 2 项目迁到 Monorepo？记录工作区、构建、示例环境与组件拆分中的实际改造及问题处理，供类似迁移参考。

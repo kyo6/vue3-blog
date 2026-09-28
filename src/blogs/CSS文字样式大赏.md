@@ -1,4 +1,5 @@
 ---
+slug: css-typography-showcase
 tag: ["CSS", "文字样式", "font-face", "text-shadow", "writing-mode", "background-clip"],
 date: 2026-08-01
 column: 教程

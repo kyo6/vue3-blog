@@ -1,4 +1,5 @@
 ---
+slug: what-is-openclaw-the-viral-ai-agent-explained-february-2026
 tag: ['OpenClaw', 'AI Agent']
 column: 译文精选
 detail: OpenClaw 为何迅速流行，实际风险在哪里？文章梳理产品机制、传播原因、Moltbook 与安全问题，帮助你判断适用场景。

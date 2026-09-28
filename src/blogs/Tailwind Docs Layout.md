@@ -1,4 +1,5 @@
 ---
+slug: tailwind-docs-layout
 tag: ['Tailwind CSS', '布局', '设计规范']
 detail: 想复刻文档站的三栏布局？拆解 Tailwind 文档页的容器宽度、导航与正文结构、响应式断点，供设计和实现时参考。
 date: 2025-02-18

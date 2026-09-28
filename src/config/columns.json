@@ -3,13 +3,13 @@
     "slug": "tech",
     "name": "技术研究",
     "desc": "理解机制——读完「懂了」",
-    "count": 9
+    "count": 12
   },
   {
     "slug": "howto",
     "name": "教程",
     "desc": "照步骤做出来——读完「跑通了」",
-    "count": 11
+    "count": 13
   },
   {
     "slug": "retro",

@@ -1,11 +1,12 @@
 ---
+slug: playwright-cli-skills-ecommerce-checkout
 tag: ["Playwright", "自动化测试", "UI 自动化测试", "E2E", "实战案例", "Skills"]
 date: "2026-08-20"
 column: 教程
 detail: 电商下单测试跨页面易失效、金额难断言？用 Playwright CLI 与 Skills 跑通搜索到下单的链路，处理登录态、动态断言和脚本修复。
 ---
 
-在[上一篇](./Playwright%20CLI%20+%20Skills%20实现%20UI%20自动化测试实战.md)里，我们用登录流程讲清了整套方法：**Playwright CLI + 无障碍树 + 可安装 Skill**，把「页面探索 → 用例生成 → 执行 → 自愈」交给 AI Agent。
+在[上一篇](/blog/playwright-cli-skills-ui-testing)里，我们用登录流程讲清了整套方法：**Playwright CLI + 无障碍树 + 可安装 Skill**，把「页面探索 → 用例生成 → 执行 → 自愈」交给 AI Agent。
 
 原文也预告过：登录只是开胃菜，**第二个案例会用实际项目中「稍复杂的业务」来讲**。本文就补上这个案例——一条电商「搜索商品 → 加入购物车 → 结算 → 提交订单」的端到端链路。它的复杂度刚好够味：
 
@@ -191,7 +192,8 @@ playwright-cli close
 
 ## 七、参考
 
-- 上篇：基于 Playwright CLI + Skills 实现 UI 自动化测试实战（同站博客）
+- 上篇：[Playwright CLI + Skills 实现 UI 自动化测试实战](/blog/playwright-cli-skills-ui-testing)
+- 组件库案例：[Playwright CLI 为组件库 NormalUpload 生成回归用例实战](/blog/playwright-cli-normalupload-regression-tests)
 - 思路来源：Raina《基于 playwright-cli +Skills 实现 UI 自动化测试实战案例》
   https://mp.weixin.qq.com/s/CCLV_CU1AgSNOjCHkyafAA
 - 官方文档：Playwright CLI Introduction https://playwright.dev/agent-cli/introduction

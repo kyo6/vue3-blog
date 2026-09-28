@@ -1,4 +1,5 @@
 ---
+slug: born-to-win-english-essays
 tag: ['英语学习', '素材']
 column: 学习笔记
 detail: 想练习英语阅读与背诵？汇集 30 篇英语美文及目录，便于按篇查找、跟读和积累表达。

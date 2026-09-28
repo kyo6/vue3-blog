@@ -1,0 +1,14 @@
+{
+  "slideStyle": "tech",
+  "colorScheme": "Blue-Pink-Gray Tech",
+  "primaryColor": "#266ED9",
+  "accentColor1": "#EC95E3",
+  "accentColor2": "#64748B",
+  "neutralColor": "#64748B",
+  "background": {
+    "type": "color",
+    "value": "#FFFFFF"
+  },
+  "fontTitle": "'Poppins', 'Noto Sans SC', sans-serif",
+  "fontBody": "'Inter', 'Noto Sans SC', sans-serif"
+}

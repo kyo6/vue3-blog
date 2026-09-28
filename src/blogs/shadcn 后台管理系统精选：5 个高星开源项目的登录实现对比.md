@@ -1,4 +1,5 @@
 ---
+slug: shadcn-admin-login-comparison
 tag: ['shadcn/ui', '后台管理', '开源项目', '登录界面', '前端']
 date: 2026-08-28
 column: 技术研究

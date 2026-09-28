@@ -27,10 +27,12 @@ const columnLink = computed(() => {
 const docModules = import.meta.glob('../../blogs/*.md', { query: '?raw', import: 'default' })
 
 // 上一篇 / 下一篇
-const currentIndex = computed(() => content.findIndex((p) => p.id === parseInt(route.params.id)))
+const currentIndex = computed(() => content.findIndex((p) => p.slug === route.params.slug))
 const prevPost = computed(() => (currentIndex.value > 0 ? content[currentIndex.value - 1] : null))
 const nextPost = computed(() =>
-  currentIndex.value < content.length - 1 ? content[currentIndex.value + 1] : null
+  currentIndex.value >= 0 && currentIndex.value < content.length - 1
+    ? content[currentIndex.value + 1]
+    : null
 )
 
 // 去除 YAML front matter（--- 包裹的块）
@@ -38,13 +40,13 @@ function stripFrontMatter(raw) {
   return raw.replace(/^---[\s\S]*?---\r?\n?/, '').trimStart()
 }
 
-async function loadArticle(id) {
+async function loadArticle(slug) {
   loading.value = true
   error.value = null
   markdownContent.value = ''
   headings.value = []
 
-  const post = content.find((p) => p.id === parseInt(id))
+  const post = content.find((p) => p.slug === slug)
   blogPost.value = post
 
   if (!post) {
@@ -71,16 +73,16 @@ async function loadArticle(id) {
   }
 }
 
-// 路由 id 变化时重新加载（上一篇/下一篇切换场景）
+// 路由 slug 变化时重新加载（上一篇/下一篇切换场景）
 watch(
-  () => route.params.id,
-  (id) => {
-    loadArticle(id)
+  () => route.params.slug,
+  (slug) => {
+    loadArticle(slug)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 )
 
-onMounted(() => loadArticle(route.params.id))
+onMounted(() => loadArticle(route.params.slug))
 </script>
 
 <template>
@@ -156,7 +158,7 @@ onMounted(() => loadArticle(route.params.id))
         <nav class="mt-12 pt-6 border-t border-gray-200 dark:border-gray-700 grid grid-cols-2 gap-4">
           <router-link
             v-if="prevPost"
-            :to="{ name: 'blog-article', params: { id: prevPost.id } }"
+            :to="{ name: 'blog-article', params: { slug: prevPost.slug } }"
             class="group flex flex-col gap-1 p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-violet-400 dark:hover:border-violet-500 transition-colors"
           >
             <span
@@ -186,7 +188,7 @@ onMounted(() => loadArticle(route.params.id))
 
           <router-link
             v-if="nextPost"
-            :to="{ name: 'blog-article', params: { id: nextPost.id } }"
+            :to="{ name: 'blog-article', params: { slug: nextPost.slug } }"
             class="group flex flex-col items-end gap-1 p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-violet-400 dark:hover:border-violet-500 transition-colors"
           >
             <span

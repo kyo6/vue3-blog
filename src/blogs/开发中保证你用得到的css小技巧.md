@@ -1,4 +1,5 @@
 ---
+slug: practical-css-tips
 tag: ['CSS', '前端']
 date: 2024-07-31
 column: 教程

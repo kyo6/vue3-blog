@@ -1,4 +1,5 @@
 ---
+slug: what-is-openclaw-formerly-moltbot-everything-you-need-to-know
 tag: ["OpenClaw"]
 date: "2026-02-03"
 column: 译文精选

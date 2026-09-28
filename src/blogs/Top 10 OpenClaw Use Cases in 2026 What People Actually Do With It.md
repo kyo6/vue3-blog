@@ -1,4 +1,5 @@
 ---
+slug: top-10-openclaw-use-cases-in-2026-what-people-actually-do-with-it
 tag: ["OpenClaw"]
 date: "2026-01-01"
 column: 译文精选

@@ -275,7 +275,7 @@ function clearFilters() {
 
       <div
         v-for="post in blogPosts"
-        :key="post.id"
+        :key="post.slug"
         class="px-4 py-6 rounded-lg shadow-sm dark:bg-slate-900 sm:px-8"
       >
         <div class="flex items-center justify-between">
@@ -286,7 +286,7 @@ function clearFilters() {
         </div>
         <div class="mt-3">
           <router-link
-            :to="{ name: 'blog-article', params: { id: post.id } }"
+            :to="{ name: 'blog-article', params: { slug: post.slug } }"
             class="text-2xl font-bold hover:underline text-gray-900 dark:text-gray-200"
           >
             {{ post.title }}
@@ -313,7 +313,7 @@ function clearFilters() {
             </button>
           </div>
           <router-link
-            :to="{ name: 'blog-article', params: { id: post.id } }"
+            :to="{ name: 'blog-article', params: { slug: post.slug } }"
             class="hover:underline dark:text-gray-500"
           >
             Read more

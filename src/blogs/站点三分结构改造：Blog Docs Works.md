@@ -1,4 +1,5 @@
 ---
+slug: blog-docs-works-site-structure
 tag: ["Vue3", "路由重构", "架构", "Vite"]
 date: "2026-08-10"
 column: 项目复盘

@@ -1,4 +1,5 @@
 ---
+slug: xiaohongshu-gui-agent-testing
 tag: ['AI Agent', 'GUI Agent', '自动化测试', 'UI 自动化测试', 'AI 编程', '测试提效', '技术分享']
 date: 2026-05-12
 column: 技术研究

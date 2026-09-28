@@ -1,4 +1,5 @@
 ---
+slug: css-light-and-dark-theme
 tag: ["CSS", "color-scheme", "暗色模式适配"]
 date: '2025-02-16'
 column: 教程

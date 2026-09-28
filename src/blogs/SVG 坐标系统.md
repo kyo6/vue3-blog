@@ -1,4 +1,5 @@
 ---
+slug: svg-coordinate-system
 tag: ['SVG', '坐标系统', '前端绘图']
 date: 2026-07-31
 column: 技术研究

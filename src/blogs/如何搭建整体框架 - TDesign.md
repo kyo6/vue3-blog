@@ -1,4 +1,5 @@
 ---
+slug: tdesign-layout-framework
 tag: ['TDesign', '设计规范', '文档规范']
 column: 学习笔记
 detail: 中后台页面框架该如何选？借 TDesign 的页面导航、布局和常见页面类型，整理搭建整体框架时可查的设计要点。

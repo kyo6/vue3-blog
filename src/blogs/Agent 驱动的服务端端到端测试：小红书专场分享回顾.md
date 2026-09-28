@@ -1,4 +1,5 @@
 ---
+slug: agent-driven-server-e2e-testing
 tag: ['AI Agent', 'E2E', '自动化测试', 'AI Testing', '技术分享']
 date: 2026-06-24
 column: 技术研究

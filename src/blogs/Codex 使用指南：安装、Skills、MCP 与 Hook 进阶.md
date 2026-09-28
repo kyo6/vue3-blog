@@ -1,4 +1,5 @@
 ---
+slug: codex-installation-skills-mcp-hooks
 tag: ["Codex", "AI 编程", "Skills", "MCP", "Hook", "自动化", "Projects"]
 date: "2026-08-21"
 column: 教程
