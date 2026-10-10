@@ -1,5 +1,32 @@
 [
   {
+    "slug": "vite-version-evolution-upgrade",
+    "title": "Vite 6 到 Vite 8：版本演进与升级清单",
+    "date": "2026-10-07",
+    "column": "技术研究",
+    "tag": [
+      "Vite",
+      "前端",
+      "工程化"
+    ],
+    "summary": "Vite 6 加 Environment API，Vite 7 砍 Node 18 和 CJS 产物，Vite 8 把 esbuild + Rollup 换成 Rolldown + Oxc。先把 Vite 解决的八个构建问题摊开，再逐版对改动，最后按业务应用 / 组件库 / 插件作者三类给升级清单。",
+    "filename": "Vite 6 到 Vite 8：版本演进与升级清单.md"
+  },
+  {
+    "slug": "nodejs-module-system",
+    "title": "Node.js 模块化：高频面试问题与机制梳理",
+    "date": "2026-10-03",
+    "column": "技术研究",
+    "tag": [
+      "JavaScript",
+      "Node.js",
+      "前端",
+      "工程化"
+    ],
+    "summary": "面试被问 CommonJS 和 ESM 的区别，答完「值的拷贝 vs 引用」就被追穿了？按出现频次梳理模块化高频问题，补上 require 解析、循环依赖、互操作这三个最常被漏掉的机制。",
+    "filename": "Node.js 模块化：高频面试问题与机制梳理.md"
+  },
+  {
     "slug": "best-free-figma-plugins",
     "title": "Figma 年度最佳免费插件合集",
     "date": "2026-09-16",
