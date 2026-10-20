@@ -3,13 +3,13 @@
     "slug": "tech",
     "name": "技术研究",
     "desc": "理解机制——读完「懂了」",
-    "count": 14
+    "count": 15
   },
   {
     "slug": "howto",
     "name": "教程",
     "desc": "照步骤做出来——读完「跑通了」",
-    "count": 13
+    "count": 14
   },
   {
     "slug": "retro",
@@ -34,5 +34,11 @@
     "name": "随笔",
     "desc": "读个人观点",
     "count": 3
+  },
+  {
+    "slug": "lifestyle",
+    "name": "生活方式",
+    "desc": "读生活方法——怎么把日子过好",
+    "count": 1
   }
 ]

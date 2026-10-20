@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rooftop Party · 活动报名卡（2026 Baseline 六项特性还原）</title>
+<style>
+  /* ── 页面壳 ─────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body { height: 100%; }
+
+  body {
+    margin: 0;
+    display: grid;
+    place-items: center;
+    gap: 22px;
+    padding: 40px 16px 56px;
+    background:
+      radial-gradient(120% 80% at 50% -10%, #ffffff 0%, #f2f3f7 55%, #e9ebf1 100%);
+    font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI",
+                 "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── 开关 ───────────────────────────────────────────────── */
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .seg {
+    display: inline-flex;
+    padding: 3px;
+    border-radius: 999px;
+    background: #ffffff;
+    border: 1px solid #e3e5ec;
+    box-shadow: 0 1px 2px rgba(20, 20, 30, .05);
+  }
+
+  .seg button {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    padding: 7px 16px;
+    border-radius: 999px;
+    font: 500 13px/1 inherit;
+    color: #6b7280;
+    cursor: pointer;
+    transition: background .18s ease, color .18s ease;
+  }
+
+  .seg button:hover { color: #1f2430; }
+
+  .seg button[aria-pressed="true"] {
+    background: #1f2430;
+    color: #ffffff;
+  }
+
+  .seg button:focus-visible {
+    outline: 2px solid #3a0ca3;
+    outline-offset: 2px;
+  }
+
+  /* ── 卡片外壳：--tone 挂在这一层，供容器样式查询读取 ───────── */
+  .party {
+    --tone: night;          /* 由 <html>/JS 切换 */
+    display: block;
+  }
+  .party[data-tone="day"] { --tone: day; }
+
+  .party[data-accent="violet"] { --accent: #3a0ca3; }
+  .party[data-accent="yellow"] { --accent: #f6c445; }
+
+  .card {
+    width: min(440px, calc(100vw - 32px));
+    transition: background-color .22s ease, color .22s ease;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #ffffff;
+    color: #17171d;
+    box-shadow:
+      0 28px 60px -24px rgba(15, 16, 26, .45),
+      0 6px 16px -8px rgba(15, 16, 26, .18);
+  }
+
+  /* ── ① 波浪标题区：clip-path: shape() 用百分比，跟着卡片伸缩 ── */
+  .banner {
+    padding: 30px 34px 68px;
+    background: var(--accent);
+    color: #ffffff;                          /* 老浏览器降级：白字 */
+    color: contrast-color(var(--accent));    /* ② 自动选黑字或白字 */
+    clip-path: shape(
+      from 0 0,
+      line to 100% 0,
+      line to 100% 88%,
+      curve to 48% 88% with 76% 102%,
+      smooth to 0% 88%,
+      close
+    );
+  }
+
+  .title {
+    margin: 0;
+    font-size: 35px;
+    line-height: 1.08;
+    font-weight: 700;
+    letter-spacing: -0.6px;
+  }
+
+  .meta {
+    margin: 12px 0 0;
+    font-size: 17px;
+    font-weight: 500;
+    opacity: .95;
+  }
+
+  /* ── 卡片主体 ────────────────────────────────────────────── */
+  .body {
+    padding: 30px 34px 38px;
+  }
+
+  /* ④ sibling-index() / sibling-count()：自己排第几、一共几个 */
+  .guests {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 26px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .guest {
+    --hue: calc(60deg + (sibling-index() - 1) * 70deg);
+    --avatar: oklch(72% 0.13 var(--hue));
+    --mid: calc((sibling-count() + 1) / 2);
+
+    width: 60px;
+    height: 60px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--avatar);
+    color: #15151b;                                  /* 降级 */
+    color: contrast-color(var(--avatar));            /* ② 头像字色同样自动 */
+    box-shadow: 0 0 0 3px #ffffff;                   /* 与卡片同色，做出叠压边缘 */
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: .4px;
+    rotate: calc((sibling-index() - var(--mid)) * 10deg);
+  }
+
+  .guest + .guest { margin-left: -9px; }
+
+  /* ── ⑥ :open：展开态直接用伪类选中 ──────────────────────── */
+  .faq {
+    margin: 0 0 18px;
+    font-size: 17px;
+  }
+
+  .faq summary {
+    cursor: pointer;
+    font-weight: 500;
+    color: inherit;
+    padding: 2px 0;
+  }
+
+  .faq summary::marker { color: currentColor; }
+
+  .faq:open > summary { color: var(--accent); }
+  .faq:open > summary::marker { color: var(--accent); }
+
+  .faq p {
+    margin: 8px 0 0 20px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #5c616e;
+  }
+
+  /* ── ① field-sizing: content：输入框跟着内容长高 ──────────── */
+  .message {
+    display: block;
+    width: 100%;
+    padding: 9px 11px;
+    border: 1px solid #d6d8e0;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #17171d;
+    font: inherit;
+    font-size: 17px;
+    line-height: 1.5;
+    field-sizing: content;   /* 高度由内容决定 */
+    min-height: 3lh;         /* 至少三行，否则塌成一条缝 */
+    resize: none;
+    outline: none;
+  }
+
+  .message::placeholder { color: #8b8f9a; }
+
+  .message:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+  }
+
+  .cta {
+    display: block;
+    width: 100%;
+    margin-top: 16px;
+    padding: 13px 16px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #ffffff;                        /* 降级 */
+    color: contrast-color(var(--accent));  /* ② */
+    font: inherit;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: filter .18s ease, transform .12s ease;
+  }
+
+  .cta:hover { filter: brightness(1.08); }
+  .cta:active { transform: translateY(1px); }
+  .cta:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+
+  /* ── ⑤ 容器样式查询：外层声明 --tone，内部元素自己响应 ───── 
+     注意 --tone 必须放在 .card 的祖先上（这里是 .party）。
+     写在 .card 自己身上不会生效：查询问的是「最近的祖先容器」。  */
+  @container style(--tone: night) {
+    .card { background: #191922; color: #f4f5f8; }
+    .guest { box-shadow: 0 0 0 3px #191922; }
+    .faq p { color: #b9bcc8; }
+    .message { border-color: #2c2c3a; }
+  }
+
+  /* ── 页脚注 ─────────────────────────────────────────────── */
+  .footnote {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2px 16px;
+    margin: 0;
+    max-width: 460px;
+    text-align: center;
+    font-size: 11.5px;
+    line-height: 1.9;
+    letter-spacing: .2px;
+    color: #9aa0ab;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  .footnote span { white-space: nowrap; }
+
+  /* 不支持 shape() 时：波浪退化成直角，其余照常 */
+  @supports not (clip-path: shape(from 0 0, line to 1px 1px)) {
+    .banner { clip-path: none; }
+  }
+
+  @media (max-width: 420px) {
+    .banner { padding: 26px 24px 84px; }
+    .title { font-size: 29px; }
+    .body { padding: 28px 24px 26px; }
+    .guest { width: 50px; height: 50px; font-size: 13.5px; }
+    .guest + .guest { margin-left: -8px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="controls">
+    <div class="seg" role="group" aria-label="主题色">
+      <button type="button" data-set="accent" data-value="violet" aria-pressed="true">深紫</button>
+      <button type="button" data-set="accent" data-value="yellow" aria-pressed="false">亮黄</button>
+    </div>
+    <div class="seg" role="group" aria-label="外观">
+      <button type="button" data-set="tone" data-value="night" aria-pressed="true">夜间</button>
+      <button type="button" data-set="tone" data-value="day" aria-pressed="false">日间</button>
+    </div>
+  </div>
+
+  <div class="party" id="party" data-accent="violet" data-tone="night">
+    <article class="card">
+      <header class="banner">
+        <h1 class="title">Rooftop Party</h1>
+        <p class="meta">Sat 7 Nov · 7 pm</p>
+      </header>
+
+      <div class="body">
+        <ul class="guests" aria-label="已报名的人">
+          <li class="guest">AL</li>
+          <li class="guest">BO</li>
+          <li class="guest">CY</li>
+          <li class="guest">DI</li>
+          <li class="guest">EV</li>
+          <li class="guest">FA</li>
+        </ul>
+
+        <details class="faq">
+          <summary>What should I bring?</summary>
+          <p>一瓶饮料、一件外套，还有能坐的东西。剩下的交给我们。</p>
+        </details>
+
+        <textarea class="message" rows="1" placeholder="Leave a message"></textarea>
+
+        <button class="cta" type="button">I'm in!</button>
+      </div>
+    </article>
+  </div>
+
+  <p class="footnote">
+    <span>field-sizing</span>
+    <span>contrast-color()</span>
+    <span>clip-path: shape()</span>
+    <span>sibling-index() / sibling-count()</span>
+    <span>@container style()</span>
+    <span>:open</span>
+  </p>
+
+<script>
+  const party = document.getElementById('party');
+  const buttons = document.querySelectorAll('.seg button');
+
+  function apply(set, value) {
+    party.dataset[set] = value;
+    buttons.forEach(b => {
+      if (b.dataset.set === set) {
+        b.setAttribute('aria-pressed', String(b.dataset.value === value));
+      }
+    });
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => apply(btn.dataset.set, btn.dataset.value));
+  });
+
+  // 首屏默认停在截图的状态：深紫 + 夜间。只有用户点过才切换，
+  // 避免系统是浅色时一进来就和参考图不一样。
+  apply('accent', 'violet');
+  apply('tone', 'night');
+</script>
+</body>
+</html>

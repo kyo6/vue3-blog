@@ -1,5 +1,46 @@
 [
   {
+    "slug": "baseline-2026-css-rsvp-card",
+    "title": "2026 Baseline 六项 CSS 新特性实战：用零 JavaScript 做一张活动报名卡",
+    "date": "2026-10-20",
+    "column": "教程",
+    "tag": [
+      "CSS",
+      "前端",
+      "实战案例"
+    ],
+    "summary": "打字就变高的输入框、自己选黑白的文字、用百分比画的波浪、知道自己是第几个的头像——这六项 CSS 在 2026 年成为 Baseline。用一张活动报名卡把它们串起来，附完整可运行页面。",
+    "filename": "2026 Baseline 六项 CSS 新特性实战：用零 JavaScript 做一张活动报名卡.md"
+  },
+  {
+    "slug": "modern-software-nine-layers",
+    "title": "现代软件开发全景图：九层技术栈与哪几层可以不要",
+    "date": "2026-10-18",
+    "column": "技术研究",
+    "tag": [
+      "架构",
+      "技术栈",
+      "系统设计",
+      "工程化",
+      "技术分享"
+    ],
+    "summary": "一张图列出九层技术栈。但真正决定架构的不是\"要搭几层\"，而是\"哪几层可以不要\"——逐层拆解各自的边界、工具的类别错位，以及加层前该看到的三个信号。",
+    "filename": "现代软件开发全景图：九层技术栈与哪几层可以不要.md"
+  },
+  {
+    "slug": "introvert-rest-methods",
+    "title": "摸索出了一些适合 i 人的休息方式",
+    "date": "2026-10-17",
+    "column": "生活方式",
+    "tag": [
+      "i人",
+      "独处",
+      "休息方法"
+    ],
+    "summary": "低能量的人怎么给自己充电？一个 INFJ 摸索出的四种休息方式，以及它们背后那条共同的逻辑。",
+    "filename": "摸索出了一些适合 i 人的休息方式.md"
+  },
+  {
     "slug": "vite-version-evolution-upgrade",
     "title": "Vite 6 到 Vite 8：版本演进与升级清单",
     "date": "2026-10-07",

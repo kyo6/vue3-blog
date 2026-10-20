@@ -86,11 +86,11 @@ onMounted(() => loadArticle(route.params.slug))
 </script>
 
 <template>
-  <div class="px-6 py-10">
+  <div class="article-detail px-6 pt-14 pb-24">
     <!-- 单一参考系：Header / 正文 / 导航共享 max-w-3xl -->
     <div class="mx-auto w-full max-w-3xl">
       <button
-        class="flex items-center gap-1 mb-8 text-sm text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
+        class="art-back flex items-center gap-1 mb-8 text-sm transition-colors"
         @click="router.back()"
       >
         <svg
@@ -119,32 +119,32 @@ onMounted(() => loadArticle(route.params.slug))
       </div>
 
       <template v-else-if="blogPost">
-        <header class="mb-8 pb-6 border-b border-gray-200 dark:border-gray-700">
+        <header class="art-header mb-8 pb-6 border-b">
           <div class="flex flex-wrap items-center gap-2 mb-3">
             <router-link
               v-if="columnLink"
               :to="columnLink"
-              class="px-2 py-0.5 text-xs font-semibold rounded bg-violet-100 text-violet-700 hover:bg-violet-200 dark:bg-violet-500/15 dark:text-violet-300 dark:hover:bg-violet-500/25 transition-colors"
+              class="art-column px-2 py-0.5 text-xs font-semibold rounded transition-colors"
             >
               {{ blogPost.column }}
             </router-link>
             <span
               v-for="tag in blogPost.tag"
               :key="tag"
-              class="px-2 py-0.5 text-xs font-semibold rounded bg-gray-100 text-gray-700 dark:bg-gray-900 dark:text-gray-300"
+              class="art-tag px-2 py-0.5 text-xs font-semibold rounded"
             >
               {{ tag }}
             </span>
           </div>
-          <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">
+          <h1 class="art-title text-3xl font-bold mb-3">
             {{ blogPost.title }}
           </h1>
-          <time class="text-sm text-gray-500 dark:text-gray-400">{{ blogPost.date }}</time>
+          <time class="art-meta text-sm">{{ blogPost.date }}</time>
         </header>
 
         <!-- 正文区：TOC 绝对定位到右侧页边距，不参与居中计算 -->
         <div class="relative">
-          <div class="prose prose-slate dark:prose-dark max-w-none prose-headings:scroll-mt-20">
+          <div class="prose max-w-none prose-headings:scroll-mt-20">
             <MarkdownViewer :markdown="markdownContent" @headings="headings = $event" />
           </div>
 
@@ -155,15 +155,13 @@ onMounted(() => loadArticle(route.params.slug))
           />
         </div>
 
-        <nav class="mt-12 pt-6 border-t border-gray-200 dark:border-gray-700 grid grid-cols-2 gap-4">
+        <nav class="art-pager mt-12 pt-6 border-t grid grid-cols-2 gap-4">
           <router-link
             v-if="prevPost"
             :to="{ name: 'blog-article', params: { slug: prevPost.slug } }"
-            class="group flex flex-col gap-1 p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-violet-400 dark:hover:border-violet-500 transition-colors"
+            class="art-pager-link group flex flex-col gap-1 p-4 rounded-lg border transition-colors"
           >
-            <span
-              class="flex items-center gap-1 text-xs text-gray-400 dark:text-gray-500 group-hover:text-violet-500 transition-colors"
-            >
+            <span class="art-pager-label flex items-center gap-1 text-xs transition-colors">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="w-3.5 h-3.5"
@@ -178,9 +176,7 @@ onMounted(() => loadArticle(route.params.slug))
               </svg>
               Previous
             </span>
-            <span
-              class="text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-violet-600 dark:group-hover:text-violet-400 line-clamp-2 transition-colors"
-            >
+            <span class="art-pager-title text-sm font-medium line-clamp-2 transition-colors">
               {{ prevPost.title }}
             </span>
           </router-link>
@@ -189,11 +185,9 @@ onMounted(() => loadArticle(route.params.slug))
           <router-link
             v-if="nextPost"
             :to="{ name: 'blog-article', params: { slug: nextPost.slug } }"
-            class="group flex flex-col items-end gap-1 p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-violet-400 dark:hover:border-violet-500 transition-colors"
+            class="art-pager-link group flex flex-col items-end gap-1 p-4 rounded-lg border transition-colors"
           >
-            <span
-              class="flex items-center gap-1 text-xs text-gray-400 dark:text-gray-500 group-hover:text-violet-500 transition-colors"
-            >
+            <span class="art-pager-label flex items-center gap-1 text-xs transition-colors">
               Next
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -209,7 +203,7 @@ onMounted(() => loadArticle(route.params.slug))
               </svg>
             </span>
             <span
-              class="text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-violet-600 dark:group-hover:text-violet-400 text-right line-clamp-2 transition-colors"
+              class="art-pager-title text-sm font-medium text-right line-clamp-2 transition-colors"
             >
               {{ nextPost.title }}
             </span>

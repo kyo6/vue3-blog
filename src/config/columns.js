@@ -24,7 +24,8 @@ export const COLUMNS = [
   { slug: 'retro', name: '项目复盘', desc: '看我做过的事的过程与结论' },
   { slug: 'notes', name: '学习笔记', desc: '备查 / 套用——不必通读' },
   { slug: 'translate', name: '译文精选', desc: '读译作' },
-  { slug: 'essay', name: '随笔', desc: '读个人观点' }
+  { slug: 'essay', name: '随笔', desc: '读个人观点' },
+  { slug: 'lifestyle', name: '生活方式', desc: '读生活方法——怎么把日子过好' }
 ]
 
 /** 全部合法栏目名，用于 front matter 校验 */

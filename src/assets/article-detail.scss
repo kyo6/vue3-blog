@@ -1,0 +1,382 @@
+/**
+ * 博客详情页配色 —— 单一事实来源
+ *
+ * 颜色取自 preview 的深色调色板（深蓝底 / 雪白标题 / 靛蓝副标题 / 琥珀强调 / 冰蓝代码），
+ * 并给出一套同色相的亮色版本，保证主题切换不失效。
+ *
+ * 作用域限定在 .article-detail 内，docs 页的 MarkdownViewer 不受影响。
+ * 所有规则用双类选择器（.article-detail .xxx），特异性高于 Tailwind 工具类，不必加 !important。
+ */
+
+.article-detail {
+  /* ---------- 亮色：同色相的白天版 ---------- */
+  --art-fg: #1e293b;
+  --art-heading: #0b1120;
+  --art-h2: #0b1120;
+  --art-h3: #4338ca;
+  --art-h4: #3730a3;
+  --art-strong: #b45309;
+  --art-em: #4f46e5;
+  --art-link: #1d4ed8;
+  --art-link-line: #93c5fd;
+  --art-rule: #e2e8f0;
+  --art-muted: #64748b;
+  --art-surface: #f8fafc;
+  --art-border: #e2e8f0;
+  --art-code-bg: #eef2f7;
+  --art-code-fg: #1d4ed8;
+  --art-pre-bg: #f8fafc;
+  --art-pre-fg: #1e293b;
+  --art-pre-border: #e2e8f0;
+  --art-quote-bg: #f8fafc;
+  --art-quote-fg: #334155;
+  --art-quote-line: #6366f1;
+  --art-accent: #6366f1;
+  --art-accent-soft: rgba(99, 102, 241, 0.1);
+  --art-tag-bg: #f1f5f9;
+  --art-tag-fg: #475569;
+  --art-toc-bg: rgba(248, 250, 252, 0.6);
+  --art-serif: Georgia, 'Songti SC', 'Noto Serif CJK SC', 'Source Han Serif SC', serif;
+  --art-sans: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Segoe UI', sans-serif;
+
+  /* ---------- 暗色：preview 原色 ---------- */
+  &.dark,
+  .dark & {
+    --art-fg: #e2e8f0;
+    --art-heading: #f8fafc;
+    --art-h2: #f8fafc;
+    --art-h3: #c7d2fe;
+    --art-h4: #dbeafe;
+    --art-strong: #fde68a;
+    --art-em: #a5b4fc;
+    --art-link: #93c5fd;
+    --art-link-line: #3b82f6;
+    --art-rule: #1e293b;
+    --art-muted: #94a3b8;
+    --art-surface: #111827;
+    --art-border: #1e293b;
+    --art-code-bg: #1e293b;
+    --art-code-fg: #93c5fd;
+    --art-pre-bg: #111827;
+    --art-pre-fg: #cbd5e1;
+    --art-pre-border: #1e293b;
+    --art-quote-bg: #111827;
+    --art-quote-fg: #cbd5e1;
+    --art-quote-line: #6366f1;
+    --art-accent: #6366f1;
+    --art-accent-soft: rgba(99, 102, 241, 0.18);
+    --art-tag-bg: #1e293b;
+    --art-tag-fg: #cbd5e1;
+    --art-toc-bg: rgba(17, 24, 39, 0.45);
+  }
+}
+
+/* ============ 页头：返回、徽章、标题、日期 ============ */
+
+.article-detail .art-back {
+  color: var(--art-muted);
+  transition: color 0.18s ease;
+
+  &:hover {
+    color: var(--art-h3);
+  }
+}
+
+.article-detail .art-header {
+  border-bottom-color: var(--art-rule);
+}
+
+.article-detail .art-title {
+  font-family: var(--art-serif);
+  color: var(--art-heading);
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+}
+
+.article-detail .art-column {
+  background: var(--art-accent-soft);
+  color: var(--art-h3);
+  transition: background 0.18s ease;
+
+  &:hover {
+    background: rgba(99, 102, 241, 0.26);
+  }
+}
+
+.article-detail .art-tag {
+  background: var(--art-tag-bg);
+  color: var(--art-tag-fg);
+}
+
+.article-detail .art-meta {
+  color: var(--art-muted);
+  font-family: var(--art-sans);
+  letter-spacing: 0.02em;
+}
+
+/* ============ 正文 ============ */
+
+.article-detail .markdown-viewer {
+  color: var(--art-fg);
+  font-family: var(--art-sans);
+  line-height: 1.85;
+
+  /* 标题：h2 用衬线 + 整条底边线（preview 的做法，替换原来的 40px 短线） */
+  h2 {
+    font-family: var(--art-serif);
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.42;
+    letter-spacing: -0.01em;
+    color: var(--art-h2);
+    margin-top: 56px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--art-rule);
+  }
+
+  h2::after {
+    display: none;
+  }
+
+  h3 {
+    font-family: var(--art-sans);
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--art-h3);
+    margin-top: 36px;
+    margin-bottom: 12px;
+  }
+
+  h4 {
+    font-family: var(--art-sans);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--art-h4);
+    margin-top: 28px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 16.5px;
+    line-height: 1.85;
+    margin: 16px 0;
+    color: var(--art-fg);
+  }
+
+  /* 强调色：加粗是琥珀，斜体是靛蓝 */
+  strong {
+    color: var(--art-strong);
+    font-weight: 600;
+  }
+
+  em {
+    color: var(--art-em);
+    font-style: italic;
+  }
+
+  a {
+    color: var(--art-link);
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid var(--art-link-line);
+
+    &:hover {
+      border-bottom-width: 2px;
+    }
+  }
+
+  /* 引用：左侧靛蓝竖条 + 深一档的底 */
+  blockquote {
+    margin: 20px 0;
+    padding: 12px 18px;
+    border-left: 3px solid var(--art-quote-line);
+    border-radius: 0 8px 8px 0;
+    background: var(--art-quote-bg);
+    color: var(--art-quote-fg);
+    font-style: normal;
+
+    p {
+      margin: 0;
+      font-size: 15.5px;
+      line-height: 1.8;
+      color: inherit;
+    }
+
+    p + p {
+      margin-top: 0.8em;
+    }
+  }
+
+  /* 图片：圆角 + 一圈细边框，和卡片同调 */
+  img {
+    margin: 22px auto;
+    border: 1px solid var(--art-border);
+    border-radius: 10px;
+  }
+
+  /* 行内代码 */
+  :not(pre) > code {
+    background: var(--art-code-bg);
+    color: var(--art-code-fg);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.88em;
+    font-weight: 500;
+
+    &::before,
+    &::after {
+      content: '';
+    }
+  }
+
+  /* 代码块：外框自己画，把 hljs 自带底色和 padding 让开，避免双层嵌套 */
+  pre {
+    display: block;
+    margin: 24px 0;
+    padding: 16px;
+    border: 1px solid var(--art-pre-border);
+    border-radius: 10px;
+    background: var(--art-pre-bg);
+    color: var(--art-pre-fg);
+    box-shadow: none;
+    overflow: auto;
+
+    code,
+    code.hljs {
+      display: block;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font-size: 13.5px;
+      line-height: 1.7;
+    }
+  }
+
+  /* 列表：无序列表用主题色圆点（定位在 padding 区），有序列表保留原生序号 */
+  ul {
+    padding-left: 0;
+
+    > li::before {
+      width: 0.4em;
+      height: 0.4em;
+      left: 0.5em;
+      top: calc(0.9em - 0.2em);
+      border-radius: 999px;
+      background-color: var(--art-accent);
+    }
+  }
+
+  ol {
+    padding-left: 1.4em;
+  }
+
+  li {
+    font-size: 16px;
+    line-height: 1.8;
+    margin: 8px 0;
+  }
+
+  hr {
+    margin: 40px 0;
+    border-color: var(--art-rule);
+    opacity: 1;
+  }
+
+  /* 表格：项目原本没有任何 table 规则，顺带补一套最小可用样式 */
+  table {
+    width: 100%;
+    font-size: 14.5px;
+    line-height: 1.6;
+    border-collapse: collapse;
+  }
+
+  thead {
+    color: var(--art-h2);
+    border-bottom: 1px solid var(--art-border);
+
+    th {
+      padding: 8px 10px;
+      text-align: left;
+    }
+  }
+
+  tbody {
+    td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--art-rule);
+    }
+
+    tr:last-child td {
+      border-bottom: 1px solid var(--art-border);
+    }
+  }
+}
+
+/* ============ 上一篇 / 下一篇 ============ */
+
+.article-detail .art-pager {
+  border-top-color: var(--art-rule);
+}
+
+.article-detail .art-pager-link {
+  border-color: var(--art-border);
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease;
+
+  &:hover {
+    border-color: var(--art-accent);
+    background: var(--art-accent-soft);
+  }
+}
+
+.article-detail .art-pager-label {
+  color: var(--art-muted);
+  transition: color 0.18s ease;
+}
+
+.article-detail .art-pager-link:hover .art-pager-label {
+  color: var(--art-h3);
+}
+
+.article-detail .art-pager-title {
+  color: var(--art-fg);
+  transition: color 0.18s ease;
+}
+
+.article-detail .art-pager-link:hover .art-pager-title {
+  color: var(--art-link);
+}
+
+/* ============ 右侧大纲 ============ */
+
+.article-detail .art-toc {
+  border-color: var(--art-border);
+  background: var(--art-toc-bg);
+}
+
+.article-detail .art-toc-title {
+  color: var(--art-muted);
+}
+
+.article-detail .art-toc-active {
+  border-left-color: var(--art-accent);
+  color: var(--art-h3);
+  font-weight: 500;
+}
+
+.article-detail .art-toc-idle {
+  border-left-color: transparent;
+  color: var(--art-muted);
+  transition:
+    color 0.18s ease,
+    border-color 0.18s ease;
+
+  &:hover {
+    color: var(--art-fg);
+    border-left-color: var(--art-border);
+  }
+}
